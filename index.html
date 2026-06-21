@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#0f0f12">
-  <meta name="description" content="Смета на производство музыкального продукта — 3 трека">
-  <title>Смета · 3 трека</title>
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="EDISON TRICK — смета на производство 3 треков. Sam Bruev.">
+  <title>EDISON TRICK · Смета</title>
   <style>
     :root {
-      --bg: #0f0f12;
-      --surface: #1a1a20;
-      --surface-2: #22222a;
-      --border: #2e2e38;
-      --text: #f0f0f4;
-      --muted: #9898a8;
-      --accent: #7c6cff;
-      --accent-soft: rgba(124, 108, 255, 0.15);
+      --bg: #000000;
+      --surface: rgba(12, 12, 12, 0.95);
+      --surface-2: rgba(18, 18, 18, 0.98);
+      --border: rgba(255, 182, 0, 0.12);
+      --text: #f5f5f7;
+      --muted: #9a9aaa;
+      --accent: #ffb600;
+      --accent-soft: rgba(255, 182, 0, 0.14);
       --green: #4ade80;
       --green-soft: rgba(74, 222, 128, 0.12);
-      --amber: #fbbf24;
-      --amber-soft: rgba(251, 191, 36, 0.12);
+      --amber: #ffb600;
+      --amber-soft: rgba(255, 182, 0, 0.12);
       --red: #f87171;
       --radius: 14px;
       --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -30,6 +30,7 @@
     html {
       scroll-behavior: smooth;
       -webkit-text-size-adjust: 100%;
+      background: #000000;
     }
 
     body {
@@ -39,12 +40,53 @@
       line-height: 1.5;
       min-height: 100dvh;
       padding-bottom: calc(80px + var(--safe-bottom));
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url("assets/symbol.png") center 38% / min(85vw, 420px) no-repeat;
+      opacity: 0.08;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body > * {
+      position: relative;
+      z-index: 1;
     }
 
     .hero {
-      background: linear-gradient(160deg, #1a1530 0%, var(--bg) 55%);
+      background: #000000;
       padding: max(20px, env(safe-area-inset-top)) 20px 28px;
       border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .hero-logo {
+      width: min(340px, 94vw);
+      height: auto;
+      margin: 0 auto 14px;
+      display: block;
+      border-radius: 12px;
+      filter: drop-shadow(0 6px 28px rgba(255, 182, 0, 0.18));
+    }
+
+    .hero-logo-wrap {
+      margin: 0 -4px 4px;
+    }
+
+    .hero-artist {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .hero-artist strong {
+      color: var(--accent);
+      font-weight: 600;
     }
 
     .hero-label {
@@ -102,7 +144,7 @@
       position: sticky;
       top: 0;
       z-index: 10;
-      background: rgba(15, 15, 18, 0.92);
+      background: rgba(0, 0, 0, 0.92);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
@@ -222,51 +264,329 @@
       color: var(--text);
     }
 
-    .schedule-item {
-      padding: 13px 16px;
+    .variant-toggle {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
       border-bottom: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: 52px 1fr auto;
-      gap: 10px;
-      align-items: start;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .schedule-item:last-child { border-bottom: none; }
+    .variant-toggle:last-child { border-bottom: none; }
 
-    .schedule-date {
+    .variant-toggle input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .variant-body { flex: 1; min-width: 0; }
+
+    .variant-title {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .variant-meta {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .variant-diff {
       font-size: 12px;
       font-weight: 600;
       color: var(--accent);
-      line-height: 1.3;
-    }
-
-    .schedule-day {
-      font-size: 10px;
-      color: var(--muted);
-      font-weight: 400;
-    }
-
-    .schedule-stage {
-      font-size: 13px;
-      font-weight: 500;
-    }
-
-    .schedule-hours {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-
-    .schedule-price {
-      font-size: 13px;
-      font-weight: 600;
-      text-align: right;
       white-space: nowrap;
     }
 
-    .schedule-price.muted {
+    .variant-note {
+      padding: 10px 16px 14px;
+      font-size: 12px;
       color: var(--muted);
-      font-weight: 400;
+      line-height: 1.45;
+      border-top: 1px solid var(--border);
+      background: rgba(255, 182, 0, 0.04);
+    }
+
+    /* ── Calendar ── */
+    .cal-widget { padding: 0; overflow: hidden; }
+
+    .cal-month-tabs {
+      display: flex;
+      gap: 6px;
+      padding: 12px 12px 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .cal-month-tabs::-webkit-scrollbar { display: none; }
+
+    .cal-tab {
+      flex-shrink: 0;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    .cal-tab.has-events { border-color: rgba(255, 182, 0, 0.25); }
+
+    .cal-tab.active {
+      background: var(--accent-soft);
+      border-color: rgba(255, 182, 0, 0.45);
+      color: var(--accent);
+    }
+
+    .cal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 12px 10px;
+      gap: 8px;
+    }
+
+    .cal-nav {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, opacity 0.15s;
+    }
+
+    .cal-nav:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+
+    .cal-nav:not(:disabled):active { background: var(--accent-soft); }
+
+    .cal-title {
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+      flex: 1;
+    }
+
+    .cal-viewport {
+      padding: 0 10px 12px;
+      touch-action: pan-y;
+      user-select: none;
+    }
+
+    .cal-viewport.is-swiping { transition: opacity 0.12s; }
+
+    .cal-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+
+    .cal-weekdays span {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      padding: 4px 0;
+    }
+
+    .cal-weekdays span:nth-child(6),
+    .cal-weekdays span:nth-child(7) { color: rgba(248, 113, 113, 0.7); }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .cal-day {
+      aspect-ratio: 1;
+      min-height: 44px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: default;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 2px;
+      position: relative;
+      transition: background 0.12s, border-color 0.12s, transform 0.1s;
+    }
+
+    .cal-day.empty { pointer-events: none; }
+
+    .cal-day.has-event {
+      cursor: pointer;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .cal-day.has-event:active { transform: scale(0.94); }
+
+    .cal-day.selected {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      box-shadow: 0 0 0 1px rgba(255, 182, 0, 0.2);
+    }
+
+    .cal-day.deadline {
+      background: var(--green-soft);
+      border-color: rgba(74, 222, 128, 0.35);
+    }
+
+    .cal-day-num { line-height: 1; }
+
+    .cal-dots {
+      display: flex;
+      gap: 3px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 100%;
+    }
+
+    .cal-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .cal-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 10px;
+      padding: 0 14px 12px;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+
+    .cal-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .cal-legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .cal-note {
+      margin: 0 12px 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(148, 163, 184, 0.1);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      font-size: 12px;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    .cal-note strong { color: var(--text); }
+
+    .cal-detail {
+      border-top: 1px solid var(--border);
+      padding: 14px 16px;
+      min-height: 72px;
+      background: var(--surface-2);
+    }
+
+    .cal-detail-placeholder {
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+      padding: 8px 0;
+    }
+
+    .cal-detail-date {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+
+    .cal-event-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 11px 12px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border-left: 3px solid var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .cal-event-card:last-child { margin-bottom: 0; }
+
+    .cal-event-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .cal-event-meta {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .cal-event-price {
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .cal-footer {
+      text-align: center;
+      padding: 12px;
+      font-size: 13px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    .cal-footer strong { color: var(--text); }
+
+    .cal-swipe-hint {
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      padding: 0 12px 10px;
+      opacity: 0.7;
     }
 
     .dates-grid {
@@ -297,8 +617,8 @@
     }
 
     .payment-banner {
-      background: linear-gradient(135deg, rgba(124, 108, 255, 0.2), rgba(74, 222, 128, 0.1));
-      border: 1px solid rgba(124, 108, 255, 0.35);
+      background: linear-gradient(135deg, rgba(255, 182, 0, 0.18), rgba(74, 222, 128, 0.08));
+      border: 1px solid rgba(255, 182, 0, 0.3);
       border-radius: var(--radius);
       padding: 18px 16px;
       margin-bottom: 12px;
@@ -504,7 +824,7 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(15, 15, 18, 0.95);
+      background: rgba(0, 0, 0, 0.95);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-top: 1px solid var(--border);
@@ -533,24 +853,17 @@
       color: var(--muted);
       text-align: right;
     }
-
-    .hours-total {
-      text-align: center;
-      padding: 12px;
-      font-size: 13px;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
-      background: var(--surface-2);
-    }
-
-    .hours-total strong { color: var(--text); }
   </style>
 </head>
 <body>
 
   <header class="hero">
-    <div class="hero-label">Музыкальный продукт</div>
-    <h1>Смета на производство<br>3 треков</h1>
+    <div class="hero-logo-wrap">
+      <img class="hero-logo" src="assets/hero-logo.svg" alt="EDISON TRICK">
+    </div>
+    <div class="hero-artist">Исполнитель: <strong>Sam Bruev</strong></div>
+    <div class="hero-label">3 трека · музыкальный продукт</div>
+    <h1>Смета на производство</h1>
     <div class="hero-stats">
       <div class="stat">
         <div class="stat-label">Ставка</div>
@@ -562,13 +875,14 @@
       </div>
       <div class="stat full">
         <div class="stat-label">Общая стоимость</div>
-        <div class="stat-value large">325 000 ₽</div>
+        <div class="stat-value large" id="heroTotal">325 000 ₽</div>
       </div>
     </div>
   </header>
 
   <nav aria-label="Разделы">
     <ul>
+      <li><a href="#variants">Варианты</a></li>
       <li><a href="#summary">Смета</a></li>
       <li><a href="#schedule">График</a></li>
       <li><a href="#dates">Даты</a></li>
@@ -579,6 +893,29 @@
   </nav>
 
   <main>
+
+    <section id="variants">
+      <h2 class="section-title">Варианты записи</h2>
+      <div class="card">
+        <label class="variant-toggle">
+          <input type="checkbox" id="variantBassLive">
+          <span class="variant-body">
+            <span class="variant-title">Бас вживую</span>
+            <span class="variant-meta">3 ч на песню · 3 000 ₽/ч · 3 трека = 27 000 ₽</span>
+          </span>
+          <span class="variant-diff">+12 000 ₽</span>
+        </label>
+        <label class="variant-toggle">
+          <input type="checkbox" id="variantDrumsLive">
+          <span class="variant-body">
+            <span class="variant-title">Барабаны вживую</span>
+            <span class="variant-meta">3 ч на песню · 5 000 ₽/ч + редакция 5 000 ₽</span>
+          </span>
+          <span class="variant-diff">+30 000 ₽</span>
+        </label>
+        <p class="variant-note">По умолчанию — MIDI-пакеты. Включите опции, чтобы пересчитать смету, оплату и итог.</p>
+      </div>
+    </section>
 
     <section id="summary">
       <h2 class="section-title">Сводная таблица</h2>
@@ -591,21 +928,21 @@
           </div>
           <span class="row-price">30 000 ₽</span>
         </div>
-        <div class="row">
+        <div class="row" id="rowDrums">
           <span class="row-num">2</span>
           <div class="row-body">
-            <div class="row-title">Барабаны (MIDI)</div>
-            <div class="row-meta">1 пакет · 30 000</div>
+            <div class="row-title" id="rowDrumsTitle">Барабаны (MIDI)</div>
+            <div class="row-meta" id="rowDrumsMeta">1 пакет · 30 000</div>
           </div>
-          <span class="row-price">30 000 ₽</span>
+          <span class="row-price" id="rowDrumsPrice">30 000 ₽</span>
         </div>
-        <div class="row">
+        <div class="row" id="rowBass">
           <span class="row-num">3</span>
           <div class="row-body">
-            <div class="row-title">Бас (MIDI)</div>
-            <div class="row-meta">1 пакет · 15 000</div>
+            <div class="row-title" id="rowBassTitle">Бас (MIDI)</div>
+            <div class="row-meta" id="rowBassMeta">1 пакет · 15 000</div>
           </div>
-          <span class="row-price">15 000 ₽</span>
+          <span class="row-price" id="rowBassPrice">15 000 ₽</span>
         </div>
         <div class="row">
           <span class="row-num">4</span>
@@ -635,7 +972,7 @@
           <span class="row-num">7</span>
           <div class="row-body">
             <div class="row-title">Сведение + мастеринг</div>
-            <div class="row-meta">1 пакет · 75 000</div>
+            <div class="row-meta">3 трека · 25 000 ₽ за сведение + мастеринг</div>
           </div>
           <span class="row-price">75 000 ₽</span>
         </div>
@@ -660,198 +997,33 @@
           <div class="row-body">
             <div class="row-title">Итого</div>
           </div>
-          <span class="row-price">325 000 ₽</span>
+          <span class="row-price" id="summaryTotal">325 000 ₽</span>
         </div>
       </div>
     </section>
 
     <section id="schedule">
       <h2 class="section-title">Календарный график</h2>
-      <div class="card">
-        <div class="schedule-item">
-          <div class="schedule-date">24<br><span class="schedule-day">июн, Ср</span></div>
-          <div>
-            <div class="schedule-stage">Репетиция</div>
-            <div class="schedule-hours">4 ч.</div>
-          </div>
-          <div class="schedule-price">15 000 ₽</div>
+      <div class="card cal-widget">
+        <div class="cal-month-tabs" id="calMonthTabs"></div>
+        <div class="cal-header">
+          <button type="button" class="cal-nav" id="calPrev" aria-label="Предыдущий месяц">‹</button>
+          <div class="cal-title" id="calTitle"></div>
+          <button type="button" class="cal-nav" id="calNext" aria-label="Следующий месяц">›</button>
         </div>
-        <div class="schedule-item">
-          <div class="schedule-date">28<br><span class="schedule-day">июн, Вс</span></div>
-          <div>
-            <div class="schedule-stage">Репетиция</div>
-            <div class="schedule-hours">4 ч.</div>
+        <p class="cal-swipe-hint">Листайте месяцы свайпом или кнопками · нажмите на дату</p>
+        <div class="cal-viewport" id="calViewport">
+          <div class="cal-weekdays">
+            <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
           </div>
-          <div class="schedule-price">15 000 ₽</div>
+          <div class="cal-grid" id="calGrid"></div>
         </div>
-        <div class="schedule-item">
-          <div class="schedule-date">29<br><span class="schedule-day">июн, Пн</span></div>
-          <div>
-            <div class="schedule-stage">Барабаны (MIDI)</div>
-            <div class="schedule-hours">5 ч.</div>
-          </div>
-          <div class="schedule-price">15 000 ₽</div>
+        <div class="cal-legend" id="calLegend"></div>
+        <div class="cal-note" id="calNote" hidden></div>
+        <div class="cal-detail" id="calDetail">
+          <div class="cal-detail-placeholder">Выберите дату с событием — подробности появятся здесь</div>
         </div>
-        <div class="schedule-item">
-          <div class="schedule-date">30<br><span class="schedule-day">июн, Вт</span></div>
-          <div>
-            <div class="schedule-stage">Барабаны (MIDI)</div>
-            <div class="schedule-hours">5 ч.</div>
-          </div>
-          <div class="schedule-price">15 000 ₽</div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">1<br><span class="schedule-day">июл, Ср</span></div>
-          <div>
-            <div class="schedule-stage">Бас (MIDI)</div>
-            <div class="schedule-hours">5 ч.</div>
-          </div>
-          <div class="schedule-price">15 000 ₽</div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">12<br><span class="schedule-day">июл, Вс</span></div>
-          <div>
-            <div class="schedule-stage">Гитары (сессия 1)</div>
-            <div class="schedule-hours">5 ч.</div>
-          </div>
-          <div class="schedule-price">15 000 ₽</div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">19<br><span class="schedule-day">июл, Вс</span></div>
-          <div>
-            <div class="schedule-stage">Гитары (сессия 2)</div>
-            <div class="schedule-hours">5 ч.</div>
-          </div>
-          <div class="schedule-price">15 000 ₽</div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">26<br><span class="schedule-day">июл, Вс</span></div>
-          <div>
-            <div class="schedule-stage">Гитары (сессия 3)</div>
-            <div class="schedule-hours">5 ч.</div>
-          </div>
-          <div class="schedule-price">15 000 ₽</div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">2<br><span class="schedule-day">авг, Вс</span></div>
-          <div>
-            <div class="schedule-stage">Гитары (сессия 4)</div>
-            <div class="schedule-hours">5 ч.</div>
-          </div>
-          <div class="schedule-price">15 000 ₽</div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">12<br><span class="schedule-day">авг, Ср</span></div>
-          <div>
-            <div class="schedule-stage">Вокал (сессия 1)</div>
-            <div class="schedule-hours">5 ч.</div>
-          </div>
-          <div class="schedule-price">15 000 ₽</div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">19<br><span class="schedule-day">авг, Ср</span></div>
-          <div>
-            <div class="schedule-stage">Вокал (сессия 2)</div>
-            <div class="schedule-hours">5 ч.</div>
-          </div>
-          <div class="schedule-price">15 000 ₽</div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">26<br><span class="schedule-day">авг, Ср</span></div>
-          <div>
-            <div class="schedule-stage">Вокал (сессия 3)</div>
-            <div class="schedule-hours">5 ч.</div>
-          </div>
-          <div class="schedule-price">15 000 ₽</div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">2<br><span class="schedule-day">сен, Ср</span></div>
-          <div>
-            <div class="schedule-stage">Вокал (сессия 4)</div>
-            <div class="schedule-hours">5 ч.</div>
-          </div>
-          <div class="schedule-price">15 000 ₽</div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">—<br><span class="schedule-day">по согл.</span></div>
-          <div>
-            <div class="schedule-stage">Продакшн, правки</div>
-            <div class="schedule-hours">8 ч.</div>
-          </div>
-          <div class="schedule-price">25 000 ₽</div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">8<br><span class="schedule-day">сен, Вт</span></div>
-          <div>
-            <div class="schedule-stage">Сведение (сессия 1)</div>
-            <div class="schedule-hours">4 ч.</div>
-          </div>
-          <div class="schedule-price">12 500 ₽</div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">9<br><span class="schedule-day">сен, Ср</span></div>
-          <div>
-            <div class="schedule-stage">Сведение (сессия 2)</div>
-            <div class="schedule-hours">4 ч.</div>
-          </div>
-          <div class="schedule-price">12 500 ₽</div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">15<br><span class="schedule-day">сен, Вт</span></div>
-          <div>
-            <div class="schedule-stage">Сведение (сессия 3)</div>
-            <div class="schedule-hours">4 ч.</div>
-          </div>
-          <div class="schedule-price">12 500 ₽</div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">16<br><span class="schedule-day">сен, Ср</span></div>
-          <div>
-            <div class="schedule-stage">Сведение (сессия 4)</div>
-            <div class="schedule-hours">4 ч.</div>
-          </div>
-          <div class="schedule-price">12 500 ₽</div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">22<br><span class="schedule-day">сен, Вт</span></div>
-          <div>
-            <div class="schedule-stage">Сведение (сессия 5)</div>
-            <div class="schedule-hours">4 ч.</div>
-          </div>
-          <div class="schedule-price">12 500 ₽</div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">23<br><span class="schedule-day">сен, Ср</span></div>
-          <div>
-            <div class="schedule-stage">Сведение (сессия 6)</div>
-            <div class="schedule-hours">4 ч.</div>
-          </div>
-          <div class="schedule-price">12 500 ₽</div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">29<br><span class="schedule-day">сен, Вт</span></div>
-          <div>
-            <div class="schedule-stage">Доработки сведения</div>
-            <div class="schedule-hours">5 ч.</div>
-          </div>
-          <div class="schedule-price">15 000 ₽</div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">30<br><span class="schedule-day">сен, Ср</span></div>
-          <div>
-            <div class="schedule-stage">Доработки сведения</div>
-            <div class="schedule-hours">5 ч.</div>
-          </div>
-          <div class="schedule-price">15 000 ₽</div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">1<br><span class="schedule-day">окт, Чт</span></div>
-          <div>
-            <div class="schedule-stage">Сдача материала</div>
-          </div>
-          <div class="schedule-price muted">—</div>
-        </div>
-        <div class="hours-total">Итого часов: <strong>~ 100 ч.</strong></div>
+        <div class="cal-footer">Итого часов: <strong>~ 76 ч.</strong> <span style="color:var(--muted);font-weight:400;">· сведение + мастеринг — фикс. 25 000 ₽/трек</span></div>
       </div>
     </section>
 
@@ -863,12 +1035,12 @@
           <span class="date-chip-value">24, 28 июня</span>
         </div>
         <div class="date-chip">
-          <span class="date-chip-label">Барабаны (MIDI)</span>
-          <span class="date-chip-value">29, 30 июня</span>
+          <span class="date-chip-label" id="dateDrumsLabel">Барабаны (MIDI)</span>
+          <span class="date-chip-value" id="dateDrumsValue">29, 30 июня</span>
         </div>
         <div class="date-chip">
-          <span class="date-chip-label">Бас (MIDI)</span>
-          <span class="date-chip-value">1 июля</span>
+          <span class="date-chip-label" id="dateBassLabel">Бас (MIDI)</span>
+          <span class="date-chip-value" id="dateBassValue">1 июля</span>
         </div>
         <div class="date-chip">
           <span class="date-chip-label">Гитары</span>
@@ -879,8 +1051,8 @@
           <span class="date-chip-value">12, 19, 26 авг · 2 сен</span>
         </div>
         <div class="date-chip">
-          <span class="date-chip-label">Сведение</span>
-          <span class="date-chip-value">8, 9, 15, 16, 22, 23 сен</span>
+          <span class="date-chip-label">Сведение + мастеринг</span>
+          <span class="date-chip-value">8, 15, 22 сен · 25 000 ₽/трек</span>
         </div>
         <div class="date-chip">
           <span class="date-chip-label">Доработки (платные)</span>
@@ -896,9 +1068,9 @@
     <section id="payment">
       <h2 class="section-title">График оплаты</h2>
       <div class="payment-banner">
-        <div class="old-price">325 000 ₽</div>
-        <div class="discount">Скидка 20% · − 65 000 ₽</div>
-        <div class="final-price">260 000 ₽</div>
+        <div class="old-price" id="paymentFull">325 000 ₽</div>
+        <div class="discount" id="paymentDiscount">Скидка 20% · − 65 000 ₽</div>
+        <div class="final-price" id="paymentFinal">260 000 ₽</div>
         <div class="final-label">Спецпредложение · трёхэтапная оплата</div>
       </div>
       <div class="card">
@@ -906,30 +1078,30 @@
           <div class="step-badge">1</div>
           <div class="step-info">
             <div class="step-pct">50%</div>
-            <div class="step-when">До 24 июня 2026 г.</div>
+            <div class="step-when">Аванс</div>
           </div>
-          <div class="step-amount">130 000 ₽</div>
+          <div class="step-amount" id="paymentStep1">130 000 ₽</div>
         </div>
         <div class="payment-step">
           <div class="step-badge">2</div>
           <div class="step-info">
             <div class="step-pct">20%</div>
-            <div class="step-when">После записей · 2 сен 2026</div>
+            <div class="step-when">После записей</div>
           </div>
-          <div class="step-amount">52 000 ₽</div>
+          <div class="step-amount" id="paymentStep2">52 000 ₽</div>
         </div>
         <div class="payment-step">
           <div class="step-badge">3</div>
           <div class="step-info">
             <div class="step-pct">30%</div>
-            <div class="step-when">После сдачи · 1 окт 2026</div>
+            <div class="step-when">После сдачи материала</div>
           </div>
-          <div class="step-amount">78 000 ₽</div>
+          <div class="step-amount" id="paymentStep3">78 000 ₽</div>
         </div>
       </div>
       <div class="alert alert-warning">
         <span class="alert-icon">⚠</span>
-        <span>При нарушении сроков оплаты скидка аннулируется, и сумма восстанавливается до полной стоимости — <strong>325 000 ₽</strong>.</span>
+        <span>При нарушении сроков оплаты более чем на 10 календарных дней скидка аннулируется, и сумма восстанавливается до полной стоимости — <strong id="paymentAlertFull">325 000 ₽</strong>.</span>
       </div>
     </section>
 
@@ -948,15 +1120,14 @@
       <div class="subsection">
         <div class="subsection-title">Ответственность исполнителя</div>
         <ul class="terms-list">
-          <li>При нарушении срока сдачи этапа «Сведение» по вине исполнителя — штраф 30% от стоимости этапа (22 500 ₽) за каждую просрочку.</li>
-          <li>Штраф не применяется при задержках по вине заказчика или форс-мажоре.</li>
+          <li>Если сведение сдано позже согласованного срока по вине исполнителя — штраф <strong>7 500 ₽ за каждый трек</strong> (30% от стоимости сведения + мастеринга: 25 000 ₽).</li>
+          <li>Штраф не применяется, если задержка произошла по вине заказчика или из‑за форс‑мажора.</li>
         </ul>
       </div>
 
       <div class="subsection">
         <div class="subsection-title">Ответственность заказчика</div>
         <ul class="terms-list">
-          <li>За несвоевременную оплату — пени 1% от суммы долга за каждый день просрочки.</li>
           <li>За отмену или перенос согласованной сессии менее чем за 3 рабочих дня — сессия оплачивается полностью.</li>
         </ul>
       </div>
@@ -980,8 +1151,8 @@
         <div class="signatures">
           <div class="sig-block">
             <div class="sig-role">Исполнитель</div>
-            <div class="sig-line"></div>
-            <div class="sig-hint">ФИО / подпись</div>
+            <div class="sig-line" style="display:flex;align-items:flex-end;justify-content:center;font-size:12px;color:var(--accent);padding-bottom:4px;">Sam Bruev</div>
+            <div class="sig-hint">подпись</div>
           </div>
           <div class="sig-block">
             <div class="sig-role">Заказчик</div>
@@ -997,10 +1168,12 @@
   <div class="footer-bar">
     <div>
       <div class="label">Со скидкой 20%</div>
-      <div class="amount">260 000 ₽</div>
+      <div class="amount" id="footerAmount">260 000 ₽</div>
     </div>
     <div class="deadline">Сдача<br>1 окт 2026</div>
   </div>
 
+  <script src="estimate.js"></script>
+  <script src="calendar.js"></script>
 </body>
 </html>

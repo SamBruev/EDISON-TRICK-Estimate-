@@ -58,6 +58,97 @@
     if (el) el.textContent = text;
   }
 
+  function parseRub(text) {
+    return parseInt(String(text || '').replace(/\s/g, '').replace(/[^\d]/g, ''), 10) || 0;
+  }
+
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  var priceAnimations = new WeakMap();
+
+  function animateRub(el, toValue, options) {
+    if (!el) return;
+    options = options || {};
+    var duration = options.duration || 980;
+    var direction = options.direction;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.textContent = formatRub(toValue);
+      return;
+    }
+
+    var existing = priceAnimations.get(el);
+    var fromValue = existing ? existing.current : parseRub(el.textContent);
+    if (fromValue === toValue) {
+      el.textContent = formatRub(toValue);
+      return;
+    }
+
+    if (existing) cancelAnimationFrame(existing.rafId);
+
+    if (direction) playBump(el, direction);
+
+    var startTime = null;
+    function frame(ts) {
+      if (!startTime) startTime = ts;
+      var t = Math.min(1, (ts - startTime) / duration);
+      var current = Math.round(fromValue + (toValue - fromValue) * easeOutCubic(t));
+      el.textContent = formatRub(current);
+
+      if (t < 1) {
+        priceAnimations.set(el, { rafId: requestAnimationFrame(frame), current: current });
+      } else {
+        el.textContent = formatRub(toValue);
+        priceAnimations.delete(el);
+      }
+    }
+
+    priceAnimations.set(el, { rafId: requestAnimationFrame(frame), current: fromValue });
+  }
+
+  function animateDiscountLine(el, toValue, options) {
+    if (!el) return;
+    options = options || {};
+    var prefix = 'Скидка 20% · − ';
+    var duration = options.duration || 980;
+    var direction = options.direction;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.textContent = prefix + formatRub(toValue);
+      return;
+    }
+
+    var fromValue = parseRub(el.textContent);
+    if (fromValue === toValue) {
+      el.textContent = prefix + formatRub(toValue);
+      return;
+    }
+
+    if (direction) playBump(el, direction);
+
+    var startTime = null;
+    function frame(ts) {
+      if (!startTime) startTime = ts;
+      var t = Math.min(1, (ts - startTime) / duration);
+      var current = Math.round(fromValue + (toValue - fromValue) * easeOutCubic(t));
+      el.textContent = prefix + formatRub(current);
+      if (t < 1) requestAnimationFrame(frame);
+      else el.textContent = prefix + formatRub(toValue);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function setPrice(el, value, anim) {
+    if (!el) return;
+    if (anim && anim.run) {
+      animateRub(el, value, { direction: anim.direction });
+    } else {
+      el.textContent = formatRub(value);
+    }
+  }
+
   function playBump(el, direction) {
     if (!el || !direction) return;
     var cls = direction === 'up' ? 'price-bump-up' : 'price-bump-down';
@@ -68,19 +159,6 @@
       el.classList.remove(cls);
       el.removeEventListener('animationend', onEnd);
     });
-  }
-
-  function bumpTotals(direction) {
-    [
-      'heroTotal',
-      'summaryTotal',
-      'paymentFinal',
-      'footerAmount',
-      'paymentFull'
-    ].forEach(function (id) {
-      playBump(document.getElementById(id), direction);
-    });
-    playBump(document.querySelector('#heroDiscount strong'), direction);
   }
 
   function flashRow(rowId) {
@@ -99,9 +177,35 @@
     var bassLive = document.getElementById('variantBassLive').checked;
     var drumsLive = document.getElementById('variantDrumsLive').checked;
     var state = calcState(bassLive, drumsLive);
+    var prevState = prevTotal !== null ? calcState(prevBassLive, prevDrumsLive) : null;
+    var shouldAnimate = fromUser && prevState !== null;
+    var totalDir = shouldAnimate && state.total !== prevState.total
+      ? (state.total > prevState.total ? 'up' : 'down')
+      : null;
+    var totalAnim = totalDir ? { run: true, direction: totalDir } : null;
+    var drumsDir = shouldAnimate && state.drums !== prevState.drums
+      ? (state.drums > prevState.drums ? 'up' : 'down')
+      : null;
+    var bassDir = shouldAnimate && state.bass !== prevState.bass
+      ? (state.bass > prevState.bass ? 'up' : 'down')
+      : null;
 
     if (bassToggle) bassToggle.classList.toggle('is-live', bassLive);
     if (drumsToggle) drumsToggle.classList.toggle('is-live', drumsLive);
+
+    var rowDrums = document.getElementById('rowDrums');
+    var rowBass = document.getElementById('rowBass');
+    if (rowDrums) rowDrums.classList.toggle('is-live', drumsLive);
+    if (rowBass) rowBass.classList.toggle('is-live', bassLive);
+
+    var dateDrumsLabel = document.getElementById('dateDrumsLabel');
+    var dateBassLabel = document.getElementById('dateBassLabel');
+    if (dateDrumsLabel && dateDrumsLabel.closest('.date-chip')) {
+      dateDrumsLabel.closest('.date-chip').classList.toggle('is-live', drumsLive);
+    }
+    if (dateBassLabel && dateBassLabel.closest('.date-chip')) {
+      dateBassLabel.closest('.date-chip').classList.toggle('is-live', bassLive);
+    }
 
     if (drumsLive) {
       setText('rowDrumsTitle', 'Барабаны (вживую)');
@@ -127,51 +231,50 @@
       setText('dateBassValue', '1 июля');
     }
 
-    setText('rowDrumsPrice', formatRub(state.drums));
-    setText('rowBassPrice', formatRub(state.bass));
-    setText('summaryTotal', formatRub(state.total));
-    setText('heroTotal', formatRub(state.total));
-    setText('paymentFull', formatRub(state.total));
-    setText('paymentDiscount', 'Скидка 20% · − ' + formatRub(state.discountAmount));
-    setText('paymentFinal', formatRub(state.finalPrice));
-    setText('paymentStep1', formatRub(state.steps[0]));
-    setText('paymentStep2', formatRub(state.steps[1]));
-    setText('paymentStep3', formatRub(state.steps[2]));
-    setText('paymentAlertFull', formatRub(state.total));
-    setText('footerAmount', formatRub(state.finalPrice));
-    var heroDiscountEl = document.getElementById('heroDiscount');
-    if (heroDiscountEl) {
-      heroDiscountEl.innerHTML = 'Со скидкой 20%: <strong>' + formatRub(state.finalPrice) + '</strong>';
+    setPrice(document.getElementById('rowDrumsPrice'), state.drums, drumsDir ? { run: true, direction: drumsDir } : null);
+    setPrice(document.getElementById('rowBassPrice'), state.bass, bassDir ? { run: true, direction: bassDir } : null);
+    setPrice(document.getElementById('summaryTotal'), state.total, totalAnim);
+    setPrice(document.getElementById('heroTotal'), state.total, totalAnim);
+    setPrice(document.getElementById('paymentFull'), state.total, totalAnim);
+
+    var paymentDiscountEl = document.getElementById('paymentDiscount');
+    if (paymentDiscountEl) {
+      if (totalAnim) {
+        animateDiscountLine(paymentDiscountEl, state.discountAmount, { direction: totalDir });
+      } else {
+        paymentDiscountEl.textContent = 'Скидка 20% · − ' + formatRub(state.discountAmount);
+      }
     }
 
-    if (fromUser && prevTotal !== null) {
-      if (state.total > prevTotal) {
-        bumpTotals('up');
-        playBump(document.getElementById('paymentStep1'), 'up');
-        playBump(document.getElementById('paymentStep2'), 'up');
-        playBump(document.getElementById('paymentStep3'), 'up');
-      } else if (state.total < prevTotal) {
-        bumpTotals('down');
-        playBump(document.getElementById('paymentStep1'), 'down');
-        playBump(document.getElementById('paymentStep2'), 'down');
-        playBump(document.getElementById('paymentStep3'), 'down');
-      }
+    setPrice(document.getElementById('paymentFinal'), state.finalPrice, totalAnim);
+    setPrice(document.getElementById('paymentStep1'), state.steps[0], totalAnim);
+    setPrice(document.getElementById('paymentStep2'), state.steps[1], totalAnim);
+    setPrice(document.getElementById('paymentStep3'), state.steps[2], totalAnim);
+    setPrice(document.getElementById('paymentAlertFull'), state.total, totalAnim);
+    setPrice(document.getElementById('footerAmount'), state.finalPrice, totalAnim);
 
+    var heroDiscountEl = document.getElementById('heroDiscount');
+    if (heroDiscountEl) {
+      var heroStrong = heroDiscountEl.querySelector('strong');
+      if (heroStrong) {
+        setPrice(heroStrong, state.finalPrice, totalAnim);
+      } else {
+        heroDiscountEl.innerHTML = 'Со скидкой 20%: <strong>' + formatRub(state.finalPrice) + '</strong>';
+      }
+    }
+
+    if (shouldAnimate) {
       if (bassLive && !prevBassLive) {
         flashRow('rowBass');
-        playBump(document.getElementById('rowBassPrice'), 'up');
         playBump(bassToggle && bassToggle.querySelector('.variant-diff'), 'up');
       } else if (!bassLive && prevBassLive) {
-        playBump(document.getElementById('rowBassPrice'), 'down');
         playBump(bassToggle && bassToggle.querySelector('.variant-diff'), 'down');
       }
 
       if (drumsLive && !prevDrumsLive) {
         flashRow('rowDrums');
-        playBump(document.getElementById('rowDrumsPrice'), 'up');
         playBump(drumsToggle && drumsToggle.querySelector('.variant-diff'), 'up');
       } else if (!drumsLive && prevDrumsLive) {
-        playBump(document.getElementById('rowDrumsPrice'), 'down');
         playBump(drumsToggle && drumsToggle.querySelector('.variant-diff'), 'down');
       }
     }

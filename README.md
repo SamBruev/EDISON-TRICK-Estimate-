@@ -16,20 +16,10 @@ python3 -m http.server 8080
 
 ## Публикация на GitHub Pages
 
-1. Создайте новый репозиторий на [github.com/new](https://github.com/new) (например, `music-estimate`).
+Репозиторий: [SamBruev/EDISON-TRICK-Estimate-](https://github.com/SamBruev/EDISON-TRICK-Estimate-)
 
-2. Загрузите код:
+**Live:** https://sambruev.github.io/EDISON-TRICK-Estimate-/
 
-```bash
-cd /Users/sam_bruev/Documents/music-estimate
-git add .
-git commit -m "Add mobile estimate site"
-git branch -M main
-git remote add origin https://github.com/ВАШ_ЛОГИН/music-estimate.git
-git push -u origin main
-```
+Деплой — автоматически при push в `main` (GitHub Pages, branch `main` / root). Файл `.nojekyll` отключает Jekyll-сборку: отдаётся статический `index.html` как есть.
 
-3. В настройках репозитория: **Settings → Pages → Source → Deploy from branch → main / (root)**.
-
-4. Сайт будет доступен по адресу:
-   `https://ВАШ_ЛОГИН.github.io/music-estimate/`
+Если сайт не открывается: **Settings → Pages → Build and deployment → Source → Deploy from a branch → main / (root)**. Не включайте одновременно «GitHub Actions» и branch deploy — достаточно branch deploy.

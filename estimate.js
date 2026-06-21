@@ -80,6 +80,7 @@
     ].forEach(function (id) {
       playBump(document.getElementById(id), direction);
     });
+    playBump(document.querySelector('#heroDiscount strong'), direction);
   }
 
   function flashRow(rowId) {
@@ -159,15 +160,19 @@
       if (bassLive && !prevBassLive) {
         flashRow('rowBass');
         playBump(document.getElementById('rowBassPrice'), 'up');
+        playBump(bassToggle && bassToggle.querySelector('.variant-diff'), 'up');
       } else if (!bassLive && prevBassLive) {
         playBump(document.getElementById('rowBassPrice'), 'down');
+        playBump(bassToggle && bassToggle.querySelector('.variant-diff'), 'down');
       }
 
       if (drumsLive && !prevDrumsLive) {
         flashRow('rowDrums');
         playBump(document.getElementById('rowDrumsPrice'), 'up');
+        playBump(drumsToggle && drumsToggle.querySelector('.variant-diff'), 'up');
       } else if (!drumsLive && prevDrumsLive) {
         playBump(document.getElementById('rowDrumsPrice'), 'down');
+        playBump(drumsToggle && drumsToggle.querySelector('.variant-diff'), 'down');
       }
     }
 

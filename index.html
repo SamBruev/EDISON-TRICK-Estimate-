@@ -13,42 +13,48 @@
   <style>
     :root {
       --bg-black: #000000;
-      --text: #f3efe8;
-      --muted: #8c8480;
-      --label: #d8d0c6;
-      --accent: #c8c4bc;
-      --time: #f3efe8;
-      --gold: #9a9692;
-      --gold-soft: rgba(255, 255, 255, 0.1);
-      --accent-soft: rgba(255, 255, 255, 0.05);
-      --ui-violet-soft: rgba(255, 255, 255, 0.04);
-      --border: rgba(255, 255, 255, 0.07);
-      --border-strong: rgba(255, 255, 255, 0.13);
+      --gold: #b8b6b3;
+      --gold-soft: rgba(255, 255, 255, 0.18);
+      --cream: #faf6f0;
+      --text: #f5f0e8;
+      --muted: #a39888;
+      --label: #e8dfd4;
+      --accent: #e8c968;
+      --time: #f2d78c;
+      --focus: #f0d080;
+      --accent-soft: rgba(212, 175, 95, 0.14);
+      --ui-violet-soft: rgba(212, 175, 95, 0.14);
+      --border: rgba(255, 255, 255, 0.2);
+      --border-strong: rgba(255, 255, 255, 0.32);
       --hairline: rgba(255, 255, 255, 0.12);
-      --glass-bg: rgba(8, 8, 8, 0.78);
-      --glass-bg-elevated: rgba(6, 6, 6, 0.86);
-      --glass-bg-bar: rgba(8, 8, 8, 0.88);
-      --glass-bg-fallback: rgba(10, 10, 10, 0.96);
-      --glass-blur: blur(28px) saturate(110%);
-      --glass-blur-strong: blur(36px) saturate(114%);
-      --glass-highlight: rgba(255, 255, 255, 0.055);
+      --glass-bg: rgba(0, 0, 0, 0.88);
+      --glass-bg-elevated: rgba(0, 0, 0, 0.92);
+      --glass-bg-bar: rgba(8, 8, 8, 0.9);
+      --glass-bg-fallback: rgba(0, 0, 0, 0.96);
+      --glass-blur: blur(22px) saturate(118%);
+      --glass-blur-strong: blur(28px) saturate(120%);
+      --glass-highlight: rgba(255, 245, 218, 0.14);
       --glass-shine: linear-gradient(
-        155deg,
-        rgba(255, 255, 255, 0.045) 0%,
-        rgba(255, 255, 255, 0.012) 30%,
-        transparent 54%
+        180deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        rgba(255, 255, 255, 0) 36%
       );
       --glass-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.06),
-        0 18px 48px rgba(0, 0, 0, 0.4);
+        0 10px 28px rgba(0, 0, 0, 0.34),
+        inset 0 1px 0 rgba(255, 244, 220, 0.1),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.055);
       --panel: var(--glass-bg);
       --brand-serif: "Roboto Slab", Georgia, "Times New Roman", serif;
+      --logo-scale: 2;
       --top-logo-reveal: 1;
-      --top-logo-space: 40vh;
-      --radius: 12px;
-      --radius-sm: 8px;
+      --top-logo-space: 52vh;
+      --app-bg-glass-min: 0.34;
+      --app-bg-glass-scroll-gain: 0.58;
+      --app-bg-scroll-blur: 0;
+      --radius: 22px;
+      --radius-sm: 12px;
       --safe-bottom: env(safe-area-inset-bottom, 0px);
-      accent-color: var(--accent);
+      accent-color: var(--gold);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -59,6 +65,8 @@
       background: #000;
       color-scheme: dark;
       touch-action: manipulation;
+      overflow-x: hidden;
+      overflow-x: clip;
     }
 
     body {
@@ -66,15 +74,17 @@
       font-size: 15px;
       font-weight: 400;
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.55;
       letter-spacing: 0.015em;
       min-height: 100dvh;
+      min-height: -webkit-fill-available;
       padding-bottom: calc(84px + var(--safe-bottom));
       position: relative;
       background: transparent;
       -webkit-font-smoothing: antialiased;
-      accent-color: var(--accent);
+      accent-color: var(--gold);
       touch-action: manipulation;
+      overflow-x: hidden;
     }
 
     body::before {
@@ -86,14 +96,73 @@
       bottom: -48px;
       z-index: -1;
       pointer-events: none;
-      background-color: #020202;
+      background-color: #030304;
       background-image:
-        linear-gradient(180deg, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.42) 16%, rgba(0, 0, 0, 0.28) 28%, rgba(0, 0, 0, 0.36) 54%, rgba(0, 0, 0, 0.72) 74%, rgba(0, 0, 0, 0.96) 90%, #000 100%),
+        linear-gradient(
+          165deg,
+          rgba(255, 248, 235, 0.07) 0%,
+          rgba(255, 255, 255, 0.025) 24%,
+          transparent 52%
+        ),
+        linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.62) 0%,
+          rgba(0, 0, 0, 0.28) 14%,
+          rgba(0, 0, 0, 0.18) 26%,
+          rgba(0, 0, 0, 0.26) 52%,
+          rgba(0, 0, 0, 0.54) 72%,
+          rgba(0, 0, 0, 0.88) 88%,
+          #000000 100%
+        ),
         url("assets/top-lamp-bg.png");
-      background-size: cover, 64% auto;
-      background-position: center, center 86%;
+      background-size: cover, cover, 100% auto;
+      background-position: center, center, center center;
       background-repeat: no-repeat;
-      filter: blur(16px) brightness(0.4) saturate(0.92);
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      filter: blur(2.4px) brightness(0.62) saturate(1.22)
+        drop-shadow(0 -42px 72px rgba(255, 198, 120, 0.38))
+        drop-shadow(0 -95px 130px rgba(255, 160, 72, 0.14));
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      top: -48px;
+      left: -48px;
+      right: -48px;
+      bottom: -48px;
+      z-index: -1;
+      pointer-events: none;
+      background-color: #040406;
+      background-image:
+        linear-gradient(
+          165deg,
+          rgba(22, 20, 18, 0.52) 0%,
+          rgba(6, 6, 8, 0.34) 46%,
+          rgba(12, 11, 10, 0.44) 100%
+        ),
+        linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.68) 0%,
+          rgba(0, 0, 0, 0.38) 14%,
+          rgba(0, 0, 0, 0.32) 26%,
+          rgba(0, 0, 0, 0.4) 52%,
+          rgba(0, 0, 0, 0.64) 72%,
+          rgba(0, 0, 0, 0.9) 88%,
+          #000000 100%
+        ),
+        url("assets/top-lamp-bg.png");
+      background-size: cover, cover, 100% auto;
+      background-position: center, center, center center;
+      background-repeat: no-repeat;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      filter: blur(14px) brightness(0.54) saturate(1.28);
+      opacity: calc(
+        var(--app-bg-glass-min, 0.34) +
+        var(--app-bg-scroll-blur, 0) * var(--app-bg-glass-scroll-gain, 0.58)
+      );
     }
 
     .top-logo {
@@ -102,23 +171,28 @@
       left: 0;
       right: 0;
       z-index: 4;
-      width: min(520px, 100%);
+      width: min(980px, 100%);
       margin: 0 auto;
-      padding: env(safe-area-inset-top) max(16px, env(safe-area-inset-left)) 0;
+      padding: calc(env(safe-area-inset-top) + 4px) max(14px, env(safe-area-inset-left), env(safe-area-inset-right)) 0;
       min-height: calc(var(--top-logo-space) + env(safe-area-inset-top));
       display: flex;
-      align-items: flex-start;
-      justify-content: center;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
       pointer-events: none;
+      box-sizing: border-box;
     }
 
     .top-logo-brand {
       position: relative;
       display: flex;
-      align-items: flex-start;
+      flex: 1 1 auto;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
       width: 100%;
-      margin-top: -6px;
+      min-height: 0;
+      isolation: isolate;
       transform:
         translate3d(0, calc((1 - var(--top-logo-reveal, 1)) * 14px), 0)
         scale(calc(0.972 + 0.028 * var(--top-logo-reveal, 1)));
@@ -131,22 +205,31 @@
       position: absolute;
       left: 50%;
       top: 50%;
-      width: min(340px, 68vw);
-      height: min(340px, 68vw);
-      transform: translate(-50%, calc(-50% + 96px));
-      background: url("assets/top-lamp-bg.png") center / contain no-repeat;
-      opacity: calc(0.06 * (0.45 + 0.55 * var(--top-logo-reveal, 1)));
-      filter: blur(22px) brightness(0.38);
+      width: min(540px, 90vw);
+      height: min(540px, 90vw);
+      transform: translate3d(-50%, calc(-50% + 96px), 0);
+      will-change: opacity;
+      background: url("assets/top-lamp-bg.png") center center / contain no-repeat;
+      opacity: calc(0.14 * (0.42 + 0.58 * var(--top-logo-reveal, 1)));
+      filter: blur(11px) saturate(1.05) brightness(0.6)
+        drop-shadow(0 18px 42px rgba(255, 195, 110, 0.38))
+        drop-shadow(0 36px 72px rgba(255, 165, 70, 0.14));
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 40%, #000 66%, #000 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, transparent 40%, #000 66%, #000 100%);
       pointer-events: none;
+      z-index: 1;
     }
 
     .logo-bg {
       position: relative;
-      z-index: 1;
-      width: min(720px, 100vw);
-      height: min(340px, 52vw);
+      z-index: 3;
+      width: 645px;
+      max-width: min(95vw, 780px);
+      height: 252px;
       margin: 0 auto;
       background: transparent;
+      transform: scale(var(--logo-scale, 2));
+      transform-origin: center top;
     }
 
     .logo-bg::before,
@@ -154,21 +237,21 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: url("assets/top-logo.png") center top / contain no-repeat;
+      background: url("assets/top-logo.png") center center / contain no-repeat;
       pointer-events: none;
       transform: translateZ(0);
       will-change: opacity;
     }
 
     .logo-bg::before {
-      filter: brightness(0.68) contrast(0.96) saturate(0.82);
-      opacity: calc(0.92 * var(--top-logo-reveal, 1));
+      filter: brightness(0.78) contrast(0.9) saturate(0.92);
+      opacity: calc(0.78 * var(--top-logo-reveal, 1));
       z-index: 1;
     }
 
     .logo-bg::after {
-      filter: blur(10px) brightness(0.58) contrast(0.92) saturate(0.88);
-      opacity: calc(0.92 * (1 - var(--top-logo-reveal, 1)));
+      filter: blur(11px) brightness(0.66) contrast(0.88) saturate(1.12);
+      opacity: calc(0.78 * (1 - var(--top-logo-reveal, 1)));
       z-index: 2;
     }
 
@@ -243,10 +326,11 @@
       position: absolute;
       inset: 0;
       border-radius: inherit;
+      border: 1px solid rgba(255, 245, 218, 0.14);
       background: var(--glass-shine);
       pointer-events: none;
       z-index: 0;
-      opacity: 0.65;
+      opacity: 1;
     }
 
     .stat > * { position: relative; z-index: 1; }
@@ -290,8 +374,8 @@
     }
 
     .stat-discount strong {
-      color: var(--label);
-      font-weight: 600;
+      color: var(--time);
+      font-weight: 700;
     }
 
     .stat-value.accent { color: var(--time); }
@@ -511,10 +595,11 @@
       position: absolute;
       inset: 0;
       border-radius: inherit;
+      border: 1px solid rgba(255, 245, 218, 0.14);
       background: var(--glass-shine);
       pointer-events: none;
       z-index: 0;
-      opacity: 0.7;
+      opacity: 1;
     }
 
     .card > * { position: relative; z-index: 1; }
@@ -555,7 +640,7 @@
     .row.total .row-price {
       font-size: 19px;
       font-weight: 700;
-      color: var(--text);
+      color: var(--time);
       letter-spacing: 0.02em;
     }
 
@@ -633,12 +718,21 @@
         scroll-behavior: auto;
       }
 
+      body::before,
+      body::after {
+        animation: none;
+      }
+
       .top-logo-brand {
         transform: none;
       }
 
       .logo-bg::after {
-        opacity: 0;
+        display: none;
+      }
+
+      .logo-bg::before {
+        opacity: calc(0.78 * var(--top-logo-reveal, 1));
       }
 
       .price-bump-up,
@@ -649,31 +743,38 @@
     }
 
     .row.row-live-flash {
-      animation: rowLiveFlash 0.65s ease-out;
+      animation: rowLiveFlash 0.85s ease-out;
     }
 
     @keyframes rowLiveFlash {
-      0% { background: rgba(255, 255, 255, 0.08); }
+      0% { background: rgba(255, 255, 255, 0.14); }
+      55% { background: rgba(255, 255, 255, 0.05); }
       100% { background: transparent; }
     }
 
     .price-bump-up {
-      animation: priceBumpUp 1.15s ease-out;
+      animation: priceBumpUp 1.35s ease-out;
     }
 
     .price-bump-down {
-      animation: priceBumpDown 1s ease-out;
+      animation: priceBumpDown 1.1s ease-out;
     }
 
     @keyframes priceBumpUp {
-      0%, 100% { transform: scale(1); }
-      40% { transform: scale(1.012); }
-      70% { transform: scale(1.015); }
+      0%, 100% { transform: scale(1); color: inherit; }
+      35% { transform: scale(1.028); color: var(--label); }
+      65% { transform: scale(1.034); color: var(--text); }
     }
 
     @keyframes priceBumpDown {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      45% { transform: scale(0.992); opacity: 0.92; }
+      0%, 100% { transform: scale(1); opacity: 1; color: inherit; }
+      40% { transform: scale(0.984); opacity: 0.86; color: var(--muted); }
+      70% { transform: scale(0.992); opacity: 0.94; }
+    }
+
+    .variant-diff.price-bump-up,
+    .variant-diff.price-bump-down {
+      transform-origin: center right;
     }
 
     .stat-value.large,
@@ -681,7 +782,9 @@
     .payment-banner .final-price,
     .payment-hero-price,
     .payment-step-amount,
-    .footer-bar .amount {
+    .footer-bar .amount,
+    .stat-discount strong,
+    .variant-diff {
       display: inline-block;
       transform-origin: center center;
     }
@@ -1183,7 +1286,7 @@
       font-size: 2.35rem;
       font-weight: 700;
       line-height: 1;
-      color: var(--text);
+      color: var(--time);
       font-variant-numeric: tabular-nums;
       letter-spacing: 0.02em;
       margin-bottom: 8px;
@@ -1557,7 +1660,7 @@
     .footer-bar .amount {
       font-size: 1.15rem;
       font-weight: 700;
-      color: var(--text);
+      color: var(--time);
       font-variant-numeric: tabular-nums;
       letter-spacing: 0.02em;
     }

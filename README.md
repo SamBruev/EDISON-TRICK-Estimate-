@@ -20,10 +20,8 @@ python3 -m http.server 8080
 
 **Live:** https://sambruev.github.io/EDISON-TRICK-Estimate-/
 
-Деплой — автоматически при push в `main`.
+Деплой — автоматически при push в `main` (GitHub Pages, branch `main` / root). Файл `.nojekyll` отключает Jekyll-обработку.
 
 **Live:** https://sambruev.github.io/EDISON-TRICK-Estimate-/
 
-В **Settings → Pages → Build and deployment → Source** выберите **GitHub Actions** (рекомендуется, workflow `.github/workflows/pages.yml`). Если выбран «Deploy from a branch», Jekyll тоже будет собирать сайт — тогда держите только branch deploy и удалите workflow.
-
-Файл `.nojekyll` отключает Jekyll-обработку HTML.
+Если 404: **Settings → Pages → Build and deployment → Source → Deploy from a branch → main / (root)**.

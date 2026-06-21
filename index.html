@@ -3,26 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#000000">
   <meta name="description" content="EDISON TRICK — смета на производство 3 треков. Sam Bruev.">
   <title>EDISON TRICK · Смета</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto+Slab:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #000000;
-      --surface: rgba(12, 12, 12, 0.95);
-      --surface-2: rgba(18, 18, 18, 0.98);
-      --border: rgba(255, 182, 0, 0.12);
-      --text: #f5f5f7;
-      --muted: #9a9aaa;
-      --accent: #ffb600;
-      --accent-soft: rgba(255, 182, 0, 0.14);
-      --green: #4ade80;
-      --green-soft: rgba(74, 222, 128, 0.12);
-      --amber: #ffb600;
-      --amber-soft: rgba(255, 182, 0, 0.12);
-      --red: #f87171;
-      --radius: 14px;
+      --bg-black: #000000;
+      --text: #f5f0e8;
+      --muted: #a39888;
+      --label: #e8dfd4;
+      --accent: #e8c968;
+      --time: #f2d78c;
+      --gold: #b8b6b3;
+      --gold-soft: rgba(255, 255, 255, 0.18);
+      --accent-soft: rgba(212, 175, 95, 0.14);
+      --ui-violet-soft: rgba(212, 175, 95, 0.14);
+      --border: rgba(255, 255, 255, 0.12);
+      --border-strong: rgba(255, 255, 255, 0.22);
+      --panel: #000000;
+      --script-font: "Pacifico", cursive;
+      --brand-serif: "Roboto Slab", Georgia, "Times New Roman", serif;
+      --top-logo-space: 26vh;
+      --radius: 22px;
       --safe-bottom: env(safe-area-inset-bottom, 0px);
+      accent-color: var(--gold);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,102 +38,120 @@
     html {
       scroll-behavior: smooth;
       -webkit-text-size-adjust: 100%;
-      background: #000000;
+      background: #000;
+      color-scheme: dark;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg);
+      font-family: var(--brand-serif);
       color: var(--text);
-      line-height: 1.5;
+      line-height: 1.55;
       min-height: 100dvh;
       padding-bottom: calc(80px + var(--safe-bottom));
       position: relative;
+      background: transparent;
+      -webkit-font-smoothing: antialiased;
+      accent-color: var(--gold);
     }
 
     body::before {
       content: "";
       position: fixed;
-      inset: 0;
-      background: url("assets/symbol.png") center 38% / min(85vw, 420px) no-repeat;
-      opacity: 0.08;
+      top: -48px;
+      left: -48px;
+      right: -48px;
+      bottom: -48px;
+      z-index: -1;
       pointer-events: none;
-      z-index: 0;
+      background-color: #030304;
+      background-image:
+        linear-gradient(165deg, rgba(255, 248, 235, 0.07) 0%, rgba(255, 255, 255, 0.025) 24%, transparent 52%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.28) 14%, rgba(0, 0, 0, 0.18) 26%, rgba(0, 0, 0, 0.26) 52%, rgba(0, 0, 0, 0.54) 72%, rgba(0, 0, 0, 0.88) 88%, #000 100%),
+        url("assets/top-lamp-bg.png");
+      background-size: cover, cover, 100% auto;
+      background-position: center, center, center 82%;
+      background-repeat: no-repeat;
+      filter: blur(2.4px) brightness(0.62) saturate(1.22)
+        drop-shadow(0 -42px 72px rgba(255, 198, 120, 0.38))
+        drop-shadow(0 -95px 130px rgba(255, 160, 72, 0.14));
     }
 
-    body > * {
+    .top-logo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 4;
+      width: min(520px, 100%);
+      margin: 0 auto;
+      padding: calc(env(safe-area-inset-top) + 4px) max(16px, env(safe-area-inset-left)) 0;
+      min-height: calc(var(--top-logo-space) + env(safe-area-inset-top));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .top-logo-brand {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .top-logo-brand::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(420px, 88vw);
+      height: min(420px, 88vw);
+      transform: translate(-50%, calc(-50% + 120px));
+      background: url("assets/top-lamp-bg.png") center / contain no-repeat;
+      opacity: 0.12;
+      filter: blur(11px) brightness(0.6) drop-shadow(0 18px 42px rgba(255, 195, 110, 0.38));
+      pointer-events: none;
+    }
+
+    .logo-bg {
       position: relative;
       z-index: 1;
-    }
-
-    .hero {
-      background: #000000;
-      padding: max(20px, env(safe-area-inset-top)) 20px 28px;
-      border-bottom: 1px solid var(--border);
-      text-align: center;
-    }
-
-    .hero-symbol {
-      width: min(120px, 32vw);
-      height: auto;
-      margin: 0 auto 12px;
-      display: block;
-      filter: drop-shadow(0 4px 24px rgba(255, 182, 0, 0.22));
-    }
-
-    .hero-descript {
-      width: min(520px, 92vw);
-      height: auto;
+      width: min(520px, 94vw);
+      height: min(200px, 34vw);
       margin: 0 auto;
-      display: block;
+      background: url("assets/top-logo.png") center / contain no-repeat;
+      filter: brightness(0.78) contrast(0.9) saturate(0.92);
     }
 
-    .hero-descript.sam {
-      margin-bottom: 8px;
+    .wrap {
+      position: relative;
+      z-index: 12;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: calc(env(safe-area-inset-top) + var(--top-logo-space)) 16px 0;
     }
 
-    .hero-descript.mixing {
-      margin-bottom: 18px;
-    }
-
-    .hero-logo {
-      width: min(340px, 94vw);
-      height: auto;
-      margin: 0 auto 14px;
-      display: block;
-      border-radius: 12px;
-      filter: drop-shadow(0 6px 28px rgba(255, 182, 0, 0.18));
-    }
-
-    .hero-logo-wrap {
-      margin: 0 -4px 4px;
-    }
-
-    .hero-artist {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 4px;
-    }
-
-    .hero-artist strong {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .hero-label {
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .hero h1 {
-      font-size: 1.55rem;
-      font-weight: 700;
-      line-height: 1.25;
+    .page-head {
+      text-align: center;
       margin-bottom: 16px;
+    }
+
+    .page-head .hero-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--time);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .page-head h1 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 14px;
+      letter-spacing: 0.01em;
     }
 
     .hero-stats {
@@ -135,10 +161,13 @@
     }
 
     .stat {
-      background: var(--surface);
+      background: var(--panel);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 12px 14px;
+      box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.34),
+        inset 0 1px 0 rgba(255, 244, 220, 0.08);
     }
 
     .stat.full { grid-column: 1 / -1; }
@@ -147,18 +176,18 @@
       font-size: 11px;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       margin-bottom: 4px;
     }
 
     .stat-value {
       font-size: 1.05rem;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .stat-value.large {
       font-size: 1.35rem;
-      color: var(--green);
+      color: var(--time);
     }
 
     .stat-value.accent { color: var(--accent); }
@@ -166,14 +195,17 @@
     nav {
       position: sticky;
       top: 0;
-      z-index: 10;
-      background: rgba(0, 0, 0, 0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      z-index: 20;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(14px) saturate(118%);
+      -webkit-backdrop-filter: blur(14px) saturate(118%);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin-bottom: 20px;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.34);
     }
 
     nav::-webkit-scrollbar { display: none; }
@@ -201,14 +233,12 @@
     nav a:hover,
     nav a:focus {
       color: var(--text);
-      background: var(--surface);
-      border-color: var(--border);
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--border-strong);
     }
 
     main {
-      max-width: 520px;
-      margin: 0 auto;
-      padding: 20px 16px 0;
+      padding: 0 0 20px;
     }
 
     section {
@@ -236,10 +266,15 @@
     }
 
     .card {
-      background: var(--surface);
+      background: var(--panel);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
+      box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.34),
+        inset 0 1px 0 rgba(255, 244, 220, 0.1),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.055),
+        0 0 36px -12px var(--ui-violet-soft);
     }
 
     .card + .card { margin-top: 10px; }
@@ -256,8 +291,8 @@
     .row:last-child { border-bottom: none; }
 
     .row.total {
-      background: var(--surface-2);
-      font-weight: 600;
+      background: rgba(255, 255, 255, 0.03);
+      font-weight: 700;
     }
 
     .row-num {
@@ -335,7 +370,7 @@
       color: var(--muted);
       line-height: 1.45;
       border-top: 1px solid var(--border);
-      background: rgba(255, 182, 0, 0.04);
+      background: rgba(212, 175, 95, 0.05);
     }
 
     /* ── Calendar ── */
@@ -365,12 +400,12 @@
       transition: background 0.15s, color 0.15s, border-color 0.15s;
     }
 
-    .cal-tab.has-events { border-color: rgba(255, 182, 0, 0.25); }
+    .cal-tab.has-events { border-color: rgba(212, 175, 95, 0.35); }
 
     .cal-tab.active {
       background: var(--accent-soft);
-      border-color: rgba(255, 182, 0, 0.45);
-      color: var(--accent);
+      border-color: rgba(212, 175, 95, 0.45);
+      color: var(--time);
     }
 
     .cal-header {
@@ -386,7 +421,7 @@
       height: 40px;
       border-radius: 12px;
       border: 1px solid var(--border);
-      background: var(--surface-2);
+      background: rgba(255, 255, 255, 0.04);
       color: var(--text);
       font-size: 22px;
       line-height: 1;
@@ -475,14 +510,14 @@
     .cal-day.has-event:active { transform: scale(0.94); }
 
     .cal-day.selected {
-      border-color: var(--accent);
+      border-color: rgba(212, 175, 95, 0.55);
       background: var(--accent-soft);
-      box-shadow: 0 0 0 1px rgba(255, 182, 0, 0.2);
+      box-shadow: 0 0 0 1px rgba(212, 175, 95, 0.22);
     }
 
     .cal-day.deadline {
-      background: var(--green-soft);
-      border-color: rgba(74, 222, 128, 0.35);
+      background: var(--accent-soft);
+      border-color: rgba(212, 175, 95, 0.45);
     }
 
     .cal-day-num { line-height: 1; }
@@ -544,7 +579,7 @@
       border-top: 1px solid var(--border);
       padding: 14px 16px;
       min-height: 72px;
-      background: var(--surface-2);
+      background: rgba(255, 255, 255, 0.04);
     }
 
     .cal-detail-placeholder {
@@ -623,7 +658,7 @@
       align-items: center;
       gap: 12px;
       padding: 12px 16px;
-      background: var(--surface);
+      background: var(--panel);
       border: 1px solid var(--border);
       border-radius: var(--radius);
     }
@@ -640,8 +675,8 @@
     }
 
     .payment-banner {
-      background: linear-gradient(135deg, rgba(255, 182, 0, 0.18), rgba(74, 222, 128, 0.08));
-      border: 1px solid rgba(255, 182, 0, 0.3);
+      background: linear-gradient(135deg, rgba(212, 175, 95, 0.16), rgba(255, 255, 255, 0.04));
+      border: 1px solid rgba(212, 175, 95, 0.32);
       border-radius: var(--radius);
       padding: 18px 16px;
       margin-bottom: 12px;
@@ -656,8 +691,8 @@
 
     .payment-banner .discount {
       display: inline-block;
-      background: var(--green-soft);
-      color: var(--green);
+      background: var(--accent-soft);
+      color: var(--time);
       font-size: 12px;
       font-weight: 600;
       padding: 3px 10px;
@@ -668,7 +703,7 @@
     .payment-banner .final-price {
       font-size: 2rem;
       font-weight: 700;
-      color: var(--green);
+      color: var(--time);
       line-height: 1.1;
     }
 
@@ -730,9 +765,9 @@
     }
 
     .alert-warning {
-      background: var(--amber-soft);
-      border: 1px solid rgba(251, 191, 36, 0.25);
-      color: #fde68a;
+      background: rgba(212, 175, 95, 0.1);
+      border: 1px solid rgba(212, 175, 95, 0.28);
+      color: var(--time);
     }
 
     .alert-icon { flex-shrink: 0; font-size: 16px; }
@@ -749,7 +784,7 @@
       font-size: 13px;
       line-height: 1.5;
       padding: 12px 14px;
-      background: var(--surface);
+      background: var(--panel);
       border: 1px solid var(--border);
       border-radius: var(--radius);
     }
@@ -790,7 +825,7 @@
 
     .deliverables li::before {
       content: "✓";
-      color: var(--green);
+      color: var(--time);
       font-weight: 700;
       flex-shrink: 0;
     }
@@ -816,7 +851,7 @@
     }
 
     .sig-block {
-      background: var(--surface);
+      background: var(--panel);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 16px 12px;
@@ -847,9 +882,9 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(0, 0, 0, 0.95);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(14px) saturate(118%);
+      -webkit-backdrop-filter: blur(14px) saturate(118%);
       border-top: 1px solid var(--border);
       padding: 12px 16px calc(12px + var(--safe-bottom));
       display: flex;
@@ -868,7 +903,7 @@
     .footer-bar .amount {
       font-size: 1.2rem;
       font-weight: 700;
-      color: var(--green);
+      color: var(--time);
     }
 
     .footer-bar .deadline {
@@ -880,13 +915,17 @@
 </head>
 <body>
 
-  <header class="hero">
-    <img class="hero-symbol" src="assets/symbol.png" alt="">
-    <img class="hero-descript sam" src="assets/descript_sam_bruev.png" alt="Sam Bruev">
-    <img class="hero-descript mixing" src="assets/descript_mixing.png" alt="Mixing & Recording">
-    <div class="hero-label">3 трека · музыкальный продукт</div>
-    <h1>Смета на производство</h1>
-    <div class="hero-stats">
+  <div class="top-logo" id="top-logo-block">
+    <div class="top-logo-brand">
+      <div class="logo-bg" role="img" aria-label="Sam Bruev · Mixing and Recording"></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <header class="page-head">
+      <div class="hero-label">3 трека · музыкальный продукт</div>
+      <h1>Смета на производство</h1>
+      <div class="hero-stats">
       <div class="stat">
         <div class="stat-label">Ставка</div>
         <div class="stat-value">3 000 ₽ / ч</div>
@@ -899,10 +938,10 @@
         <div class="stat-label">Общая стоимость</div>
         <div class="stat-value large" id="heroTotal">325 000 ₽</div>
       </div>
-    </div>
-  </header>
+      </div>
+    </header>
 
-  <nav aria-label="Разделы">
+    <nav aria-label="Разделы">
     <ul>
       <li><a href="#variants">Варианты</a></li>
       <li><a href="#summary">Смета</a></li>
@@ -1082,7 +1121,7 @@
         </div>
         <div class="date-chip">
           <span class="date-chip-label">Сдача материала</span>
-          <span class="date-chip-value" style="color: var(--green);">1 октября 2026</span>
+          <span class="date-chip-value" style="color: var(--time);">1 октября 2026</span>
         </div>
       </div>
     </section>
@@ -1186,6 +1225,8 @@
     </section>
 
   </main>
+
+  </div>
 
   <div class="footer-bar">
     <div>

@@ -7,7 +7,7 @@
     vocals:    { label: 'Вокал', color: '#f472b6' },
     mixing:    { label: 'Сведение', color: '#ffb600' },
     mixfix:    { label: 'Доработки', color: '#d97706' },
-    deadline:  { label: 'Сдача', color: '#4ade80' },
+    deadline:  { label: 'Сдача', color: '#f2d78c' },
   };
 
   const EVENTS = {

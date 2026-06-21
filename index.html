@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#000000">
-  <meta name="description" content="EDISON TRICK — смета на производство 3 треков. Sam Bruev.">
+  <meta name="description" content="EDISON TRICK — смета на производство 3 песен. Sam Bruev.">
   <title>EDISON TRICK · Смета</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto+Slab:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-black: #000000;
@@ -25,22 +25,26 @@
       --border: rgba(255, 255, 255, 0.07);
       --border-strong: rgba(255, 255, 255, 0.13);
       --hairline: rgba(196, 169, 98, 0.28);
-      --glass-bg: rgba(12, 11, 10, 0.76);
-      --glass-bg-elevated: rgba(16, 15, 14, 0.84);
-      --glass-bg-bar: rgba(8, 8, 8, 0.92);
+      --glass-bg: rgba(12, 11, 10, 0.74);
+      --glass-bg-elevated: rgba(16, 15, 14, 0.82);
+      --glass-bg-bar: rgba(8, 8, 8, 0.88);
       --glass-bg-fallback: rgba(10, 10, 10, 0.96);
-      --glass-blur: blur(28px) saturate(108%);
-      --glass-blur-strong: blur(36px) saturate(112%);
-      --glass-highlight: rgba(255, 255, 255, 0.05);
+      --glass-blur: blur(28px) saturate(110%);
+      --glass-blur-strong: blur(36px) saturate(114%);
+      --glass-highlight: rgba(255, 255, 255, 0.055);
+      --glass-shine: linear-gradient(
+        155deg,
+        rgba(255, 255, 255, 0.045) 0%,
+        rgba(255, 255, 255, 0.012) 30%,
+        transparent 54%
+      );
       --glass-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.05),
-        0 18px 48px rgba(0, 0, 0, 0.42);
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 18px 48px rgba(0, 0, 0, 0.4);
       --panel: var(--glass-bg);
       --brand-serif: "Roboto Slab", Georgia, "Times New Roman", serif;
-      --script-font: "Pacifico", cursive;
-      --name-gold: #d4c4a0;
       --top-logo-reveal: 1;
-      --top-logo-space: 46vh;
+      --top-logo-space: 40vh;
       --radius: 12px;
       --radius-sm: 8px;
       --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -102,10 +106,10 @@
       z-index: 4;
       width: min(520px, 100%);
       margin: 0 auto;
-      padding: calc(env(safe-area-inset-top) + 4px) max(16px, env(safe-area-inset-left)) 0;
+      padding: env(safe-area-inset-top) max(16px, env(safe-area-inset-left)) 0;
       min-height: calc(var(--top-logo-space) + env(safe-area-inset-top));
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       pointer-events: none;
     }
@@ -113,9 +117,10 @@
     .top-logo-brand {
       position: relative;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       width: 100%;
+      margin-top: -6px;
       transform:
         translate3d(0, calc((1 - var(--top-logo-reveal, 1)) * 14px), 0)
         scale(calc(0.972 + 0.028 * var(--top-logo-reveal, 1)));
@@ -130,7 +135,7 @@
       top: 50%;
       width: min(480px, 92vw);
       height: min(480px, 92vw);
-      transform: translate(-50%, calc(-50% + 140px));
+      transform: translate(-50%, calc(-50% + 96px));
       background: url("assets/top-lamp-bg.png") center / contain no-repeat;
       opacity: calc(0.07 * (0.45 + 0.55 * var(--top-logo-reveal, 1)));
       filter: blur(12px) brightness(0.5) drop-shadow(0 12px 28px rgba(255, 195, 110, 0.12));
@@ -141,7 +146,7 @@
       position: relative;
       z-index: 1;
       width: min(720px, 100vw);
-      height: min(420px, 62vw);
+      height: min(340px, 52vw);
       margin: 0 auto;
       background: transparent;
     }
@@ -151,7 +156,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: url("assets/top-logo.png") center / contain no-repeat;
+      background: url("assets/top-logo.png") center top / contain no-repeat;
       pointer-events: none;
       transform: translateZ(0);
       will-change: opacity;
@@ -211,16 +216,6 @@
       text-transform: uppercase;
     }
 
-    .script-name {
-      font-family: var(--script-font);
-      font-weight: 400;
-      font-synthesis: none;
-      letter-spacing: 0.02em;
-      line-height: 1.15;
-      color: var(--name-gold);
-      -webkit-font-smoothing: antialiased;
-    }
-
     .hero-performer {
       font-size: clamp(1.45rem, 5vw, 1.85rem);
       margin: 0 0 18px;
@@ -234,14 +229,29 @@
     }
 
     .stat {
+      position: relative;
+      isolation: isolate;
       background: var(--glass-bg);
       backdrop-filter: var(--glass-blur);
       -webkit-backdrop-filter: var(--glass-blur);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
       padding: 13px 14px;
-      box-shadow: none;
+      box-shadow: var(--glass-shadow);
     }
+
+    .stat::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: var(--glass-shine);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.65;
+    }
+
+    .stat > * { position: relative; z-index: 1; }
 
     .stat.full {
       grid-column: 1 / -1;
@@ -276,29 +286,40 @@
 
     .icon-lamp {
       display: inline-block;
-      width: 1.05em;
-      height: 1.05em;
+      width: 12px;
+      height: 17px;
       flex-shrink: 0;
-      background: url("assets/lamp-icon.svg") center / contain no-repeat;
-      vertical-align: -0.12em;
-    }
-
-    .icon-lamp--sm {
-      width: 14px;
-      height: 14px;
-      vertical-align: -2px;
-    }
-
-    .icon-lamp--md {
-      width: 18px;
-      height: 18px;
+      background: url("assets/symbol.png") center / contain no-repeat;
       vertical-align: -3px;
     }
 
-    .deadline-badge .icon-lamp {
-      width: 16px;
+    .icon-lamp--sm {
+      width: 11px;
       height: 16px;
-      vertical-align: 0;
+      vertical-align: -3px;
+    }
+
+    .icon-lamp--xs {
+      width: 9px;
+      height: 13px;
+      vertical-align: -2px;
+      opacity: 0.95;
+    }
+
+    .stat-value .icon-lamp--xs {
+      margin-right: 2px;
+    }
+
+    .icon-lamp--md {
+      width: 14px;
+      height: 20px;
+      vertical-align: -4px;
+    }
+
+    .deadline-badge .icon-lamp {
+      width: 13px;
+      height: 18px;
+      vertical-align: -2px;
       filter: drop-shadow(0 0 6px rgba(196, 169, 98, 0.35));
     }
 
@@ -316,7 +337,6 @@
       gap: 8px;
       padding: 18px 16px;
       text-align: center;
-      background: linear-gradient(180deg, rgba(196, 169, 98, 0.06), transparent);
     }
 
     .date-chip--deadline .date-chip-value {
@@ -343,10 +363,10 @@
     }
 
     .cal-legend-lamp {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 14px;
       flex-shrink: 0;
-      background: url("assets/lamp-icon.svg") center / contain no-repeat;
+      background: url("assets/symbol.png") center / contain no-repeat;
       opacity: 0.92;
     }
 
@@ -475,6 +495,8 @@
     }
 
     .card {
+      position: relative;
+      isolation: isolate;
       background: var(--glass-bg);
       backdrop-filter: var(--glass-blur);
       -webkit-backdrop-filter: var(--glass-blur);
@@ -483,6 +505,19 @@
       overflow: hidden;
       box-shadow: var(--glass-shadow);
     }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: var(--glass-shine);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.7;
+    }
+
+    .card > * { position: relative; z-index: 1; }
 
     .card + .card { margin-top: 8px; }
 
@@ -571,72 +606,74 @@
     }
 
     .variant-toggle--bass.is-live {
-      animation: variantBassGlow 2.2s ease-in-out infinite;
+      animation: variantBassGlow 2.4s ease-out infinite;
     }
 
     .variant-toggle--drums.is-live {
-      animation: variantDrumsGlow 1.05s ease-in-out infinite;
+      animation: variantDrumsGlow 1.8s ease-out infinite;
     }
 
     @keyframes variantBassGlow {
-      0%, 100% { box-shadow: inset 2px 0 0 rgba(196, 169, 98, 0.28); }
-      50% { box-shadow: inset 2px 0 0 rgba(217, 200, 150, 0.62); }
+      0%, 44%, 56%, 100% {
+        box-shadow: inset 2px 0 0 rgba(196, 169, 98, 0.22);
+      }
+      6%, 50% {
+        box-shadow: inset 2px 0 0 rgba(217, 200, 150, 0.44);
+      }
     }
 
     @keyframes variantDrumsGlow {
-      0%, 100% { box-shadow: inset 2px 0 0 rgba(196, 169, 98, 0.3); }
-      22% { box-shadow: inset 2px 0 0 rgba(217, 200, 150, 0.75); }
-      44% { box-shadow: inset 2px 0 0 rgba(196, 169, 98, 0.35); }
-      66% { box-shadow: inset 2px 0 0 rgba(217, 200, 150, 0.7); }
+      0%, 100%, 22%, 28%, 47%, 53%, 72%, 78% {
+        box-shadow: inset 2px 0 0 rgba(196, 169, 98, 0.24);
+      }
+      4%, 54% {
+        box-shadow: inset 2px 0 0 rgba(217, 200, 150, 0.46);
+      }
+      25%, 75% {
+        box-shadow: inset 2px 0 0 rgba(217, 200, 150, 0.32);
+      }
     }
 
     .variant-toggle.is-live .variant-title::after {
       content: "";
       display: inline-block;
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
       margin-left: 8px;
       border-radius: 50%;
       background: var(--time);
       vertical-align: 0.1em;
-      box-shadow: 0 0 8px rgba(217, 200, 150, 0.45);
+      box-shadow: 0 0 6px rgba(217, 200, 150, 0.32);
     }
 
     .variant-toggle--bass.is-live .variant-title::after {
-      animation: liveDotSoft 1.9s ease-in-out infinite;
+      animation: liveDotBass 2.4s ease-out infinite;
     }
 
     .variant-toggle--drums.is-live .variant-title::after {
-      animation: liveDotDrums 0.9s ease-in-out infinite;
+      animation: liveDotDrums 1.8s ease-out infinite;
     }
 
-    @keyframes liveDotSoft {
-      0%, 100% { opacity: 0.35; transform: scale(0.88); }
-      50% { opacity: 1; transform: scale(1.12); }
+    @keyframes liveDotBass {
+      0%, 44%, 56%, 100% { opacity: 0.4; transform: scale(0.94); }
+      6%, 50% { opacity: 0.9; transform: scale(1.04); }
     }
 
     @keyframes liveDotDrums {
-      0%, 100% { opacity: 0.45; transform: scale(0.9); }
-      25% { opacity: 1; transform: scale(1.18); }
-      50% { opacity: 0.4; transform: scale(0.92); }
-      75% { opacity: 0.95; transform: scale(1.1); }
+      0%, 100%, 22%, 28%, 47%, 53%, 72%, 78% { opacity: 0.42; transform: scale(0.94); }
+      4%, 54% { opacity: 0.92; transform: scale(1.05); }
+      25%, 75% { opacity: 0.62; transform: scale(0.98); }
     }
 
     .variant-toggle.is-live .variant-diff {
       color: var(--time);
-      animation: variantDiffPulse 1.6s ease-in-out infinite;
-    }
-
-    @keyframes variantDiffPulse {
-      0%, 100% { opacity: 0.72; }
-      50% { opacity: 1; }
+      opacity: 0.88;
     }
 
     @media (prefers-reduced-motion: reduce) {
       .variant-toggle--bass.is-live,
       .variant-toggle--drums.is-live,
       .variant-toggle.is-live .variant-title::after,
-      .variant-toggle.is-live .variant-diff,
       .variant-check-wrap::before {
         animation: none;
       }
@@ -719,11 +756,11 @@
       border: 1px solid var(--border-strong);
       background: rgba(255, 255, 255, 0.04);
       box-sizing: border-box;
-      animation: variantCheckInvite 2.2s ease-in-out infinite;
+      animation: variantCheckInvite 2.8s ease-out infinite;
     }
 
     .variant-toggle--drums:not(.is-live) .variant-check-wrap::before {
-      animation: variantCheckInviteDrums 1.25s ease-in-out infinite;
+      animation: variantCheckInviteDrums 1.8s ease-out infinite;
     }
 
     .variant-toggle.is-live .variant-check-wrap::before {
@@ -748,32 +785,28 @@
     }
 
     @keyframes variantCheckInvite {
-      0%, 100% {
+      0%, 72%, 100% {
         border-color: rgba(255, 255, 255, 0.14);
         box-shadow: 0 0 0 0 rgba(217, 200, 150, 0);
       }
-      50% {
-        border-color: rgba(217, 200, 150, 0.78);
-        box-shadow: 0 0 0 3px rgba(196, 169, 98, 0.14), 0 0 14px rgba(217, 200, 150, 0.24);
+      8%, 56% {
+        border-color: rgba(217, 200, 150, 0.62);
+        box-shadow: 0 0 0 2px rgba(196, 169, 98, 0.1), 0 0 8px rgba(217, 200, 150, 0.16);
       }
     }
 
     @keyframes variantCheckInviteDrums {
-      0%, 100% {
+      0%, 100%, 22%, 28%, 47%, 53%, 72%, 78% {
         border-color: rgba(255, 255, 255, 0.14);
         box-shadow: 0 0 0 0 rgba(217, 200, 150, 0);
       }
-      30% {
-        border-color: rgba(217, 200, 150, 0.82);
-        box-shadow: 0 0 0 3px rgba(196, 169, 98, 0.16), 0 0 14px rgba(217, 200, 150, 0.28);
+      4%, 54% {
+        border-color: rgba(217, 200, 150, 0.64);
+        box-shadow: 0 0 0 2px rgba(196, 169, 98, 0.11), 0 0 8px rgba(217, 200, 150, 0.18);
       }
-      55% {
-        border-color: rgba(255, 255, 255, 0.18);
-        box-shadow: 0 0 0 0 rgba(217, 200, 150, 0);
-      }
-      80% {
-        border-color: rgba(217, 200, 150, 0.75);
-        box-shadow: 0 0 0 2px rgba(196, 169, 98, 0.12), 0 0 10px rgba(217, 200, 150, 0.2);
+      25%, 75% {
+        border-color: rgba(217, 200, 150, 0.42);
+        box-shadow: 0 0 0 1px rgba(196, 169, 98, 0.08), 0 0 5px rgba(217, 200, 150, 0.1);
       }
     }
 
@@ -1305,13 +1338,28 @@
     }
 
     .alert-warning {
-      background: rgba(255, 255, 255, 0.03);
+      position: relative;
+      isolation: isolate;
+      background: rgba(255, 255, 255, 0.035);
       backdrop-filter: var(--glass-blur);
       -webkit-backdrop-filter: var(--glass-blur);
       border: 1px solid var(--border);
       border-left: 2px solid var(--hairline);
       color: var(--label);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
     }
+
+    .alert-warning::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: var(--glass-shine);
+      pointer-events: none;
+      opacity: 0.65;
+    }
+
+    .alert-warning > * { position: relative; z-index: 1; }
 
     .alert-icon { flex-shrink: 0; font-size: 14px; opacity: 0.85; }
 
@@ -1373,6 +1421,8 @@
     }
 
     .liability-card {
+      position: relative;
+      isolation: isolate;
       background: var(--glass-bg);
       backdrop-filter: var(--glass-blur);
       -webkit-backdrop-filter: var(--glass-blur);
@@ -1380,6 +1430,22 @@
       border-radius: var(--radius);
       overflow: hidden;
       box-shadow: var(--glass-shadow);
+    }
+
+    .liability-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--glass-shine);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.85;
+    }
+
+    .liability-card-head,
+    .liability-list {
+      position: relative;
+      z-index: 1;
     }
 
     .liability-card-head {
@@ -1527,54 +1593,6 @@
       justify-content: center;
     }
 
-    .signatures {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 8px;
-    }
-
-    .sig-block {
-      background: var(--glass-bg);
-      backdrop-filter: var(--glass-blur);
-      -webkit-backdrop-filter: var(--glass-blur);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 16px 12px;
-      text-align: center;
-      box-shadow: none;
-    }
-
-    .sig-role {
-      font-size: 10px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 24px;
-    }
-
-    .sig-line {
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 8px;
-      height: 28px;
-    }
-
-    .sig-name {
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      min-height: 36px;
-      margin-bottom: 8px;
-      padding-bottom: 4px;
-      border-bottom: 1px solid var(--border);
-      font-size: clamp(1.2rem, 4.2vw, 1.55rem);
-    }
-
-    .sig-hint {
-      font-size: 10px;
-      color: var(--muted);
-    }
-
     .footer-bar {
       position: fixed;
       bottom: 0;
@@ -1611,9 +1629,10 @@
       .card,
       .stat,
       .date-chip,
+      .dates-grid,
+      .terms-list,
       .terms-list li,
       .liability-card,
-      .sig-block,
       .payment-panel,
       nav,
       .footer-bar {
@@ -1633,8 +1652,8 @@
   <div class="wrap">
     <header class="page-head">
       <div class="hero-band">EDISON TRICK</div>
-      <div class="hero-label">3 трека · музыкальный продукт</div>
-      <h1>Смета на производство</h1>
+      <div class="hero-label">3 песни · музыкальный продукт</div>
+      <h1>Смета на производство 3 песен</h1>
       <div class="hero-stats">
       <div class="stat">
         <div class="stat-label">Ставка</div>
@@ -1642,7 +1661,7 @@
       </div>
       <div class="stat">
         <div class="stat-label">Срок сдачи</div>
-        <div class="stat-value accent"><span class="icon-lamp icon-lamp--sm" aria-hidden="true"></span> 1 окт 2026</div>
+        <div class="stat-value accent"><span class="icon-lamp icon-lamp--xs" aria-hidden="true"></span> 1 окт 2026</div>
       </div>
       <div class="stat full">
         <div class="stat-label">Общая стоимость</div>
@@ -1945,22 +1964,6 @@
         <p style="margin-top: 14px; font-size: 14px; color: var(--muted); line-height: 1.6;">
           Материал считается сданным в момент отправки ссылки на скачивание (облачное хранилище) или передачи на физическом носителе (по договорённости).
         </p>
-      </div>
-
-      <div class="subsection" style="margin-top: 24px;">
-        <div class="subsection-title">Подписи сторон</div>
-        <div class="signatures">
-          <div class="sig-block">
-            <div class="sig-role">Исполнитель</div>
-            <div class="sig-name script-name">Sam Bruev</div>
-            <div class="sig-hint">подпись</div>
-          </div>
-          <div class="sig-block">
-            <div class="sig-role">Заказчик</div>
-            <div class="sig-line"></div>
-            <div class="sig-hint">ФИО / подпись</div>
-          </div>
-        </div>
       </div>
     </section>
 

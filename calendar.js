@@ -1,14 +1,18 @@
 (function () {
   const TYPES = {
-    rehearsal: { label: 'Репетиция', color: '#8f8378' },
-    drums:     { label: 'Барабаны', color: '#a8867a' },
-    bass:      { label: 'Бас', color: '#b8956a' },
-    guitars:   { label: 'Гитары', color: '#c4a962' },
-    vocals:    { label: 'Вокал', color: '#a89888' },
-    mixing:    { label: 'Редакция + сведение', color: '#d9c896' },
-    mixfix:    { label: 'Доработки', color: '#9a8570' },
-    deadline:  { label: 'Сдача', color: '#d4c4a0' },
+    rehearsal: { label: 'Репетиция', color: '#a78bfa' },
+    drums:     { label: 'Барабаны', color: '#f87171' },
+    bass:      { label: 'Бас', color: '#fb923c' },
+    guitars:   { label: 'Гитары', color: '#38bdf8' },
+    vocals:    { label: 'Вокал', color: '#f472b6' },
+    mixing:    { label: 'Редакция + сведение', color: '#ffb600' },
+    mixfix:    { label: 'Доработки', color: '#d97706' },
+    deadline:  { label: 'Сдача', color: '#f2d78c' },
   };
+
+  function colorMark(color, className) {
+    return `<span class="${className}" style="background:${color};box-shadow:0 0 6px ${color}99"></span>`;
+  }
 
   const EVENTS = {
     '2026-06-24': [{ type: 'rehearsal', title: 'Репетиция', hours: '4 ч.', price: '15 000 ₽' }],
@@ -103,7 +107,7 @@
         const t = TYPES[type];
         const mark = type === 'deadline'
           ? '<span class="cal-legend-lamp" aria-hidden="true"></span>'
-          : `<span class="cal-legend-dot" style="background:${t.color}"></span>`;
+          : colorMark(t.color, 'cal-legend-dot');
         return `<span class="cal-legend-item">${mark}${t.label}</span>`;
       })
       .join('');
@@ -155,7 +159,7 @@
 
         const types = [...new Set(events.map((e) => e.type))];
         const dots = types
-          .map((t) => `<span class="cal-dot" style="background:${TYPES[t].color}"></span>`)
+          .map((t) => colorMark(TYPES[t].color, 'cal-dot'))
           .join('');
 
         btn.innerHTML = `<span class="cal-day-num">${day}</span><span class="cal-dots">${dots}</span>`;

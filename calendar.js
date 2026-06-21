@@ -65,6 +65,20 @@
   const nextBtn = document.getElementById('calNext');
   const viewport = document.getElementById('calViewport');
 
+  if (
+    !tabsEl ||
+    !titleEl ||
+    !gridEl ||
+    !legendEl ||
+    !detailEl ||
+    !noteEl ||
+    !prevBtn ||
+    !nextBtn ||
+    !viewport
+  ) {
+    return;
+  }
+
   function pad(n) {
     return String(n).padStart(2, '0');
   }

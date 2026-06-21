@@ -86,16 +86,14 @@
       bottom: -48px;
       z-index: -1;
       pointer-events: none;
-      background-color: #030303;
+      background-color: #020202;
       background-image:
-        linear-gradient(165deg, rgba(255, 248, 235, 0.035) 0%, rgba(255, 255, 255, 0.012) 24%, transparent 52%),
-        linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.38) 14%, rgba(0, 0, 0, 0.24) 26%, rgba(0, 0, 0, 0.32) 52%, rgba(0, 0, 0, 0.68) 72%, rgba(0, 0, 0, 0.94) 88%, #000 100%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.42) 16%, rgba(0, 0, 0, 0.28) 28%, rgba(0, 0, 0, 0.36) 54%, rgba(0, 0, 0, 0.72) 74%, rgba(0, 0, 0, 0.96) 90%, #000 100%),
         url("assets/top-lamp-bg.png");
-      background-size: cover, cover, 68% auto;
-      background-position: center, center, center 84%;
+      background-size: cover, 64% auto;
+      background-position: center, center 86%;
       background-repeat: no-repeat;
-      filter: blur(14px) brightness(0.46) saturate(1.02)
-        drop-shadow(0 -20px 44px rgba(255, 198, 120, 0.1));
+      filter: blur(16px) brightness(0.4) saturate(0.92);
     }
 
     .top-logo {
@@ -138,7 +136,7 @@
       transform: translate(-50%, calc(-50% + 96px));
       background: url("assets/top-lamp-bg.png") center / contain no-repeat;
       opacity: calc(0.06 * (0.45 + 0.55 * var(--top-logo-reveal, 1)));
-      filter: blur(20px) brightness(0.46) drop-shadow(0 10px 24px rgba(255, 195, 110, 0.08));
+      filter: blur(22px) brightness(0.38);
       pointer-events: none;
     }
 
@@ -276,10 +274,24 @@
     }
 
     .stat-value.large {
-      font-size: 1.42rem;
+      font-size: 1.5rem;
       font-weight: 700;
       color: var(--time);
       letter-spacing: 0.02em;
+    }
+
+    .stat-discount {
+      margin-top: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      line-height: 1.4;
+    }
+
+    .stat-discount strong {
+      color: var(--label);
+      font-weight: 600;
     }
 
     .stat-value.accent { color: var(--time); }
@@ -408,26 +420,8 @@
     .nav-scroll-hint--left { left: 7px; }
     .nav-scroll-hint--right { right: 7px; }
 
-    .nav-scroll-wrap.can-scroll-left .nav-scroll-hint--left,
-    .nav-scroll-wrap.can-scroll-right .nav-scroll-hint--right {
-      animation: navHintBlink 1.35s ease-in-out infinite;
-    }
-
-    .nav-scroll-wrap.can-scroll-left .nav-scroll-hint--left { opacity: 0.82; }
-    .nav-scroll-wrap.can-scroll-right .nav-scroll-hint--right { opacity: 0.82; }
-
-    @keyframes navHintBlink {
-      0%, 100% { opacity: 0.28; }
-      50% { opacity: 0.88; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .nav-scroll-wrap.can-scroll-left .nav-scroll-hint--left,
-      .nav-scroll-wrap.can-scroll-right .nav-scroll-hint--right {
-        animation: none;
-        opacity: 0.55;
-      }
-    }
+    .nav-scroll-wrap.can-scroll-left .nav-scroll-hint--left { opacity: 0.5; }
+    .nav-scroll-wrap.can-scroll-right .nav-scroll-hint--right { opacity: 0.5; }
 
     .nav-scroll-wrap.can-scroll nav ul {
       padding-left: 22px;
@@ -464,6 +458,12 @@
       color: var(--label);
       background: rgba(255, 255, 255, 0.04);
       border-color: var(--border);
+    }
+
+    nav a.is-active {
+      color: var(--time);
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--hairline);
     }
 
     main {
@@ -533,11 +533,11 @@
     .row:last-child { border-bottom: none; }
 
     .row.total {
-      background: rgba(255, 255, 255, 0.04);
+      background: var(--glass-bg-elevated);
       backdrop-filter: var(--glass-blur);
       -webkit-backdrop-filter: var(--glass-blur);
       border-top: 1px solid var(--border-strong);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
       font-weight: 700;
       padding-top: 18px;
       padding-bottom: 18px;
@@ -553,7 +553,7 @@
     }
 
     .row.total .row-price {
-      font-size: 17px;
+      font-size: 19px;
       font-weight: 700;
       color: var(--text);
       letter-spacing: 0.02em;
@@ -607,18 +607,8 @@
       background: rgba(255, 255, 255, 0.025);
     }
 
-    .variant-toggle--bass.is-live,
-    .variant-toggle--drums.is-live {
-      animation: variantLiveGlow 7.2s ease-in-out infinite;
-    }
-
-    @keyframes variantLiveGlow {
-      0%, 44%, 56%, 100% {
-        box-shadow: inset 2px 0 0 rgba(255, 255, 255, 0.1);
-      }
-      6%, 50% {
-        box-shadow: inset 2px 0 0 rgba(255, 255, 255, 0.12);
-      }
+    .variant-toggle.is-live {
+      box-shadow: inset 2px 0 0 rgba(255, 255, 255, 0.1);
     }
 
     .variant-toggle.is-live .variant-title::after {
@@ -633,44 +623,16 @@
       box-shadow: 0 0 8px rgba(255, 59, 59, 0.42);
     }
 
-    .variant-toggle--bass.is-live .variant-title::after,
-    .variant-toggle--drums.is-live .variant-title::after {
-      animation: recordDotPulse 7.2s ease-in-out infinite;
-    }
-
-    @keyframes recordDotPulse {
-      0%, 44%, 56%, 100% {
-        opacity: 0.62;
-        transform: scale(0.94);
-        box-shadow: 0 0 6px rgba(255, 59, 59, 0.32);
-      }
-      6%, 50% {
-        opacity: 1;
-        transform: scale(1.06);
-        box-shadow: 0 0 12px rgba(255, 59, 59, 0.62);
-      }
-    }
-
     .variant-toggle.is-live .variant-diff {
       color: var(--label);
       opacity: 0.88;
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .variant-toggle--bass.is-live,
-      .variant-toggle--drums.is-live,
-      .variant-toggle.is-live .variant-title::after,
-      .variant-check-wrap::before {
+      .price-bump-up,
+      .price-bump-down,
+      .row.row-live-flash {
         animation: none;
-      }
-
-      .variant-toggle:not(.is-live) .variant-check-wrap::before {
-        border-color: var(--hairline);
-        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.05);
-      }
-
-      .variant-toggle.is-live {
-        box-shadow: inset 2px 0 0 var(--hairline);
       }
     }
 
@@ -684,23 +646,22 @@
     }
 
     .price-bump-up {
-      animation: priceBumpUp 1.8s ease-in-out;
+      animation: priceBumpUp 1.15s ease-out;
     }
 
     .price-bump-down {
-      animation: priceBumpDown 1.5s ease-in-out;
+      animation: priceBumpDown 1s ease-out;
     }
 
     @keyframes priceBumpUp {
-      0%, 100% { transform: scale(1); color: inherit; }
-      28% { transform: scale(1.02); color: inherit; }
-      52% { transform: scale(1.04); color: var(--label); }
-      78% { transform: scale(1.015); color: inherit; }
+      0%, 100% { transform: scale(1); }
+      40% { transform: scale(1.012); }
+      70% { transform: scale(1.015); }
     }
 
     @keyframes priceBumpDown {
       0%, 100% { transform: scale(1); opacity: 1; }
-      45% { transform: scale(0.985); opacity: 0.88; }
+      45% { transform: scale(0.992); opacity: 0.92; }
     }
 
     .stat-value.large,
@@ -742,11 +703,13 @@
       border: 1px solid var(--border-strong);
       background: rgba(255, 255, 255, 0.04);
       box-sizing: border-box;
-      animation: variantCheckInvite 8.4s ease-in-out infinite;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .variant-toggle--drums:not(.is-live) .variant-check-wrap::before {
-      animation: variantCheckInvite 8.4s ease-in-out infinite;
+    .variant-toggle:not(.is-live):hover .variant-check-wrap::before,
+    .variant-toggle:not(.is-live):focus-within .variant-check-wrap::before {
+      border-color: rgba(255, 255, 255, 0.22);
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.04);
     }
 
     .variant-toggle.is-live .variant-check-wrap::before {
@@ -768,17 +731,6 @@
       background: var(--text);
       pointer-events: none;
       z-index: 1;
-    }
-
-    @keyframes variantCheckInvite {
-      0%, 72%, 100% {
-        border-color: rgba(255, 255, 255, 0.14);
-        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-      }
-      8%, 56% {
-        border-color: rgba(255, 255, 255, 0.28);
-        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.05), 0 0 8px rgba(255, 255, 255, 0.07);
-      }
     }
 
     .variant-body { flex: 1; min-width: 0; }
@@ -1176,6 +1128,8 @@
       line-height: 1.45;
       color: var(--label);
       font-variant-numeric: tabular-nums;
+      max-width: 58%;
+      word-break: break-word;
     }
 
     .payment-panel {
@@ -1187,9 +1141,7 @@
       padding: 20px 18px 18px;
       text-align: center;
       border-bottom: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: var(--glass-blur);
-      -webkit-backdrop-filter: var(--glass-blur);
+      background: transparent;
     }
 
     .payment-hero-top {
@@ -1639,6 +1591,7 @@
       <div class="stat full">
         <div class="stat-label">Общая стоимость</div>
         <div class="stat-value large" id="heroTotal">325 000 ₽</div>
+        <div class="stat-discount" id="heroDiscount">Со скидкой 20%: <strong>260 000 ₽</strong></div>
       </div>
       </div>
     </header>

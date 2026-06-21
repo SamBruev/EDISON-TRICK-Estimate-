@@ -138,6 +138,10 @@
     setText('paymentStep3', formatRub(state.steps[2]));
     setText('paymentAlertFull', formatRub(state.total));
     setText('footerAmount', formatRub(state.finalPrice));
+    var heroDiscountEl = document.getElementById('heroDiscount');
+    if (heroDiscountEl) {
+      heroDiscountEl.innerHTML = 'Со скидкой 20%: <strong>' + formatRub(state.finalPrice) + '</strong>';
+    }
 
     if (fromUser && prevTotal !== null) {
       if (state.total > prevTotal) {

@@ -1,32 +1,32 @@
 (function () {
   const TYPES = {
-    rehearsal: { label: 'Репетиция', color: '#a78bfa' },
-    drums:     { label: 'Барабаны', color: '#f87171' },
-    bass:      { label: 'Бас', color: '#fb923c' },
-    guitars:   { label: 'Гитары', color: '#38bdf8' },
-    vocals:    { label: 'Вокал', color: '#f472b6' },
-    mixing:    { label: 'Сведение', color: '#ffb600' },
-    mixfix:    { label: 'Доработки', color: '#d97706' },
-    deadline:  { label: 'Сдача', color: '#f2d78c' },
+    rehearsal: { label: 'Репетиция', color: '#8f8378' },
+    drums:     { label: 'Барабаны', color: '#a8867a' },
+    bass:      { label: 'Бас', color: '#b8956a' },
+    guitars:   { label: 'Гитары', color: '#c4a962' },
+    vocals:    { label: 'Вокал', color: '#a89888' },
+    mixing:    { label: 'Редакция + сведение', color: '#d9c896' },
+    mixfix:    { label: 'Доработки', color: '#9a8570' },
+    deadline:  { label: 'Сдача', color: '#d4c4a0' },
   };
 
   const EVENTS = {
     '2026-06-24': [{ type: 'rehearsal', title: 'Репетиция', hours: '4 ч.', price: '15 000 ₽' }],
     '2026-06-28': [{ type: 'rehearsal', title: 'Репетиция', hours: '4 ч.', price: '15 000 ₽' }],
-    '2026-06-29': [{ type: 'drums', title: 'Барабаны (MIDI)', hours: '5 ч.', price: '15 000 ₽' }],
-    '2026-06-30': [{ type: 'drums', title: 'Барабаны (MIDI)', hours: '5 ч.', price: '15 000 ₽' }],
-    '2026-07-01': [{ type: 'bass', title: 'Бас (MIDI)', hours: '5 ч.', price: '15 000 ₽' }],
-    '2026-07-12': [{ type: 'guitars', title: 'Гитары (сессия 1)', hours: '5 ч.', price: '15 000 ₽' }],
-    '2026-07-19': [{ type: 'guitars', title: 'Гитары (сессия 2)', hours: '5 ч.', price: '15 000 ₽' }],
-    '2026-07-26': [{ type: 'guitars', title: 'Гитары (сессия 3)', hours: '5 ч.', price: '15 000 ₽' }],
-    '2026-08-02': [{ type: 'guitars', title: 'Гитары (сессия 4)', hours: '5 ч.', price: '15 000 ₽' }],
-    '2026-08-12': [{ type: 'vocals', title: 'Вокал (сессия 1)', hours: '5 ч.', price: '15 000 ₽' }],
-    '2026-08-19': [{ type: 'vocals', title: 'Вокал (сессия 2)', hours: '5 ч.', price: '15 000 ₽' }],
-    '2026-08-26': [{ type: 'vocals', title: 'Вокал (сессия 3)', hours: '5 ч.', price: '15 000 ₽' }],
-    '2026-09-02': [{ type: 'vocals', title: 'Вокал (сессия 4)', hours: '5 ч.', price: '15 000 ₽' }],
-    '2026-09-08': [{ type: 'mixing', title: 'Сведение + мастеринг · трек 1', meta: 'за трек', price: '25 000 ₽' }],
-    '2026-09-15': [{ type: 'mixing', title: 'Сведение + мастеринг · трек 2', meta: 'за трек', price: '25 000 ₽' }],
-    '2026-09-22': [{ type: 'mixing', title: 'Сведение + мастеринг · трек 3', meta: 'за трек', price: '25 000 ₽' }],
+    '2026-06-29': [{ type: 'drums', title: 'Барабаны (MIDI)', meta: '3 трека', hours: '5 ч.', price: '15 000 ₽' }],
+    '2026-06-30': [{ type: 'drums', title: 'Барабаны (MIDI)', meta: '3 трека', hours: '5 ч.', price: '15 000 ₽' }],
+    '2026-07-01': [{ type: 'bass', title: 'Бас (MIDI)', meta: '3 трека', hours: '5 ч.', price: '15 000 ₽' }],
+    '2026-07-12': [{ type: 'guitars', title: 'Гитары (смена 1)', hours: '5 ч.', price: '15 000 ₽' }],
+    '2026-07-19': [{ type: 'guitars', title: 'Гитары (смена 2)', hours: '5 ч.', price: '15 000 ₽' }],
+    '2026-07-26': [{ type: 'guitars', title: 'Гитары (смена 3)', hours: '5 ч.', price: '15 000 ₽' }],
+    '2026-08-02': [{ type: 'guitars', title: 'Гитары (смена 4)', hours: '5 ч.', price: '15 000 ₽' }],
+    '2026-08-12': [{ type: 'vocals', title: 'Вокал (смена 1)', hours: '5 ч.', price: '15 000 ₽' }],
+    '2026-08-19': [{ type: 'vocals', title: 'Вокал (смена 2)', hours: '5 ч.', price: '15 000 ₽' }],
+    '2026-08-26': [{ type: 'vocals', title: 'Вокал (смена 3)', hours: '5 ч.', price: '15 000 ₽' }],
+    '2026-09-02': [{ type: 'vocals', title: 'Вокал (смена 4)', hours: '5 ч.', price: '15 000 ₽' }],
+    '2026-09-08': [{ type: 'mixing', title: 'Редакция вокала + сведение + мастеринг · трек 1', meta: 'за трек', price: '25 000 ₽' }],
+    '2026-09-15': [{ type: 'mixing', title: 'Редакция вокала + сведение + мастеринг · трек 2', meta: 'за трек', price: '25 000 ₽' }],
+    '2026-09-22': [{ type: 'mixing', title: 'Редакция вокала + сведение + мастеринг · трек 3', meta: 'за трек', price: '25 000 ₽' }],
     '2026-09-29': [{ type: 'mixfix', title: 'Доработки сведения', hours: '5 ч.', price: '15 000 ₽' }],
     '2026-09-30': [{ type: 'mixfix', title: 'Доработки сведения', hours: '5 ч.', price: '15 000 ₽' }],
     '2026-10-01': [{ type: 'deadline', title: 'Сдача материала', hours: '', price: '' }],
@@ -101,7 +101,10 @@
     legendEl.innerHTML = [...used]
       .map((type) => {
         const t = TYPES[type];
-        return `<span class="cal-legend-item"><span class="cal-legend-dot" style="background:${t.color}"></span>${t.label}</span>`;
+        const mark = type === 'deadline'
+          ? '<span class="cal-legend-lamp" aria-hidden="true"></span>'
+          : `<span class="cal-legend-dot" style="background:${t.color}"></span>`;
+        return `<span class="cal-legend-item">${mark}${t.label}</span>`;
       })
       .join('');
   }
@@ -110,7 +113,7 @@
     if (viewMonth === 8) {
       noteEl.hidden = false;
       noteEl.innerHTML =
-        '<strong>Продакшн, правки</strong> (8 ч. · 25 000 ₽) — дата по согласованию, между записью вокала (2 сен) и сведением (8 сен).';
+        '<strong>Продакшн, правки</strong> (10 ч. · 25 000 ₽) — дата по согласованию, между записью вокала (2 сен) и сведением (8 сен).';
     } else {
       noteEl.hidden = true;
     }
@@ -146,6 +149,7 @@
 
       if (events) {
         btn.classList.add('has-event');
+        if (events.some((e) => e.type !== 'deadline')) btn.classList.add('has-recording');
         if (events.some((e) => e.type === 'deadline')) btn.classList.add('deadline');
         if (key === selectedKey) btn.classList.add('selected');
 
@@ -185,7 +189,7 @@
           const meta = ev.meta || [ev.hours, TYPES[ev.type].label].filter(Boolean).join(' · ');
           const price = ev.price
             ? `<span class="cal-event-price">${ev.price}</span>`
-            : '<span class="cal-event-price" style="color:var(--green)">Финал</span>';
+            : '<span class="cal-event-price" style="color:var(--time)">Финал</span>';
           return `<div class="cal-event-card" style="border-left-color:${color}">
             <div>
               <div class="cal-event-title">${ev.title}</div>

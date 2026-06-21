@@ -13,6 +13,13 @@
     total: 325000
   };
 
+  var prevTotal = null;
+  var prevBassLive = false;
+  var prevDrumsLive = false;
+
+  var bassToggle = document.getElementById('variantBassToggle');
+  var drumsToggle = document.getElementById('variantDrumsToggle');
+
   function formatRub(n) {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₽';
   }
@@ -51,10 +58,49 @@
     if (el) el.textContent = text;
   }
 
-  function update() {
+  function playBump(el, direction) {
+    if (!el || !direction) return;
+    var cls = direction === 'up' ? 'price-bump-up' : 'price-bump-down';
+    el.classList.remove('price-bump-up', 'price-bump-down');
+    void el.offsetWidth;
+    el.classList.add(cls);
+    el.addEventListener('animationend', function onEnd() {
+      el.classList.remove(cls);
+      el.removeEventListener('animationend', onEnd);
+    });
+  }
+
+  function bumpTotals(direction) {
+    [
+      'heroTotal',
+      'summaryTotal',
+      'paymentFinal',
+      'footerAmount',
+      'paymentFull'
+    ].forEach(function (id) {
+      playBump(document.getElementById(id), direction);
+    });
+  }
+
+  function flashRow(rowId) {
+    var row = document.getElementById(rowId);
+    if (!row) return;
+    row.classList.remove('row-live-flash');
+    void row.offsetWidth;
+    row.classList.add('row-live-flash');
+    row.addEventListener('animationend', function onEnd() {
+      row.classList.remove('row-live-flash');
+      row.removeEventListener('animationend', onEnd);
+    });
+  }
+
+  function update(fromUser) {
     var bassLive = document.getElementById('variantBassLive').checked;
     var drumsLive = document.getElementById('variantDrumsLive').checked;
     var state = calcState(bassLive, drumsLive);
+
+    if (bassToggle) bassToggle.classList.toggle('is-live', bassLive);
+    if (drumsToggle) drumsToggle.classList.toggle('is-live', drumsLive);
 
     if (drumsLive) {
       setText('rowDrumsTitle', 'Барабаны (вживую)');
@@ -63,7 +109,7 @@
       setText('dateDrumsValue', '3 × 3 ч · по согласованию');
     } else {
       setText('rowDrumsTitle', 'Барабаны (MIDI)');
-      setText('rowDrumsMeta', '1 пакет · 30 000');
+      setText('rowDrumsMeta', '3 трека · MIDI-пакет · 30 000 ₽');
       setText('dateDrumsLabel', 'Барабаны (MIDI)');
       setText('dateDrumsValue', '29, 30 июня');
     }
@@ -75,7 +121,7 @@
       setText('dateBassValue', '3 × 3 ч · по согласованию');
     } else {
       setText('rowBassTitle', 'Бас (MIDI)');
-      setText('rowBassMeta', '1 пакет · 15 000');
+      setText('rowBassMeta', '3 трека · MIDI-пакет · 15 000 ₽');
       setText('dateBassLabel', 'Бас (MIDI)');
       setText('dateBassValue', '1 июля');
     }
@@ -92,8 +138,46 @@
     setText('paymentStep3', formatRub(state.steps[2]));
     setText('paymentAlertFull', formatRub(state.total));
     setText('footerAmount', formatRub(state.finalPrice));
+
+    if (fromUser && prevTotal !== null) {
+      if (state.total > prevTotal) {
+        bumpTotals('up');
+        playBump(document.getElementById('paymentStep1'), 'up');
+        playBump(document.getElementById('paymentStep2'), 'up');
+        playBump(document.getElementById('paymentStep3'), 'up');
+      } else if (state.total < prevTotal) {
+        bumpTotals('down');
+        playBump(document.getElementById('paymentStep1'), 'down');
+        playBump(document.getElementById('paymentStep2'), 'down');
+        playBump(document.getElementById('paymentStep3'), 'down');
+      }
+
+      if (bassLive && !prevBassLive) {
+        flashRow('rowBass');
+        playBump(document.getElementById('rowBassPrice'), 'up');
+      } else if (!bassLive && prevBassLive) {
+        playBump(document.getElementById('rowBassPrice'), 'down');
+      }
+
+      if (drumsLive && !prevDrumsLive) {
+        flashRow('rowDrums');
+        playBump(document.getElementById('rowDrumsPrice'), 'up');
+      } else if (!drumsLive && prevDrumsLive) {
+        playBump(document.getElementById('rowDrumsPrice'), 'down');
+      }
+    }
+
+    prevTotal = state.total;
+    prevBassLive = bassLive;
+    prevDrumsLive = drumsLive;
   }
 
-  document.getElementById('variantBassLive').addEventListener('change', update);
-  document.getElementById('variantDrumsLive').addEventListener('change', update);
+  document.getElementById('variantBassLive').addEventListener('change', function () {
+    update(true);
+  });
+  document.getElementById('variantDrumsLive').addEventListener('change', function () {
+    update(true);
+  });
+
+  update(false);
 })();

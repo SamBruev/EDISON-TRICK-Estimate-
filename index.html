@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#000000">
   <meta name="description" content="EDISON TRICK — смета на производство 3 треков. Sam Bruev.">
@@ -13,24 +13,38 @@
   <style>
     :root {
       --bg-black: #000000;
-      --text: #f5f0e8;
-      --muted: #a39888;
-      --label: #e8dfd4;
-      --accent: #e8c968;
-      --time: #f2d78c;
-      --gold: #b8b6b3;
-      --gold-soft: rgba(255, 255, 255, 0.18);
-      --accent-soft: rgba(212, 175, 95, 0.14);
-      --ui-violet-soft: rgba(212, 175, 95, 0.14);
-      --border: rgba(255, 255, 255, 0.12);
-      --border-strong: rgba(255, 255, 255, 0.22);
-      --panel: #000000;
-      --script-font: "Pacifico", cursive;
+      --text: #f3efe8;
+      --muted: #8c8480;
+      --label: #d8d0c6;
+      --accent: #c4a962;
+      --time: #d9c896;
+      --gold: #9a9692;
+      --gold-soft: rgba(255, 255, 255, 0.1);
+      --accent-soft: rgba(196, 169, 98, 0.08);
+      --ui-violet-soft: rgba(196, 169, 98, 0.06);
+      --border: rgba(255, 255, 255, 0.07);
+      --border-strong: rgba(255, 255, 255, 0.13);
+      --hairline: rgba(196, 169, 98, 0.28);
+      --glass-bg: rgba(12, 11, 10, 0.76);
+      --glass-bg-elevated: rgba(16, 15, 14, 0.84);
+      --glass-bg-bar: rgba(8, 8, 8, 0.92);
+      --glass-bg-fallback: rgba(10, 10, 10, 0.96);
+      --glass-blur: blur(28px) saturate(108%);
+      --glass-blur-strong: blur(36px) saturate(112%);
+      --glass-highlight: rgba(255, 255, 255, 0.05);
+      --glass-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 18px 48px rgba(0, 0, 0, 0.42);
+      --panel: var(--glass-bg);
       --brand-serif: "Roboto Slab", Georgia, "Times New Roman", serif;
-      --top-logo-space: 26vh;
-      --radius: 22px;
+      --script-font: "Pacifico", cursive;
+      --name-gold: #d4c4a0;
+      --top-logo-reveal: 1;
+      --top-logo-space: 46vh;
+      --radius: 12px;
+      --radius-sm: 8px;
       --safe-bottom: env(safe-area-inset-bottom, 0px);
-      accent-color: var(--gold);
+      accent-color: var(--accent);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -40,18 +54,23 @@
       -webkit-text-size-adjust: 100%;
       background: #000;
       color-scheme: dark;
+      touch-action: manipulation;
     }
 
     body {
       font-family: var(--brand-serif);
+      font-size: 15px;
+      font-weight: 400;
       color: var(--text);
-      line-height: 1.55;
+      line-height: 1.6;
+      letter-spacing: 0.015em;
       min-height: 100dvh;
-      padding-bottom: calc(80px + var(--safe-bottom));
+      padding-bottom: calc(84px + var(--safe-bottom));
       position: relative;
       background: transparent;
       -webkit-font-smoothing: antialiased;
-      accent-color: var(--gold);
+      accent-color: var(--accent);
+      touch-action: manipulation;
     }
 
     body::before {
@@ -63,17 +82,16 @@
       bottom: -48px;
       z-index: -1;
       pointer-events: none;
-      background-color: #030304;
+      background-color: #030303;
       background-image:
-        linear-gradient(165deg, rgba(255, 248, 235, 0.07) 0%, rgba(255, 255, 255, 0.025) 24%, transparent 52%),
-        linear-gradient(180deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.28) 14%, rgba(0, 0, 0, 0.18) 26%, rgba(0, 0, 0, 0.26) 52%, rgba(0, 0, 0, 0.54) 72%, rgba(0, 0, 0, 0.88) 88%, #000 100%),
+        linear-gradient(165deg, rgba(255, 248, 235, 0.035) 0%, rgba(255, 255, 255, 0.012) 24%, transparent 52%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.38) 14%, rgba(0, 0, 0, 0.24) 26%, rgba(0, 0, 0, 0.32) 52%, rgba(0, 0, 0, 0.68) 72%, rgba(0, 0, 0, 0.94) 88%, #000 100%),
         url("assets/top-lamp-bg.png");
       background-size: cover, cover, 100% auto;
       background-position: center, center, center 82%;
       background-repeat: no-repeat;
-      filter: blur(2.4px) brightness(0.62) saturate(1.22)
-        drop-shadow(0 -42px 72px rgba(255, 198, 120, 0.38))
-        drop-shadow(0 -95px 130px rgba(255, 160, 72, 0.14));
+      filter: blur(2px) brightness(0.52) saturate(1.05)
+        drop-shadow(0 -28px 56px rgba(255, 198, 120, 0.16));
     }
 
     .top-logo {
@@ -98,6 +116,11 @@
       align-items: center;
       justify-content: center;
       width: 100%;
+      transform:
+        translate3d(0, calc((1 - var(--top-logo-reveal, 1)) * 14px), 0)
+        scale(calc(0.972 + 0.028 * var(--top-logo-reveal, 1)));
+      transform-origin: center center;
+      will-change: transform;
     }
 
     .top-logo-brand::before {
@@ -105,23 +128,45 @@
       position: absolute;
       left: 50%;
       top: 50%;
-      width: min(420px, 88vw);
-      height: min(420px, 88vw);
-      transform: translate(-50%, calc(-50% + 120px));
+      width: min(480px, 92vw);
+      height: min(480px, 92vw);
+      transform: translate(-50%, calc(-50% + 140px));
       background: url("assets/top-lamp-bg.png") center / contain no-repeat;
-      opacity: 0.12;
-      filter: blur(11px) brightness(0.6) drop-shadow(0 18px 42px rgba(255, 195, 110, 0.38));
+      opacity: calc(0.07 * (0.45 + 0.55 * var(--top-logo-reveal, 1)));
+      filter: blur(12px) brightness(0.5) drop-shadow(0 12px 28px rgba(255, 195, 110, 0.12));
       pointer-events: none;
     }
 
     .logo-bg {
       position: relative;
       z-index: 1;
-      width: min(520px, 94vw);
-      height: min(200px, 34vw);
+      width: min(720px, 100vw);
+      height: min(420px, 62vw);
       margin: 0 auto;
+      background: transparent;
+    }
+
+    .logo-bg::before,
+    .logo-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
       background: url("assets/top-logo.png") center / contain no-repeat;
-      filter: brightness(0.78) contrast(0.9) saturate(0.92);
+      pointer-events: none;
+      transform: translateZ(0);
+      will-change: opacity;
+    }
+
+    .logo-bg::before {
+      filter: brightness(0.68) contrast(0.96) saturate(0.82);
+      opacity: calc(0.92 * var(--top-logo-reveal, 1));
+      z-index: 1;
+    }
+
+    .logo-bg::after {
+      filter: blur(10px) brightness(0.58) contrast(0.92) saturate(0.88);
+      opacity: calc(0.92 * (1 - var(--top-logo-reveal, 1)));
+      z-index: 2;
     }
 
     .wrap {
@@ -129,100 +174,264 @@
       z-index: 12;
       max-width: 520px;
       margin: 0 auto;
-      padding: calc(env(safe-area-inset-top) + var(--top-logo-space)) 16px 0;
+      padding: calc(env(safe-area-inset-top) + var(--top-logo-space)) 18px 0;
     }
 
     .page-head {
       text-align: center;
-      margin-bottom: 16px;
+      margin-bottom: 22px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-head .hero-band {
+      font-size: clamp(1rem, 3.8vw, 1.2rem);
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--label);
+      margin-bottom: 6px;
     }
 
     .page-head .hero-label {
-      font-size: 11px;
-      letter-spacing: 0.14em;
+      font-size: 10px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--time);
-      font-weight: 700;
-      margin-bottom: 8px;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 10px;
     }
 
     .page-head h1 {
-      font-size: 1.45rem;
-      font-weight: 800;
-      line-height: 1.25;
-      margin-bottom: 14px;
-      letter-spacing: 0.01em;
+      font-size: 1.35rem;
+      font-weight: 700;
+      line-height: 1.32;
+      margin-bottom: 6px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .script-name {
+      font-family: var(--script-font);
+      font-weight: 400;
+      font-synthesis: none;
+      letter-spacing: 0.02em;
+      line-height: 1.15;
+      color: var(--name-gold);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .hero-performer {
+      font-size: clamp(1.45rem, 5vw, 1.85rem);
+      margin: 0 0 18px;
+      opacity: 0.92;
     }
 
     .hero-stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 8px;
     }
 
     .stat {
-      background: var(--panel);
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 12px 14px;
-      box-shadow:
-        0 10px 28px rgba(0, 0, 0, 0.34),
-        inset 0 1px 0 rgba(255, 244, 220, 0.08);
+      border-radius: var(--radius-sm);
+      padding: 13px 14px;
+      box-shadow: none;
     }
 
-    .stat.full { grid-column: 1 / -1; }
+    .stat.full {
+      grid-column: 1 / -1;
+      border-color: var(--border-strong);
+      background: var(--glass-bg-elevated);
+    }
 
     .stat-label {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 4px;
+      letter-spacing: 0.14em;
+      margin-bottom: 6px;
+      font-weight: 600;
     }
 
     .stat-value {
-      font-size: 1.05rem;
-      font-weight: 700;
+      font-size: 1rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.01em;
     }
 
     .stat-value.large {
-      font-size: 1.35rem;
+      font-size: 1.42rem;
+      font-weight: 700;
+      color: var(--time);
+      letter-spacing: 0.02em;
+    }
+
+    .stat-value.accent { color: var(--time); }
+
+    .icon-lamp {
+      display: inline-block;
+      width: 1.05em;
+      height: 1.05em;
+      flex-shrink: 0;
+      background: url("assets/lamp-icon.svg") center / contain no-repeat;
+      vertical-align: -0.12em;
+    }
+
+    .icon-lamp--sm {
+      width: 14px;
+      height: 14px;
+      vertical-align: -2px;
+    }
+
+    .icon-lamp--md {
+      width: 18px;
+      height: 18px;
+      vertical-align: -3px;
+    }
+
+    .deadline-badge .icon-lamp {
+      width: 16px;
+      height: 16px;
+      vertical-align: 0;
+      filter: drop-shadow(0 0 6px rgba(196, 169, 98, 0.35));
+    }
+
+    .date-chip-label--deadline {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
       color: var(--time);
     }
 
-    .stat-value.accent { color: var(--accent); }
+    .date-chip--deadline {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 18px 16px;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(196, 169, 98, 0.06), transparent);
+    }
+
+    .date-chip--deadline .date-chip-value {
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .footer-bar .deadline {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .footer-bar .deadline-head {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .cal-legend-lamp {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+      background: url("assets/lamp-icon.svg") center / contain no-repeat;
+      opacity: 0.92;
+    }
 
     nav {
       position: sticky;
       top: 0;
       z-index: 20;
-      background: rgba(0, 0, 0, 0.82);
-      backdrop-filter: blur(14px) saturate(118%);
-      -webkit-backdrop-filter: blur(14px) saturate(118%);
+      background: var(--glass-bg-bar);
+      backdrop-filter: var(--glass-blur-strong);
+      -webkit-backdrop-filter: var(--glass-blur-strong);
       border: 1px solid var(--border);
-      border-radius: 999px;
-      margin-bottom: 20px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 0;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.34);
+      box-shadow: var(--glass-shadow);
+    }
+
+    .nav-scroll-wrap {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .nav-scroll-hint {
+      position: absolute;
+      top: 50%;
+      z-index: 21;
+      transform: translateY(-50%);
+      pointer-events: none;
+      font-size: 13px;
+      line-height: 1;
+      color: var(--time);
+      opacity: 0;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.85);
+      transition: opacity 0.2s ease;
+    }
+
+    .nav-scroll-hint--left { left: 7px; }
+    .nav-scroll-hint--right { right: 7px; }
+
+    .nav-scroll-wrap.can-scroll-left .nav-scroll-hint--left,
+    .nav-scroll-wrap.can-scroll-right .nav-scroll-hint--right {
+      animation: navHintBlink 1.35s ease-in-out infinite;
+    }
+
+    .nav-scroll-wrap.can-scroll-left .nav-scroll-hint--left { opacity: 0.82; }
+    .nav-scroll-wrap.can-scroll-right .nav-scroll-hint--right { opacity: 0.82; }
+
+    @keyframes navHintBlink {
+      0%, 100% { opacity: 0.28; }
+      50% { opacity: 0.88; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .nav-scroll-wrap.can-scroll-left .nav-scroll-hint--left,
+      .nav-scroll-wrap.can-scroll-right .nav-scroll-hint--right {
+        animation: none;
+        opacity: 0.55;
+      }
+    }
+
+    .nav-scroll-wrap.can-scroll nav ul {
+      padding-left: 22px;
+      padding-right: 22px;
     }
 
     nav::-webkit-scrollbar { display: none; }
 
     nav ul {
       display: flex;
-      gap: 6px;
+      gap: 2px;
       list-style: none;
-      padding: 10px 16px;
+      padding: 6px 8px;
       min-width: max-content;
     }
 
     nav a {
       display: block;
-      padding: 7px 12px;
-      border-radius: 999px;
-      font-size: 13px;
+      padding: 8px 11px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
       color: var(--muted);
       text-decoration: none;
       white-space: nowrap;
@@ -232,9 +441,9 @@
 
     nav a:hover,
     nav a:focus {
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.06);
-      border-color: var(--border-strong);
+      color: var(--label);
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--border);
     }
 
     main {
@@ -242,77 +451,100 @@
     }
 
     section {
-      margin-bottom: 28px;
+      margin-bottom: 32px;
       scroll-margin-top: 56px;
     }
 
     .section-title {
-      font-size: 13px;
+      font-size: 10px;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .section-title::after {
       content: "";
       flex: 1;
       height: 1px;
-      background: var(--border);
+      background: linear-gradient(90deg, var(--border-strong), transparent);
     }
 
     .card {
-      background: var(--panel);
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
-      box-shadow:
-        0 10px 28px rgba(0, 0, 0, 0.34),
-        inset 0 1px 0 rgba(255, 244, 220, 0.1),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.055),
-        0 0 36px -12px var(--ui-violet-soft);
+      box-shadow: var(--glass-shadow);
     }
 
-    .card + .card { margin-top: 10px; }
+    .card + .card { margin-top: 8px; }
 
     .row {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 12px;
-      padding: 13px 16px;
+      gap: 14px;
+      padding: 14px 16px;
       border-bottom: 1px solid var(--border);
     }
 
     .row:last-child { border-bottom: none; }
 
     .row.total {
-      background: rgba(255, 255, 255, 0.03);
+      background: linear-gradient(180deg, rgba(196, 169, 98, 0.1), rgba(196, 169, 98, 0.04));
+      border-top: 1px solid var(--hairline);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
       font-weight: 700;
+      padding-top: 18px;
+      padding-bottom: 18px;
+      margin-top: 2px;
+    }
+
+    .row.total .row-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--time);
+    }
+
+    .row.total .row-price {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--time);
+      letter-spacing: 0.02em;
     }
 
     .row-num {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--muted);
-      min-width: 18px;
-      padding-top: 2px;
+      min-width: 16px;
+      padding-top: 3px;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.06em;
     }
 
-    .row-body { flex: 1; min-width: 0; }
+    .row-body { flex: 1; min-width: 0; line-height: 1.52; }
 
     .row-title {
       font-size: 14px;
-      font-weight: 500;
-      margin-bottom: 2px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      letter-spacing: 0.02em;
+      color: var(--label);
     }
 
     .row-meta {
       font-size: 12px;
       color: var(--muted);
+      line-height: 1.5;
     }
 
     .row-price {
@@ -320,6 +552,7 @@
       font-weight: 600;
       white-space: nowrap;
       color: var(--text);
+      font-variant-numeric: tabular-nums;
     }
 
     .variant-toggle {
@@ -330,47 +563,244 @@
       border-bottom: 1px solid var(--border);
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
+      transition: background 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .variant-toggle.is-live {
+      background: rgba(196, 169, 98, 0.05);
+    }
+
+    .variant-toggle--bass.is-live {
+      animation: variantBassGlow 2.2s ease-in-out infinite;
+    }
+
+    .variant-toggle--drums.is-live {
+      animation: variantDrumsGlow 1.05s ease-in-out infinite;
+    }
+
+    @keyframes variantBassGlow {
+      0%, 100% { box-shadow: inset 2px 0 0 rgba(196, 169, 98, 0.28); }
+      50% { box-shadow: inset 2px 0 0 rgba(217, 200, 150, 0.62); }
+    }
+
+    @keyframes variantDrumsGlow {
+      0%, 100% { box-shadow: inset 2px 0 0 rgba(196, 169, 98, 0.3); }
+      22% { box-shadow: inset 2px 0 0 rgba(217, 200, 150, 0.75); }
+      44% { box-shadow: inset 2px 0 0 rgba(196, 169, 98, 0.35); }
+      66% { box-shadow: inset 2px 0 0 rgba(217, 200, 150, 0.7); }
+    }
+
+    .variant-toggle.is-live .variant-title::after {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      margin-left: 8px;
+      border-radius: 50%;
+      background: var(--time);
+      vertical-align: 0.1em;
+      box-shadow: 0 0 8px rgba(217, 200, 150, 0.45);
+    }
+
+    .variant-toggle--bass.is-live .variant-title::after {
+      animation: liveDotSoft 1.9s ease-in-out infinite;
+    }
+
+    .variant-toggle--drums.is-live .variant-title::after {
+      animation: liveDotDrums 0.9s ease-in-out infinite;
+    }
+
+    @keyframes liveDotSoft {
+      0%, 100% { opacity: 0.35; transform: scale(0.88); }
+      50% { opacity: 1; transform: scale(1.12); }
+    }
+
+    @keyframes liveDotDrums {
+      0%, 100% { opacity: 0.45; transform: scale(0.9); }
+      25% { opacity: 1; transform: scale(1.18); }
+      50% { opacity: 0.4; transform: scale(0.92); }
+      75% { opacity: 0.95; transform: scale(1.1); }
+    }
+
+    .variant-toggle.is-live .variant-diff {
+      color: var(--time);
+      animation: variantDiffPulse 1.6s ease-in-out infinite;
+    }
+
+    @keyframes variantDiffPulse {
+      0%, 100% { opacity: 0.72; }
+      50% { opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .variant-toggle--bass.is-live,
+      .variant-toggle--drums.is-live,
+      .variant-toggle.is-live .variant-title::after,
+      .variant-toggle.is-live .variant-diff,
+      .variant-check-wrap::before {
+        animation: none;
+      }
+
+      .variant-toggle:not(.is-live) .variant-check-wrap::before {
+        border-color: var(--hairline);
+        box-shadow: 0 0 0 2px rgba(196, 169, 98, 0.1);
+      }
+
+      .variant-toggle.is-live {
+        box-shadow: inset 2px 0 0 var(--hairline);
+      }
+    }
+
+    .row.row-live-flash {
+      animation: rowLiveFlash 0.65s ease-out;
+    }
+
+    @keyframes rowLiveFlash {
+      0% { background: rgba(196, 169, 98, 0.16); }
+      100% { background: transparent; }
+    }
+
+    .price-bump-up {
+      animation: priceBumpUp 0.6s ease-out;
+    }
+
+    .price-bump-down {
+      animation: priceBumpDown 0.55s ease-out;
+    }
+
+    @keyframes priceBumpUp {
+      0% { transform: scale(1); color: inherit; }
+      38% { transform: scale(1.07); color: var(--time); }
+      100% { transform: scale(1); color: inherit; }
+    }
+
+    @keyframes priceBumpDown {
+      0% { transform: scale(1); }
+      38% { transform: scale(0.97); opacity: 0.78; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .stat-value.large,
+    .row-price,
+    .payment-banner .final-price,
+    .payment-hero-price,
+    .payment-step-amount,
+    .footer-bar .amount {
+      display: inline-block;
+      transform-origin: center center;
     }
 
     .variant-toggle:last-child { border-bottom: none; }
 
     .variant-toggle input {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--accent);
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .variant-check-wrap {
+      position: relative;
       flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+    }
+
+    .variant-check-wrap::before {
+      content: "";
+      display: block;
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      border: 1px solid var(--border-strong);
+      background: rgba(255, 255, 255, 0.04);
+      box-sizing: border-box;
+      animation: variantCheckInvite 2.2s ease-in-out infinite;
+    }
+
+    .variant-toggle--drums:not(.is-live) .variant-check-wrap::before {
+      animation: variantCheckInviteDrums 1.25s ease-in-out infinite;
+    }
+
+    .variant-toggle.is-live .variant-check-wrap::before {
+      animation: none;
+      border-color: var(--hairline);
+      background: rgba(196, 169, 98, 0.22);
+      box-shadow: inset 0 0 0 1px rgba(217, 200, 150, 0.45);
+    }
+
+    .variant-toggle.is-live .variant-check-wrap::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 8px;
+      height: 8px;
+      transform: translate(-50%, -50%);
+      border-radius: 2px;
+      background: var(--time);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes variantCheckInvite {
+      0%, 100% {
+        border-color: rgba(255, 255, 255, 0.14);
+        box-shadow: 0 0 0 0 rgba(217, 200, 150, 0);
+      }
+      50% {
+        border-color: rgba(217, 200, 150, 0.78);
+        box-shadow: 0 0 0 3px rgba(196, 169, 98, 0.14), 0 0 14px rgba(217, 200, 150, 0.24);
+      }
+    }
+
+    @keyframes variantCheckInviteDrums {
+      0%, 100% {
+        border-color: rgba(255, 255, 255, 0.14);
+        box-shadow: 0 0 0 0 rgba(217, 200, 150, 0);
+      }
+      30% {
+        border-color: rgba(217, 200, 150, 0.82);
+        box-shadow: 0 0 0 3px rgba(196, 169, 98, 0.16), 0 0 14px rgba(217, 200, 150, 0.28);
+      }
+      55% {
+        border-color: rgba(255, 255, 255, 0.18);
+        box-shadow: 0 0 0 0 rgba(217, 200, 150, 0);
+      }
+      80% {
+        border-color: rgba(217, 200, 150, 0.75);
+        box-shadow: 0 0 0 2px rgba(196, 169, 98, 0.12), 0 0 10px rgba(217, 200, 150, 0.2);
+      }
     }
 
     .variant-body { flex: 1; min-width: 0; }
 
     .variant-title {
       display: block;
-      font-size: 14px;
-      font-weight: 500;
-      margin-bottom: 2px;
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 3px;
+      letter-spacing: 0.01em;
     }
 
     .variant-meta {
       display: block;
-      font-size: 12px;
+      font-size: 13px;
       color: var(--muted);
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
     .variant-diff {
-      font-size: 12px;
+      font-size: 10px;
       font-weight: 600;
-      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--time);
       white-space: nowrap;
-    }
-
-    .variant-note {
-      padding: 10px 16px 14px;
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.45;
-      border-top: 1px solid var(--border);
-      background: rgba(212, 175, 95, 0.05);
     }
 
     /* ── Calendar ── */
@@ -389,22 +819,24 @@
 
     .cal-tab {
       flex-shrink: 0;
-      padding: 6px 12px;
-      border-radius: 999px;
+      padding: 5px 10px;
+      border-radius: 6px;
       border: 1px solid var(--border);
       background: transparent;
       color: var(--muted);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
       cursor: pointer;
       transition: background 0.15s, color 0.15s, border-color 0.15s;
     }
 
-    .cal-tab.has-events { border-color: rgba(212, 175, 95, 0.35); }
+    .cal-tab.has-events { border-color: rgba(196, 169, 98, 0.22); }
 
     .cal-tab.active {
-      background: var(--accent-soft);
-      border-color: rgba(212, 175, 95, 0.45);
+      background: rgba(196, 169, 98, 0.1);
+      border-color: var(--hairline);
       color: var(--time);
     }
 
@@ -417,13 +849,13 @@
     }
 
     .cal-nav {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
       border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--text);
-      font-size: 22px;
+      background: transparent;
+      color: var(--label);
+      font-size: 20px;
       line-height: 1;
       cursor: pointer;
       display: flex;
@@ -440,10 +872,13 @@
     .cal-nav:not(:disabled):active { background: var(--accent-soft); }
 
     .cal-title {
-      font-size: 16px;
-      font-weight: 700;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       text-align: center;
       flex: 1;
+      color: var(--label);
     }
 
     .cal-viewport {
@@ -470,7 +905,7 @@
     }
 
     .cal-weekdays span:nth-child(6),
-    .cal-weekdays span:nth-child(7) { color: rgba(248, 113, 113, 0.7); }
+    .cal-weekdays span:nth-child(7) { color: rgba(196, 152, 120, 0.72); }
 
     .cal-grid {
       display: grid;
@@ -480,8 +915,8 @@
 
     .cal-day {
       aspect-ratio: 1;
-      min-height: 44px;
-      border-radius: 10px;
+      min-height: 42px;
+      border-radius: 6px;
       border: 1px solid transparent;
       background: transparent;
       color: var(--muted);
@@ -503,24 +938,67 @@
     .cal-day.has-event {
       cursor: pointer;
       color: var(--text);
-      background: rgba(255, 255, 255, 0.03);
-      border-color: rgba(255, 255, 255, 0.06);
+      background: rgba(196, 169, 98, 0.07);
+      border-color: rgba(196, 169, 98, 0.22);
+    }
+
+    .cal-day.has-recording .cal-day-num {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--time);
+      min-width: 28px;
+      min-height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 7px;
+      background: rgba(196, 169, 98, 0.18);
+      border: 1px solid rgba(217, 200, 150, 0.38);
+      box-shadow: 0 0 10px rgba(217, 200, 150, 0.12);
+      line-height: 1;
+    }
+
+    .cal-day.has-recording .cal-dot {
+      width: 6px;
+      height: 6px;
     }
 
     .cal-day.has-event:active { transform: scale(0.94); }
 
     .cal-day.selected {
-      border-color: rgba(212, 175, 95, 0.55);
-      background: var(--accent-soft);
-      box-shadow: 0 0 0 1px rgba(212, 175, 95, 0.22);
+      border-color: var(--hairline);
+      background: rgba(196, 169, 98, 0.14);
+      box-shadow: inset 0 0 0 1px rgba(217, 200, 150, 0.22);
+    }
+
+    .cal-day.selected.has-recording .cal-day-num {
+      background: rgba(196, 169, 98, 0.32);
+      border-color: rgba(217, 200, 150, 0.62);
+      color: var(--text);
+      box-shadow: 0 0 14px rgba(217, 200, 150, 0.28);
+      transform: scale(1.06);
     }
 
     .cal-day.deadline {
-      background: var(--accent-soft);
-      border-color: rgba(212, 175, 95, 0.45);
+      background: rgba(196, 169, 98, 0.1);
+      border-color: var(--hairline);
     }
 
-    .cal-day-num { line-height: 1; }
+    .cal-day.deadline .cal-day-num {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--time);
+      min-width: 26px;
+      min-height: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid var(--hairline);
+      background: rgba(196, 169, 98, 0.14);
+    }
+
+    .cal-day-num { line-height: 1; font-variant-numeric: tabular-nums; }
 
     .cal-dots {
       display: flex;
@@ -564,22 +1042,22 @@
 
     .cal-note {
       margin: 0 12px 12px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      background: rgba(148, 163, 184, 0.1);
-      border: 1px solid rgba(148, 163, 184, 0.2);
+      padding: 11px 12px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
       font-size: 12px;
-      color: #cbd5e1;
-      line-height: 1.45;
+      color: var(--muted);
+      line-height: 1.5;
     }
 
-    .cal-note strong { color: var(--text); }
+    .cal-note strong { color: var(--label); }
 
     .cal-detail {
       border-top: 1px solid var(--border);
       padding: 14px 16px;
       min-height: 72px;
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.02);
     }
 
     .cal-detail-placeholder {
@@ -590,11 +1068,11 @@
     }
 
     .cal-detail-date {
-      font-size: 12px;
+      font-size: 10px;
       font-weight: 600;
-      color: var(--accent);
+      color: var(--time);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.14em;
       margin-bottom: 10px;
     }
 
@@ -604,40 +1082,46 @@
       align-items: flex-start;
       gap: 12px;
       padding: 11px 12px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.04);
-      border-left: 3px solid var(--accent);
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--hairline);
       margin-bottom: 8px;
     }
 
     .cal-event-card:last-child { margin-bottom: 0; }
 
     .cal-event-title {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
+      line-height: 1.35;
     }
 
     .cal-event-meta {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--muted);
+      line-height: 1.4;
     }
 
     .cal-event-price {
-      font-size: 14px;
-      font-weight: 700;
+      font-size: 13px;
+      font-weight: 600;
       white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+      color: var(--label);
     }
 
     .cal-footer {
       text-align: center;
       padding: 12px;
-      font-size: 13px;
+      font-size: 12px;
       color: var(--muted);
+      line-height: 1.5;
       border-top: 1px solid var(--border);
     }
 
-    .cal-footer strong { color: var(--text); }
+    .cal-footer strong { color: var(--label); font-weight: 600; }
 
     .cal-swipe-hint {
       text-align: center;
@@ -649,162 +1133,346 @@
 
     .dates-grid {
       display: grid;
-      gap: 8px;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      box-shadow: var(--glass-shadow);
     }
 
     .date-chip {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+      gap: 14px;
+      padding: 13px 16px;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      border-radius: 0;
+      box-shadow: none;
     }
 
+    .date-chip:last-child { border-bottom: none; }
+
     .date-chip-label {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--muted);
+      line-height: 1.45;
+      letter-spacing: 0.02em;
     }
 
     .date-chip-value {
       font-size: 13px;
       font-weight: 600;
       text-align: right;
+      line-height: 1.45;
+      color: var(--label);
+      font-variant-numeric: tabular-nums;
     }
 
-    .payment-banner {
-      background: linear-gradient(135deg, rgba(212, 175, 95, 0.16), rgba(255, 255, 255, 0.04));
-      border: 1px solid rgba(212, 175, 95, 0.32);
-      border-radius: var(--radius);
-      padding: 18px 16px;
-      margin-bottom: 12px;
+    .payment-panel {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .payment-hero {
+      padding: 20px 18px 18px;
       text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(196, 169, 98, 0.08), rgba(196, 169, 98, 0.02));
     }
 
-    .payment-banner .old-price {
-      font-size: 14px;
+    .payment-hero-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .payment-hero-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .payment-hero-was {
+      font-size: 12px;
       color: var(--muted);
       text-decoration: line-through;
+      font-variant-numeric: tabular-nums;
     }
 
-    .payment-banner .discount {
-      display: inline-block;
-      background: var(--accent-soft);
+    .payment-hero-price {
+      font-size: 2.35rem;
+      font-weight: 700;
+      line-height: 1;
       color: var(--time);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
+    }
+
+    .payment-hero-note {
       font-size: 12px;
       font-weight: 600;
-      padding: 3px 10px;
-      border-radius: 999px;
-      margin: 8px 0;
+      color: var(--label);
+      letter-spacing: 0.02em;
+      margin-bottom: 6px;
     }
 
-    .payment-banner .final-price {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--time);
-      line-height: 1.1;
-    }
-
-    .payment-banner .final-label {
-      font-size: 12px;
+    .payment-hero-caption {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       color: var(--muted);
-      margin-top: 4px;
+    }
+
+    .payment-steps {
+      display: grid;
     }
 
     .payment-step {
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--border);
       display: grid;
-      grid-template-columns: 36px 1fr auto;
-      gap: 10px;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
       align-items: center;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
     }
 
     .payment-step:last-child { border-bottom: none; }
 
-    .step-badge {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-size: 13px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .payment-step-main {
+      display: grid;
+      gap: 4px;
+      min-width: 0;
     }
 
-    .step-info .step-pct {
+    .payment-step-head {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .payment-step-num {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--time);
+    }
+
+    .payment-step-pct {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .payment-step-title {
       font-size: 15px;
       font-weight: 600;
+      color: var(--label);
+      line-height: 1.35;
     }
 
-    .step-info .step-when {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 1px;
-    }
-
-    .step-amount {
-      font-size: 15px;
+    .payment-step-amount {
+      font-size: 16px;
       font-weight: 700;
+      color: var(--text);
       white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.01em;
+      text-align: right;
     }
 
     .alert {
       display: flex;
       gap: 10px;
       padding: 12px 14px;
-      border-radius: var(--radius);
+      border-radius: var(--radius-sm);
       font-size: 13px;
-      line-height: 1.45;
+      line-height: 1.58;
       margin-top: 12px;
     }
 
     .alert-warning {
-      background: rgba(212, 175, 95, 0.1);
-      border: 1px solid rgba(212, 175, 95, 0.28);
-      color: var(--time);
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--hairline);
+      color: var(--label);
     }
 
-    .alert-icon { flex-shrink: 0; font-size: 16px; }
+    .alert-icon { flex-shrink: 0; font-size: 14px; opacity: 0.85; }
 
     .terms-list {
       list-style: none;
       display: grid;
-      gap: 10px;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--glass-bg);
     }
 
     .terms-list li {
-      display: flex;
-      gap: 10px;
-      font-size: 13px;
-      line-height: 1.5;
-      padding: 12px 14px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+      display: block;
+      position: relative;
+      font-size: 14px;
+      line-height: 1.68;
+      padding: 14px 16px 14px 2rem;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      border-radius: 0;
+      box-shadow: none;
     }
+
+    .terms-list li:last-child { border-bottom: none; }
 
     .terms-list li::before {
-      content: "•";
-      color: var(--accent);
-      font-weight: 700;
-      flex-shrink: 0;
+      content: "—";
+      position: absolute;
+      left: 16px;
+      top: 14px;
+      color: var(--time);
+      font-weight: 400;
     }
 
-    .subsection {
-      margin-top: 16px;
+    .terms-list li strong {
+      color: var(--label);
+      font-weight: 600;
+    }
+
+    .terms-liability {
+      display: grid;
+      gap: 14px;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .terms-liability-label {
+      grid-column: 1 / -1;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--time);
+      margin-bottom: 2px;
+    }
+
+    .liability-card {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--glass-shadow);
+    }
+
+    .liability-card-head {
+      padding: 16px 18px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .liability-card--executor .liability-card-head {
+      background: linear-gradient(180deg, rgba(196, 169, 98, 0.1), rgba(196, 169, 98, 0.02));
+      border-left: 2px solid var(--time);
+    }
+
+    .liability-card--client .liability-card-head {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+      border-left: 2px solid var(--hairline);
+    }
+
+    .liability-card-role {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .liability-card--executor .liability-card-role { color: var(--time); }
+
+    .liability-card-title {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.35;
+      color: var(--label);
+      letter-spacing: 0.01em;
+    }
+
+    .liability-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .liability-list li {
+      position: relative;
+      font-size: 14px;
+      line-height: 1.68;
+      padding: 16px 18px 16px 2.35rem;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .liability-list li:last-child { border-bottom: none; }
+
+    .liability-list li::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 1.35em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--time);
+      opacity: 0.55;
+      transform: translateY(-50%);
+    }
+
+    .liability-card--client .liability-list li::before {
+      background: var(--muted);
+      opacity: 0.45;
+    }
+
+    .liability-list li strong {
+      color: var(--label);
+      font-weight: 600;
+    }
+
+    @media (min-width: 640px) {
+      .terms-liability {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .terms-liability-label { margin-bottom: 0; }
     }
 
     .subsection-title {
-      font-size: 13px;
+      font-size: 11px;
       font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       margin-bottom: 8px;
-      color: var(--text);
+      color: var(--muted);
     }
 
     .deliverables {
@@ -820,27 +1488,43 @@
     .deliverables li {
       display: flex;
       gap: 10px;
-      font-size: 14px;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .subsection {
+      margin-top: 18px;
     }
 
     .deliverables li::before {
-      content: "✓";
+      content: "—";
       color: var(--time);
-      font-weight: 700;
+      font-weight: 400;
       flex-shrink: 0;
     }
 
     .deadline-badge {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
-      margin-top: 14px;
-      padding: 8px 12px;
-      background: var(--accent-soft);
-      border-radius: 999px;
-      font-size: 13px;
+      width: fit-content;
+      max-width: 100%;
+      margin: 14px auto 0;
+      padding: 7px 12px;
+      background: transparent;
+      border: 1px solid var(--hairline);
+      border-radius: 6px;
+      font-size: 11px;
       font-weight: 600;
-      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--time);
+    }
+
+    .deliverables-deadline {
+      display: flex;
+      justify-content: center;
     }
 
     .signatures {
@@ -851,18 +1535,21 @@
     }
 
     .sig-block {
-      background: var(--panel);
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: var(--radius-sm);
       padding: 16px 12px;
       text-align: center;
+      box-shadow: none;
     }
 
     .sig-role {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.12em;
       margin-bottom: 24px;
     }
 
@@ -870,6 +1557,17 @@
       border-bottom: 1px solid var(--border);
       margin-bottom: 8px;
       height: 28px;
+    }
+
+    .sig-name {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      min-height: 36px;
+      margin-bottom: 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--border);
+      font-size: clamp(1.2rem, 4.2vw, 1.55rem);
     }
 
     .sig-hint {
@@ -882,11 +1580,12 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(0, 0, 0, 0.92);
-      backdrop-filter: blur(14px) saturate(118%);
-      -webkit-backdrop-filter: blur(14px) saturate(118%);
-      border-top: 1px solid var(--border);
-      padding: 12px 16px calc(12px + var(--safe-bottom));
+      background: var(--glass-bg-bar);
+      backdrop-filter: var(--glass-blur-strong);
+      -webkit-backdrop-filter: var(--glass-blur-strong);
+      border-top: 1px solid var(--hairline);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      padding: 14px 18px calc(14px + var(--safe-bottom));
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -894,22 +1593,32 @@
     }
 
     .footer-bar .label {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.14em;
     }
 
     .footer-bar .amount {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: var(--time);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.02em;
     }
 
-    .footer-bar .deadline {
-      font-size: 11px;
-      color: var(--muted);
-      text-align: right;
+    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      .card,
+      .stat,
+      .date-chip,
+      .terms-list li,
+      .liability-card,
+      .sig-block,
+      .payment-panel,
+      nav,
+      .footer-bar {
+        background: var(--glass-bg-fallback);
+      }
     }
   </style>
 </head>
@@ -923,6 +1632,7 @@
 
   <div class="wrap">
     <header class="page-head">
+      <div class="hero-band">EDISON TRICK</div>
       <div class="hero-label">3 трека · музыкальный продукт</div>
       <h1>Смета на производство</h1>
       <div class="hero-stats">
@@ -932,7 +1642,7 @@
       </div>
       <div class="stat">
         <div class="stat-label">Срок сдачи</div>
-        <div class="stat-value accent">1 окт 2026</div>
+        <div class="stat-value accent"><span class="icon-lamp icon-lamp--sm" aria-hidden="true"></span> 1 окт 2026</div>
       </div>
       <div class="stat full">
         <div class="stat-label">Общая стоимость</div>
@@ -941,7 +1651,9 @@
       </div>
     </header>
 
-    <nav aria-label="Разделы">
+    <div class="nav-scroll-wrap" id="nav-scroll-wrap">
+      <span class="nav-scroll-hint nav-scroll-hint--left" aria-hidden="true">‹</span>
+      <nav aria-label="Разделы" id="section-nav">
     <ul>
       <li><a href="#variants">Варианты</a></li>
       <li><a href="#summary">Смета</a></li>
@@ -951,30 +1663,35 @@
       <li><a href="#terms">Условия</a></li>
       <li><a href="#result">Результат</a></li>
     </ul>
-  </nav>
+      </nav>
+      <span class="nav-scroll-hint nav-scroll-hint--right" aria-hidden="true">›</span>
+    </div>
 
   <main>
 
     <section id="variants">
       <h2 class="section-title">Варианты записи</h2>
       <div class="card">
-        <label class="variant-toggle">
-          <input type="checkbox" id="variantBassLive">
+        <label class="variant-toggle variant-toggle--bass" id="variantBassToggle">
+          <span class="variant-check-wrap">
+            <input type="checkbox" id="variantBassLive" aria-label="Бас вживую">
+          </span>
           <span class="variant-body">
             <span class="variant-title">Бас вживую</span>
             <span class="variant-meta">3 ч на песню · 3 000 ₽/ч · 3 трека = 27 000 ₽</span>
           </span>
           <span class="variant-diff">+12 000 ₽</span>
         </label>
-        <label class="variant-toggle">
-          <input type="checkbox" id="variantDrumsLive">
+        <label class="variant-toggle variant-toggle--drums" id="variantDrumsToggle">
+          <span class="variant-check-wrap">
+            <input type="checkbox" id="variantDrumsLive" aria-label="Барабаны вживую">
+          </span>
           <span class="variant-body">
             <span class="variant-title">Барабаны вживую</span>
             <span class="variant-meta">3 ч на песню · 5 000 ₽/ч + редакция 5 000 ₽</span>
           </span>
           <span class="variant-diff">+30 000 ₽</span>
         </label>
-        <p class="variant-note">По умолчанию — MIDI-пакеты. Включите опции, чтобы пересчитать смету, оплату и итог.</p>
       </div>
     </section>
 
@@ -993,7 +1710,7 @@
           <span class="row-num">2</span>
           <div class="row-body">
             <div class="row-title" id="rowDrumsTitle">Барабаны (MIDI)</div>
-            <div class="row-meta" id="rowDrumsMeta">1 пакет · 30 000</div>
+            <div class="row-meta" id="rowDrumsMeta">3 трека · MIDI-пакет · 30 000 ₽</div>
           </div>
           <span class="row-price" id="rowDrumsPrice">30 000 ₽</span>
         </div>
@@ -1001,7 +1718,7 @@
           <span class="row-num">3</span>
           <div class="row-body">
             <div class="row-title" id="rowBassTitle">Бас (MIDI)</div>
-            <div class="row-meta" id="rowBassMeta">1 пакет · 15 000</div>
+            <div class="row-meta" id="rowBassMeta">3 трека · MIDI-пакет · 15 000 ₽</div>
           </div>
           <span class="row-price" id="rowBassPrice">15 000 ₽</span>
         </div>
@@ -1009,7 +1726,7 @@
           <span class="row-num">4</span>
           <div class="row-body">
             <div class="row-title">Гитары (запись)</div>
-            <div class="row-meta">4 смены · 15 000</div>
+            <div class="row-meta">4 смены по 5 ч · 15 000 ₽</div>
           </div>
           <span class="row-price">60 000 ₽</span>
         </div>
@@ -1017,7 +1734,7 @@
           <span class="row-num">5</span>
           <div class="row-body">
             <div class="row-title">Вокал (запись)</div>
-            <div class="row-meta">4 смены · 15 000</div>
+            <div class="row-meta">4 смены по 5 ч · 15 000 ₽</div>
           </div>
           <span class="row-price">60 000 ₽</span>
         </div>
@@ -1025,15 +1742,15 @@
           <span class="row-num">6</span>
           <div class="row-body">
             <div class="row-title">Продакшн, правки</div>
-            <div class="row-meta">1 смена · 25 000</div>
+            <div class="row-meta">1 смена по 10 ч · 25 000 ₽</div>
           </div>
           <span class="row-price">25 000 ₽</span>
         </div>
         <div class="row">
           <span class="row-num">7</span>
           <div class="row-body">
-            <div class="row-title">Сведение + мастеринг</div>
-            <div class="row-meta">3 трека · 25 000 ₽ за сведение + мастеринг</div>
+            <div class="row-title">Редакция вокала + сведение + мастеринг</div>
+            <div class="row-meta">3 трека · 25 000 ₽ за редакцию вокала + сведение + мастеринг</div>
           </div>
           <span class="row-price">75 000 ₽</span>
         </div>
@@ -1084,7 +1801,7 @@
         <div class="cal-detail" id="calDetail">
           <div class="cal-detail-placeholder">Выберите дату с событием — подробности появятся здесь</div>
         </div>
-        <div class="cal-footer">Итого часов: <strong>~ 76 ч.</strong> <span style="color:var(--muted);font-weight:400;">· сведение + мастеринг — фикс. 25 000 ₽/трек</span></div>
+        <div class="cal-footer">Итого часов: <strong>~ 78 ч.</strong> <span style="color:var(--muted);font-weight:400;">· редакция вокала + сведение + мастеринг — фикс. 25 000 ₽/трек</span></div>
       </div>
     </section>
 
@@ -1105,22 +1822,22 @@
         </div>
         <div class="date-chip">
           <span class="date-chip-label">Гитары</span>
-          <span class="date-chip-value">12, 19, 26 июля · 2 авг</span>
+          <span class="date-chip-value">4 × 5 ч · 12, 19, 26 июля · 2 авг</span>
         </div>
         <div class="date-chip">
           <span class="date-chip-label">Вокал</span>
-          <span class="date-chip-value">12, 19, 26 авг · 2 сен</span>
+          <span class="date-chip-value">4 × 5 ч · 12, 19, 26 авг · 2 сен</span>
         </div>
         <div class="date-chip">
-          <span class="date-chip-label">Сведение + мастеринг</span>
+          <span class="date-chip-label">Редакция вокала + сведение + мастеринг</span>
           <span class="date-chip-value">8, 15, 22 сен · 25 000 ₽/трек</span>
         </div>
         <div class="date-chip">
           <span class="date-chip-label">Доработки (платные)</span>
           <span class="date-chip-value">29, 30 сентября</span>
         </div>
-        <div class="date-chip">
-          <span class="date-chip-label">Сдача материала</span>
+        <div class="date-chip date-chip--deadline">
+          <span class="date-chip-label date-chip-label--deadline"><span class="icon-lamp icon-lamp--sm" aria-hidden="true"></span> Сдача материала</span>
           <span class="date-chip-value" style="color: var(--time);">1 октября 2026</span>
         </div>
       </div>
@@ -1128,36 +1845,47 @@
 
     <section id="payment">
       <h2 class="section-title">График оплаты</h2>
-      <div class="payment-banner">
-        <div class="old-price" id="paymentFull">325 000 ₽</div>
-        <div class="discount" id="paymentDiscount">Скидка 20% · − 65 000 ₽</div>
-        <div class="final-price" id="paymentFinal">260 000 ₽</div>
-        <div class="final-label">Спецпредложение · трёхэтапная оплата</div>
-      </div>
-      <div class="card">
-        <div class="payment-step">
-          <div class="step-badge">1</div>
-          <div class="step-info">
-            <div class="step-pct">50%</div>
-            <div class="step-when">Аванс</div>
+      <div class="card payment-panel">
+        <header class="payment-hero">
+          <div class="payment-hero-top">
+            <span class="payment-hero-label">К оплате</span>
+            <span class="payment-hero-was" id="paymentFull">325 000 ₽</span>
           </div>
-          <div class="step-amount" id="paymentStep1">130 000 ₽</div>
-        </div>
-        <div class="payment-step">
-          <div class="step-badge">2</div>
-          <div class="step-info">
-            <div class="step-pct">20%</div>
-            <div class="step-when">После записей</div>
+          <div class="payment-hero-price" id="paymentFinal">260 000 ₽</div>
+          <div class="payment-hero-note" id="paymentDiscount">Скидка 20% · − 65 000 ₽</div>
+          <div class="payment-hero-caption">Спецпредложение · 3 этапа</div>
+        </header>
+        <div class="payment-steps">
+          <div class="payment-step">
+            <div class="payment-step-main">
+              <div class="payment-step-head">
+                <span class="payment-step-num">Этап 1</span>
+                <span class="payment-step-pct">50%</span>
+              </div>
+              <div class="payment-step-title">Аванс</div>
+            </div>
+            <div class="payment-step-amount" id="paymentStep1">130 000 ₽</div>
           </div>
-          <div class="step-amount" id="paymentStep2">52 000 ₽</div>
-        </div>
-        <div class="payment-step">
-          <div class="step-badge">3</div>
-          <div class="step-info">
-            <div class="step-pct">30%</div>
-            <div class="step-when">После сдачи материала</div>
+          <div class="payment-step">
+            <div class="payment-step-main">
+              <div class="payment-step-head">
+                <span class="payment-step-num">Этап 2</span>
+                <span class="payment-step-pct">20%</span>
+              </div>
+              <div class="payment-step-title">После записей</div>
+            </div>
+            <div class="payment-step-amount" id="paymentStep2">52 000 ₽</div>
           </div>
-          <div class="step-amount" id="paymentStep3">78 000 ₽</div>
+          <div class="payment-step">
+            <div class="payment-step-main">
+              <div class="payment-step-head">
+                <span class="payment-step-num">Этап 3</span>
+                <span class="payment-step-pct">30%</span>
+              </div>
+              <div class="payment-step-title">После сдачи материала</div>
+            </div>
+            <div class="payment-step-amount" id="paymentStep3">78 000 ₽</div>
+          </div>
         </div>
       </div>
       <div class="alert alert-warning">
@@ -1178,19 +1906,29 @@
         </ul>
       </div>
 
-      <div class="subsection">
-        <div class="subsection-title">Ответственность исполнителя</div>
-        <ul class="terms-list">
-          <li>Если сведение сдано позже согласованного срока по вине исполнителя — штраф <strong>7 500 ₽ за каждый трек</strong> (30% от стоимости сведения + мастеринга: 25 000 ₽).</li>
-          <li>Штраф не применяется, если задержка произошла по вине заказчика или из‑за форс‑мажора.</li>
-        </ul>
-      </div>
+      <div class="terms-liability">
+        <div class="terms-liability-label">Ответственность сторон</div>
 
-      <div class="subsection">
-        <div class="subsection-title">Ответственность заказчика</div>
-        <ul class="terms-list">
-          <li>За отмену или перенос согласованной сессии менее чем за 3 рабочих дня — сессия оплачивается полностью.</li>
-        </ul>
+        <article class="liability-card liability-card--executor">
+          <header class="liability-card-head">
+            <span class="liability-card-role">Исполнитель</span>
+            <h3 class="liability-card-title">За сроки и качество</h3>
+          </header>
+          <ul class="liability-list">
+            <li>Если материал сдан позже согласованного срока по вине исполнителя — штраф <strong>7 500 ₽ за каждый трек</strong> (30% от стоимости редакции вокала + сведения + мастеринга: 25 000 ₽).</li>
+            <li>Штраф не применяется, если задержка произошла по вине заказчика или из‑за форс‑мажора.</li>
+          </ul>
+        </article>
+
+        <article class="liability-card liability-card--client">
+          <header class="liability-card-head">
+            <span class="liability-card-role">Заказчик</span>
+            <h3 class="liability-card-title">За сессии и сроки</h3>
+          </header>
+          <ul class="liability-list">
+            <li>За отмену или перенос согласованной сессии менее чем за 3 рабочих дня — сессия оплачивается полностью.</li>
+          </ul>
+        </article>
       </div>
     </section>
 
@@ -1201,8 +1939,10 @@
           <li>3 финальных стерео-трека в формате .WAV (44.1 кГц / 24 bit)</li>
           <li>Минусовки (инструментальные версии) — по запросу</li>
         </ul>
-        <div class="deadline-badge">📦 Сдача: 1 октября 2026</div>
-        <p style="margin-top: 14px; font-size: 12px; color: var(--muted); line-height: 1.5;">
+        <div class="deliverables-deadline">
+          <div class="deadline-badge"><span class="icon-lamp" aria-hidden="true"></span> Сдача: 1 октября 2026</div>
+        </div>
+        <p style="margin-top: 14px; font-size: 14px; color: var(--muted); line-height: 1.6;">
           Материал считается сданным в момент отправки ссылки на скачивание (облачное хранилище) или передачи на физическом носителе (по договорённости).
         </p>
       </div>
@@ -1212,7 +1952,7 @@
         <div class="signatures">
           <div class="sig-block">
             <div class="sig-role">Исполнитель</div>
-            <div class="sig-line" style="display:flex;align-items:flex-end;justify-content:center;font-size:12px;color:var(--accent);padding-bottom:4px;">Sam Bruev</div>
+            <div class="sig-name script-name">Sam Bruev</div>
             <div class="sig-hint">подпись</div>
           </div>
           <div class="sig-block">
@@ -1233,9 +1973,14 @@
       <div class="label">Со скидкой 20%</div>
       <div class="amount" id="footerAmount">260 000 ₽</div>
     </div>
-    <div class="deadline">Сдача<br>1 окт 2026</div>
+    <div class="deadline">
+      <span class="deadline-head"><span class="icon-lamp icon-lamp--sm" aria-hidden="true"></span> Сдача</span>
+      1 окт 2026
+    </div>
   </div>
 
+  <script src="logo-scroll.js"></script>
+  <script src="nav-scroll.js"></script>
   <script src="estimate.js"></script>
   <script src="calendar.js"></script>
 </body>

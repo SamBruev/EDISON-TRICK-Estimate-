@@ -36,8 +36,13 @@
       --glass-bg-elevated: rgba(24, 26, 32, 0.62);
       --glass-bg-bar: rgba(12, 13, 17, 0.6);
       --glass-bg-fallback: rgba(10, 11, 15, 0.94);
-      --glass-blur: blur(18px) saturate(155%);
-      --glass-blur-strong: blur(22px) saturate(165%);
+      /* Статичные карточки больше НЕ используют backdrop-filter: на тёмном
+         фоне (--glass-bg ~55% непрозрачности) блюр почти не виден, но каждый
+         такой слой держит отдельный backing-store и перерисовывается при
+         скролле — ~25 слоёв переполняли память WebKit и роняли вкладку на iOS.
+         Реальный backdrop-blur оставлен только на липких барах (nav/footer). */
+      --glass-blur: none;
+      --glass-blur-strong: none;
       --glass-blur-bar: blur(13px) saturate(150%);
       --glass-highlight: rgba(255, 248, 230, 0.22);
       --glass-shine: linear-gradient(
@@ -1437,23 +1442,48 @@
 
     .bonus-summary > * { position: relative; z-index: 1; }
 
-    .bonus-summary::after {
-      content: "";
+    /* Музыкальный мотив: тонкая золотая звуковая волна тихо «играет» вдоль
+       нижней кромки плашки. В покое — спокойная и приглушённая; при раскрытии
+       блока громкость «прибавляется» (ярче, быстрее, выше амплитуда). */
+    .bonus-wave {
       position: absolute;
-      top: 0;
       left: 0;
-      width: 45%;
-      height: 100%;
-      background: linear-gradient(100deg, transparent 0%, rgba(255, 245, 215, 0.4) 50%, transparent 100%);
-      transform: translateX(-180%) skewX(-16deg);
-      animation: bonusShine 5s ease-in-out infinite;
-      pointer-events: none;
+      bottom: 7px;
+      width: 200%;
+      height: 20px;
+      color: var(--time);
+      opacity: 0.42;
       z-index: 0;
+      pointer-events: none;
+      transform: translateX(0) scaleY(0.62);
+      transform-origin: bottom;
+      animation: bonusWaveTravel 9s linear infinite;
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
-    @keyframes bonusShine {
-      0%, 16%   { transform: translateX(-180%) skewX(-16deg); }
-      60%, 100% { transform: translateX(360%) skewX(-16deg); }
+    .bonus-wave-path {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.4;
+      stroke-linecap: round;
+      vector-effect: non-scaling-stroke;
+      filter: drop-shadow(0 0 3px rgba(242, 215, 140, 0.5));
+    }
+
+    .bonus-wave-path--echo {
+      opacity: 0.3;
+      transform: translateY(3px);
+    }
+
+    @keyframes bonusWaveTravel {
+      from { transform: translateX(0) scaleY(var(--wave-amp, 0.62)); }
+      to   { transform: translateX(-50%) scaleY(var(--wave-amp, 0.62)); }
+    }
+
+    .bonus-toggle:checked ~ .bonus-summary .bonus-wave {
+      --wave-amp: 1;
+      opacity: 0.7;
+      animation-duration: 5s;
     }
 
     .bonus-summary-title {
@@ -1497,16 +1527,31 @@
       margin-top: 10px;
     }
 
+    /* Пункты поднимаются по очереди, как ноты, а лампа Эдисона на каждом
+       «зажигается» — короткая тёплая вспышка света в момент появления. */
     .bonus-toggle:checked ~ .bonus-collapse .bonus-item {
-      animation: bonusItemIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation: bonusItemIn 0.62s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
-    .bonus-toggle:checked ~ .bonus-collapse .bonus-item:nth-child(1) { animation-delay: 0.14s; }
+    .bonus-toggle:checked ~ .bonus-collapse .bonus-item:nth-child(1) { animation-delay: 0.12s; }
     .bonus-toggle:checked ~ .bonus-collapse .bonus-item:nth-child(2) { animation-delay: 0.26s; }
-    .bonus-toggle:checked ~ .bonus-collapse .bonus-item:nth-child(3) { animation-delay: 0.38s; }
+    .bonus-toggle:checked ~ .bonus-collapse .bonus-item:nth-child(3) { animation-delay: 0.40s; }
+
+    .bonus-toggle:checked ~ .bonus-collapse .bonus-item .bonus-item-icon {
+      animation: bonusLampIgnite 0.95s ease-out both;
+    }
+    .bonus-toggle:checked ~ .bonus-collapse .bonus-item:nth-child(1) .bonus-item-icon { animation-delay: 0.20s; }
+    .bonus-toggle:checked ~ .bonus-collapse .bonus-item:nth-child(2) .bonus-item-icon { animation-delay: 0.34s; }
+    .bonus-toggle:checked ~ .bonus-collapse .bonus-item:nth-child(3) .bonus-item-icon { animation-delay: 0.48s; }
 
     @keyframes bonusItemIn {
-      from { opacity: 0; transform: translateY(12px); }
+      from { opacity: 0; transform: translateY(14px); }
       to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bonusLampIgnite {
+      0%   { opacity: 0.22; filter: brightness(0.45) saturate(0.55) drop-shadow(0 0 0 rgba(255, 190, 90, 0)); }
+      45%  { opacity: 1;    filter: brightness(1.4)  saturate(1.25) drop-shadow(0 0 13px rgba(255, 190, 90, 0.9)); }
+      100% { opacity: 0.95; filter: brightness(1)    saturate(1)    drop-shadow(0 0 5px rgba(255, 190, 90, 0.32)); }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1514,8 +1559,9 @@
       .bonus-chevron {
         transition: none;
       }
-      .bonus-summary::after { animation: none; display: none; }
-      .bonus-toggle:checked ~ .bonus-collapse .bonus-item { animation: none; }
+      .bonus-wave { animation: none; }
+      .bonus-toggle:checked ~ .bonus-collapse .bonus-item,
+      .bonus-toggle:checked ~ .bonus-collapse .bonus-item .bonus-item-icon { animation: none; }
     }
 
     .bonus-list {
@@ -1540,10 +1586,10 @@
     .bonus-item-icon {
       flex-shrink: 0;
       width: 26px;
-      height: 26px;
-      background: url("assets/et-lamp-icon.png") center / contain no-repeat;
+      height: 32px;
+      background: url("assets/symbol.png") center top / contain no-repeat;
       opacity: 0.95;
-      margin-top: 0;
+      margin-top: -1px;
     }
 
     .bonus-item strong { color: var(--label); font-weight: 600; }
@@ -2650,6 +2696,10 @@
     <section id="bonus" class="bonus-section">
       <input type="checkbox" id="bonusToggle" class="bonus-toggle" hidden>
       <label for="bonusToggle" class="bonus-summary">
+        <svg class="bonus-wave" viewBox="0 0 1200 44" preserveAspectRatio="none" aria-hidden="true">
+          <path class="bonus-wave-path bonus-wave-path--echo" d="M0,22 Q25,15 50,22 Q75,29 100,22 Q125,15 150,22 Q175,29 200,22 Q225,15 250,22 Q275,29 300,22 Q325,15 350,22 Q375,29 400,22 Q425,15 450,22 Q475,29 500,22 Q525,15 550,22 Q575,29 600,22 Q625,15 650,22 Q675,29 700,22 Q725,15 750,22 Q775,29 800,22 Q825,15 850,22 Q875,29 900,22 Q925,15 950,22 Q975,29 1000,22 Q1025,15 1050,22 Q1075,29 1100,22 Q1125,15 1150,22 Q1175,29 1200,22"/>
+          <path class="bonus-wave-path" d="M0,22 Q25,15 50,22 Q75,29 100,22 Q125,15 150,22 Q175,29 200,22 Q225,15 250,22 Q275,29 300,22 Q325,15 350,22 Q375,29 400,22 Q425,15 450,22 Q475,29 500,22 Q525,15 550,22 Q575,29 600,22 Q625,15 650,22 Q675,29 700,22 Q725,15 750,22 Q775,29 800,22 Q825,15 850,22 Q875,29 900,22 Q925,15 950,22 Q975,29 1000,22 Q1025,15 1050,22 Q1075,29 1100,22 Q1125,15 1150,22 Q1175,29 1200,22"/>
+        </svg>
         <span class="bonus-summary-title">✦ Бонусы</span>
         <span class="bonus-chevron" aria-hidden="true">⌄</span>
       </label>

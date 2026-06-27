@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#000000">
   <meta name="description" content="EDISON TRICK — понятная смета на производство 3 песен. Sam Bruev.">
@@ -56,7 +56,7 @@
       --brand-serif: "Roboto Slab", Georgia, "Times New Roman", serif;
       --logo-scale: 1.45;
       --top-logo-reveal: 1;
-      --top-logo-space: 36vh;
+      --top-logo-space: 31vh;
       --app-bg-glass-min: 0.34;
       --app-bg-glass-scroll-gain: 0.58;
       --app-bg-scroll-blur: 0;
@@ -214,7 +214,7 @@
     .top-logo-brand::before {
       content: "";
       position: absolute;
-      left: 50%;
+      left: 52.5%;
       top: 74%;
       width: min(480px, 82vw);
       height: min(480px, 82vw);
@@ -295,9 +295,9 @@
     .page-head .hero-band-logo {
       display: block;
       width: auto;
-      height: clamp(58px, 16vw, 84px);
-      max-width: 88%;
-      margin: 0 auto 12px;
+      height: clamp(76px, 22vw, 116px);
+      max-width: 94%;
+      margin: 0 auto 14px;
       object-fit: contain;
     }
 
@@ -412,6 +412,22 @@
     .stat-discount strong {
       color: var(--time);
       font-weight: 700;
+    }
+
+    .stat-discount-note {
+      margin-top: 4px;
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+      line-height: 1.4;
+      opacity: 0.9;
+    }
+
+    .stat-discount-note a {
+      color: var(--time);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(242, 215, 140, 0.4);
     }
 
     .stat-value.accent { color: var(--time); }
@@ -1623,6 +1639,26 @@
       margin-top: 6px;
     }
 
+    .payment-or {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px 4px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--time);
+    }
+
+    .payment-or::before,
+    .payment-or::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+    }
+
     .payment-steps {
       display: grid;
     }
@@ -2265,6 +2301,7 @@
         <div class="stat-label">Полная сумма</div>
         <div class="stat-value large" id="heroTotal">295 000 ₽</div>
         <div class="stat-discount" id="heroDiscount">Итого со скидкой 20%: <strong>236 000 ₽</strong></div>
+        <div class="stat-discount-note">Условия скидки <a href="#payment">описаны ниже</a></div>
       </div>
       </div>
     </header>
@@ -2441,7 +2478,7 @@
     </section>
 
     <section id="payment">
-      <h2 class="section-title">Оплата по этапам</h2>
+      <h2 class="section-title">Оплата</h2>
       <div class="card payment-panel">
         <header class="payment-hero">
           <div class="payment-hero-top">
@@ -2450,8 +2487,8 @@
           </div>
           <div class="payment-hero-price" id="paymentFinal">236 000 ₽</div>
           <div class="payment-hero-note" id="paymentDiscount">Скидка 20% · экономия 59 000 ₽</div>
-          <div class="payment-hero-caption">Удобно разбить на 3 комфортных этапа</div>
         </header>
+        <div class="payment-or">или оплата по этапам</div>
         <div class="payment-steps">
           <div class="payment-step">
             <div class="payment-step-main">
@@ -2622,5 +2659,12 @@
   <script src="estimate.js"></script>
   <script src="calendar.js"></script>
   <script src="edge-refresh.js"></script>
+  <script>
+    // Отключаем масштабирование жестами: iOS Safari игнорирует user-scalable=no,
+    // поэтому глушим pinch-жесты вручную. Двойной тап уже отключён через touch-action: manipulation.
+    ['gesturestart', 'gesturechange', 'gestureend'].forEach(function (type) {
+      document.addEventListener(type, function (e) { e.preventDefault(); }, { passive: false });
+    });
+  </script>
 </body>
 </html>

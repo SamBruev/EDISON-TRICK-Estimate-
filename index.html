@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#000000">
-  <meta name="description" content="EDISON TRICK — смета на производство 3 песен. Sam Bruev.">
+  <meta name="description" content="EDISON TRICK — понятная смета на производство 3 песен. Sam Bruev.">
   <title>EDISON TRICK · Смета</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -117,7 +117,7 @@
         ),
         url("assets/top-lamp-bg.png");
       background-size: cover, cover, 68% auto;
-      background-position: center, center, center center;
+      background-position: center, center, center 42%;
       background-repeat: no-repeat;
       transform: translateZ(0);
       backface-visibility: hidden;
@@ -155,7 +155,7 @@
         ),
         url("assets/top-lamp-bg.png");
       background-size: cover, cover, 68% auto;
-      background-position: center, center, center center;
+      background-position: center, center, center 42%;
       background-repeat: no-repeat;
       transform: translateZ(0);
       backface-visibility: hidden;
@@ -193,7 +193,7 @@
       justify-content: flex-start;
       width: 100%;
       min-height: 0;
-      margin-top: -4px;
+      margin-top: -18px;
       isolation: isolate;
       transform:
         translate3d(0, calc((1 - var(--top-logo-reveal, 1)) * 14px), 0)
@@ -206,10 +206,10 @@
       content: "";
       position: absolute;
       left: 50%;
-      top: 50%;
-      width: min(520px, 88vw);
-      height: min(520px, 88vw);
-      transform: translate3d(-50%, -50%, 0);
+      top: 74%;
+      width: min(480px, 82vw);
+      height: min(480px, 82vw);
+      transform: translate3d(-50%, -36%, 0);
       will-change: opacity;
       background: url("assets/top-lamp-bg.png") center center / contain no-repeat;
       opacity: calc(0.18 * (0.42 + 0.58 * var(--top-logo-reveal, 1)));
@@ -228,7 +228,7 @@
       width: 645px;
       max-width: min(95vw, 780px);
       height: 252px;
-      margin: 0 auto;
+      margin: -8px auto 0;
       background: transparent;
       transform: scale(var(--logo-scale, 2));
       transform-origin: center top;
@@ -296,9 +296,16 @@
       font-size: 1.35rem;
       font-weight: 700;
       line-height: 1.32;
-      margin-bottom: 6px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+
+    .page-head .hero-intro {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 16px;
+      letter-spacing: 0.01em;
     }
 
     .hero-performer {
@@ -346,10 +353,9 @@
     }
 
     .stat-label {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.03em;
       margin-bottom: 6px;
       font-weight: 600;
     }
@@ -579,11 +585,10 @@
     }
 
     .section-title {
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
+      letter-spacing: 0.04em;
+      color: var(--label);
       margin-bottom: 10px;
       display: flex;
       align-items: center;
@@ -649,11 +654,10 @@
     }
 
     .row.total .row-title {
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
+      letter-spacing: 0.03em;
+      color: var(--label);
     }
 
     .row.total .row-price {
@@ -1295,25 +1299,23 @@
     }
 
     .payment-hero {
-      padding: 20px 18px 18px;
-      text-align: center;
+      padding: 18px 18px 16px;
       border-bottom: 1px solid var(--border);
       background: transparent;
     }
 
     .payment-hero-top {
       display: flex;
-      align-items: center;
+      align-items: baseline;
       justify-content: space-between;
       gap: 12px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .payment-hero-label {
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
+      letter-spacing: 0.03em;
       color: var(--muted);
     }
 
@@ -1325,7 +1327,7 @@
     }
 
     .payment-hero-price {
-      font-size: 2.35rem;
+      font-size: 2rem;
       font-weight: 700;
       line-height: 1;
       color: var(--time);
@@ -1336,17 +1338,17 @@
 
     .payment-hero-note {
       font-size: 12px;
-      font-weight: 600;
-      color: var(--label);
+      font-weight: 400;
+      color: var(--muted);
       letter-spacing: 0.02em;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .payment-hero-caption {
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.03em;
       color: var(--muted);
+      margin-top: 6px;
     }
 
     .payment-steps {
@@ -1378,10 +1380,9 @@
     }
 
     .payment-step-num {
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+      letter-spacing: 0.03em;
       color: var(--time);
     }
 
@@ -1426,7 +1427,7 @@
       backdrop-filter: var(--glass-blur);
       -webkit-backdrop-filter: var(--glass-blur);
       border: 1px solid var(--border);
-      border-left: 2px solid var(--hairline);
+      border-left: 2px solid rgba(242, 215, 140, 0.45);
       color: var(--label);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
     }
@@ -1443,7 +1444,7 @@
 
     .alert-warning > * { position: relative; z-index: 1; }
 
-    .alert-icon { flex-shrink: 0; font-size: 14px; opacity: 0.85; }
+    .alert-icon { flex-shrink: 0; font-size: 13px; opacity: 0.75; color: var(--time); }
 
     .terms-list {
       list-style: none;
@@ -1494,10 +1495,9 @@
 
     .terms-liability-label {
       grid-column: 1 / -1;
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
+      letter-spacing: 0.03em;
       color: var(--time);
       margin-bottom: 2px;
     }
@@ -1547,10 +1547,9 @@
 
     .liability-card-role {
       display: block;
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+      letter-spacing: 0.03em;
       color: var(--muted);
       margin-bottom: 6px;
     }
@@ -1615,12 +1614,11 @@
     }
 
     .subsection-title {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      letter-spacing: 0.03em;
       margin-bottom: 8px;
-      color: var(--muted);
+      color: var(--label);
     }
 
     .deliverables {
@@ -1665,8 +1663,7 @@
       border-radius: 6px;
       font-size: 14px;
       font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      letter-spacing: 0.06em;
       color: var(--time);
     }
 
@@ -1693,10 +1690,9 @@
     }
 
     .footer-bar .label {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.03em;
     }
 
     .footer-bar .amount {
@@ -1937,21 +1933,21 @@
   <div class="wrap">
     <header class="page-head">
       <div class="hero-band">EDISON TRICK</div>
-      <div class="hero-label">3 песни · музыкальный продукт</div>
-      <h1>Смета на производство 3 песен</h1>
+      <h1>Смета на производство<br>3 песен</h1>
+      <p class="hero-intro">Всё прозрачно и по шагам — без лишней суеты</p>
       <div class="hero-stats">
       <div class="stat">
-        <div class="stat-label">Ставка</div>
+        <div class="stat-label">Стоимость часа</div>
         <div class="stat-value">3 000 ₽ / ч</div>
       </div>
       <div class="stat">
-        <div class="stat-label">Срок сдачи</div>
+        <div class="stat-label">Готовность</div>
         <div class="stat-value accent deadline-date"><span class="icon-lamp icon-lamp--xs" aria-hidden="true"></span> 1 ОКТ 2026</div>
       </div>
       <div class="stat full">
-        <div class="stat-label">Общая стоимость</div>
+        <div class="stat-label">Полная сумма</div>
         <div class="stat-value large" id="heroTotal">325 000 ₽</div>
-        <div class="stat-discount" id="heroDiscount">Со скидкой 20%: <strong>260 000 ₽</strong></div>
+        <div class="stat-discount" id="heroDiscount">Итого со скидкой 20%: <strong>260 000 ₽</strong></div>
       </div>
       </div>
     </header>
@@ -1975,25 +1971,25 @@
   <main>
 
     <section id="variants">
-      <h2 class="section-title">Варианты записи</h2>
+      <h2 class="section-title">Если захотите записать вживую</h2>
       <div class="card">
         <label class="variant-toggle variant-toggle--bass" id="variantBassToggle">
           <span class="variant-check-wrap">
-            <input type="checkbox" id="variantBassLive" aria-label="Бас вживую">
+            <input type="checkbox" id="variantBassLive" aria-label="Записать бас вживую">
           </span>
           <span class="variant-body">
             <span class="variant-title">Бас вживую</span>
-            <span class="variant-meta">3 ч на песню · 3 000 ₽/ч · 3 трека = 27 000 ₽</span>
+            <span class="variant-meta">по 3 ч на трек · 3 000 ₽/ч · на 3 трека = 27 000 ₽</span>
           </span>
           <span class="variant-diff">+12 000 ₽</span>
         </label>
         <label class="variant-toggle variant-toggle--drums" id="variantDrumsToggle">
           <span class="variant-check-wrap">
-            <input type="checkbox" id="variantDrumsLive" aria-label="Барабаны вживую">
+            <input type="checkbox" id="variantDrumsLive" aria-label="Записать барабаны вживую">
           </span>
           <span class="variant-body">
             <span class="variant-title">Барабаны вживую</span>
-            <span class="variant-meta">3 ч на песню · 5 000 ₽/ч + редакция 5 000 ₽</span>
+            <span class="variant-meta">по 3 ч на трек · 5 000 ₽/ч + редакция 5 000 ₽</span>
           </span>
           <span class="variant-diff">+30 000 ₽</span>
         </label>
@@ -2001,7 +1997,7 @@
     </section>
 
     <section id="summary">
-      <h2 class="section-title">Сводная таблица</h2>
+      <h2 class="section-title">Из чего складывается сумма</h2>
       <div class="card">
         <div class="row">
           <span class="row-num">1</span>
@@ -2086,7 +2082,7 @@
     </section>
 
     <section id="schedule">
-      <h2 class="section-title">Календарный график</h2>
+      <h2 class="section-title">Календарь работ</h2>
       <div class="card cal-widget">
         <div class="cal-month-tabs" id="calMonthTabs"></div>
         <div class="cal-header">
@@ -2094,7 +2090,7 @@
           <div class="cal-title" id="calTitle"></div>
           <button type="button" class="cal-nav" id="calNext" aria-label="Следующий месяц">›</button>
         </div>
-        <p class="cal-swipe-hint">Листайте месяцы свайпом или кнопками · нажмите на дату</p>
+        <p class="cal-swipe-hint">Можно листать месяцы свайпом или стрелками · нажмите на интересную дату</p>
         <div class="cal-viewport" id="calViewport">
           <div class="cal-weekdays">
             <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
@@ -2104,14 +2100,14 @@
         <div class="cal-legend" id="calLegend"></div>
         <div class="cal-note" id="calNote" hidden></div>
         <div class="cal-detail" id="calDetail">
-          <div class="cal-detail-placeholder">Выберите дату с событием — подробности появятся здесь</div>
+          <div class="cal-detail-placeholder">Выберите дату — расскажем, что там запланировано</div>
         </div>
         <div class="cal-footer">Итого часов: <strong>~ 78 ч.</strong> <span style="color:var(--muted);font-weight:400;">· редакция вокала + сведение + мастеринг — фикс. 25 000 ₽/трек</span></div>
       </div>
     </section>
 
     <section id="dates">
-      <h2 class="section-title">Ключевые даты</h2>
+      <h2 class="section-title">Важные даты</h2>
       <div class="dates-grid">
         <div class="date-chip">
           <span class="date-chip-label">Репетиции</span>
@@ -2138,27 +2134,27 @@
           <span class="date-chip-value">8, 15, 22 сен · 25 000 ₽/трек</span>
         </div>
         <div class="date-chip">
-          <span class="date-chip-label">Доработки (платные)</span>
+          <span class="date-chip-label">Доработки, если понадобятся</span>
           <span class="date-chip-value">29, 30 сентября</span>
         </div>
         <div class="date-chip date-chip--deadline">
-          <span class="date-chip-label date-chip-label--deadline"><span class="icon-lamp icon-lamp--sm" aria-hidden="true"></span> Сдача материала</span>
+          <span class="date-chip-label date-chip-label--deadline"><span class="icon-lamp icon-lamp--sm" aria-hidden="true"></span> Финальная сдача</span>
           <span class="date-chip-value" style="color: var(--time);">1 ОКТЯБРЯ 2026</span>
         </div>
       </div>
     </section>
 
     <section id="payment">
-      <h2 class="section-title">График оплаты</h2>
+      <h2 class="section-title">Оплата по этапам</h2>
       <div class="card payment-panel">
         <header class="payment-hero">
           <div class="payment-hero-top">
-            <span class="payment-hero-label">К оплате</span>
+            <span class="payment-hero-label">Итого к оплате</span>
             <span class="payment-hero-was" id="paymentFull">325 000 ₽</span>
           </div>
           <div class="payment-hero-price" id="paymentFinal">260 000 ₽</div>
-          <div class="payment-hero-note" id="paymentDiscount">Скидка 20% · − 65 000 ₽</div>
-          <div class="payment-hero-caption">Спецпредложение · 3 этапа</div>
+          <div class="payment-hero-note" id="paymentDiscount">Скидка 20% · экономия 65 000 ₽</div>
+          <div class="payment-hero-caption">Удобно разбить на 3 комфортных этапа</div>
         </header>
         <div class="payment-steps">
           <div class="payment-step">
@@ -2167,7 +2163,7 @@
                 <span class="payment-step-num">Этап 1</span>
                 <span class="payment-step-pct">50%</span>
               </div>
-              <div class="payment-step-title">Аванс</div>
+              <div class="payment-step-title">Старт работ</div>
             </div>
             <div class="payment-step-amount" id="paymentStep1">130 000 ₽</div>
           </div>
@@ -2177,7 +2173,7 @@
                 <span class="payment-step-num">Этап 2</span>
                 <span class="payment-step-pct">20%</span>
               </div>
-              <div class="payment-step-title">После записей</div>
+              <div class="payment-step-title">Когда записи готовы</div>
             </div>
             <div class="payment-step-amount" id="paymentStep2">52 000 ₽</div>
           </div>
@@ -2187,68 +2183,68 @@
                 <span class="payment-step-num">Этап 3</span>
                 <span class="payment-step-pct">30%</span>
               </div>
-              <div class="payment-step-title">После сдачи материала</div>
+              <div class="payment-step-title">Когда всё готово</div>
             </div>
             <div class="payment-step-amount" id="paymentStep3">78 000 ₽</div>
           </div>
         </div>
       </div>
       <div class="alert alert-warning">
-        <span class="alert-icon">⚠</span>
-        <span>При нарушении сроков оплаты более чем на 10 календарных дней скидка аннулируется, и сумма восстанавливается до полной стоимости — <strong id="paymentAlertFull">325 000 ₽</strong>.</span>
+        <span class="alert-icon">✦</span>
+        <span>Небольшое напоминание: если оплата задержится больше чем на 10 дней, скидка 20%, к сожалению, не сохранится — сумма вернётся к полной стоимости: <strong id="paymentAlertFull">325 000 ₽</strong>.</span>
       </div>
     </section>
 
     <section id="terms">
-      <h2 class="section-title">Условия</h2>
+      <h2 class="section-title">Несколько важных моментов</h2>
 
       <div class="subsection">
-        <div class="subsection-title">Правки</div>
+        <div class="subsection-title">Про правки</div>
         <ul class="terms-list">
-          <li>В стоимость включено 2 раунда бесплатных правок по каждому этапу (кроме мастеринга).</li>
-          <li>Правки в мастеринге — бесплатно, если не меняются миксы.</li>
-          <li>Дополнительные правки — 3 000 ₽ / час.</li>
+          <li>В стоимость уже включены 2 раунда бесплатных правок на каждом этапе (кроме мастеринга).</li>
+          <li>Правки в мастеринге — бесплатно, если миксы остаются прежними.</li>
+          <li>Если понадобится больше — дополнительные правки по 3 000 ₽ / час.</li>
         </ul>
       </div>
 
       <div class="terms-liability">
-        <div class="terms-liability-label">Ответственность сторон</div>
+        <div class="terms-liability-label">На случай непредвиденного</div>
 
         <article class="liability-card liability-card--executor">
           <header class="liability-card-head">
-            <span class="liability-card-role">Исполнитель</span>
-            <h3 class="liability-card-title">За сроки и качество</h3>
+            <span class="liability-card-role">С моей стороны</span>
+            <h3 class="liability-card-title">Сроки и качество</h3>
           </header>
           <ul class="liability-list">
-            <li>Если материал сдан позже согласованного срока по вине исполнителя — штраф <strong>7 500 ₽ за каждый трек</strong> (30% от стоимости редакции вокала + сведения + мастеринга: 25 000 ₽).</li>
-            <li>Штраф не применяется, если задержка произошла по вине заказчика или из‑за форс‑мажора.</li>
+            <li>Если по моей вине материал сдан позже согласованного срока — компенсация <strong>7 500 ₽ за каждый трек</strong> (30% от стоимости редакции вокала + сведения + мастеринга: 25 000 ₽).</li>
+            <li>Это не касается ситуаций, когда задержка связана с вашей стороной или форс‑мажором.</li>
           </ul>
         </article>
 
         <article class="liability-card liability-card--client">
           <header class="liability-card-head">
-            <span class="liability-card-role">Заказчик</span>
-            <h3 class="liability-card-title">За сессии и сроки</h3>
+            <span class="liability-card-role">С вашей стороны</span>
+            <h3 class="liability-card-title">Сессии и сроки</h3>
           </header>
           <ul class="liability-list">
-            <li>За отмену или перенос согласованной сессии менее чем за 3 рабочих дня — сессия оплачивается полностью.</li>
+            <li>Если сессию отменяют или переносят менее чем за 3 рабочих дня — она оплачивается полностью, чтобы время в студии не пропало зря.</li>
           </ul>
         </article>
       </div>
     </section>
 
     <section id="result">
-      <h2 class="section-title">Результат</h2>
+      <h2 class="section-title">Что вы получите</h2>
       <div class="card deliverables">
         <ul>
           <li>3 финальных стерео-трека в формате .WAV (44.1 кГц / 24 bit)</li>
-          <li>Минусовки (инструментальные версии) — по запросу</li>
+          <li>Минусовки (инструментальные версии) — с радостью, по запросу</li>
         </ul>
         <div class="deliverables-deadline">
-          <div class="deadline-badge"><span class="icon-lamp" aria-hidden="true"></span> Сдача: 1 ОКТЯБРЯ 2026</div>
+          <div class="deadline-badge"><span class="icon-lamp" aria-hidden="true"></span> Готовность: 1 ОКТЯБРЯ 2026</div>
         </div>
         <p style="margin-top: 14px; font-size: 14px; color: var(--muted); line-height: 1.6;">
-          Материал считается сданным в момент отправки ссылки на скачивание (облачное хранилище) или передачи на физическом носителе (по договорённости).
+          Считаем, что всё готово, когда вы получаете ссылку на скачивание (облако) или файлы на носителе — как вам удобнее.
         </p>
       </div>
     </section>
@@ -2276,11 +2272,11 @@
 
   <div class="footer-bar">
     <div>
-      <div class="label">Со скидкой 20%</div>
+      <div class="label">Итого со скидкой 20%</div>
       <div class="amount" id="footerAmount">260 000 ₽</div>
     </div>
     <div class="deadline">
-      <span class="deadline-head"><span class="icon-lamp icon-lamp--sm" aria-hidden="true"></span> Сдача</span>
+      <span class="deadline-head"><span class="icon-lamp icon-lamp--sm" aria-hidden="true"></span> Готовность</span>
       <span class="deadline-date">1 ОКТ 2026</span>
     </div>
   </div>

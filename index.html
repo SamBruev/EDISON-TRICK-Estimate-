@@ -605,6 +605,35 @@
       background: linear-gradient(90deg, var(--border-strong), transparent);
     }
 
+    @keyframes termsTitleGlow {
+      0%, 100% {
+        color: var(--label);
+        text-shadow: none;
+      }
+      50% {
+        color: var(--time);
+        text-shadow:
+          0 0 10px rgba(242, 215, 140, 0.55),
+          0 0 22px rgba(242, 215, 140, 0.25);
+      }
+    }
+
+    #terms .section-title {
+      justify-content: center;
+      animation: termsTitleGlow 3.2s ease-in-out infinite;
+    }
+
+    #terms .section-title::before {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(270deg, var(--border-strong), transparent);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #terms .section-title { animation: none; }
+    }
+
     .card {
       position: relative;
       isolation: isolate;
@@ -703,6 +732,14 @@
       font-variant-numeric: tabular-nums;
     }
 
+    @keyframes variantPressAnim {
+      0%   { transform: scale(1); }
+      20%  { transform: scale(0.974); filter: brightness(0.9); }
+      55%  { transform: scale(1.014); filter: brightness(1.06); }
+      78%  { transform: scale(0.997); }
+      100% { transform: scale(1); filter: brightness(1); }
+    }
+
     .variant-toggle {
       display: flex;
       align-items: center;
@@ -712,6 +749,17 @@
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       transition: background 0.25s ease, box-shadow 0.25s ease;
+      transform-origin: center;
+      will-change: transform;
+    }
+
+    .variant-toggle:active {
+      transform: scale(0.976);
+      transition: transform 0.07s ease-out, background 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .variant-toggle.is-pressing {
+      animation: variantPressAnim 0.44s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .variant-toggle.is-live {
@@ -784,6 +832,7 @@
       .price-bump-up,
       .price-bump-down,
       .row.row-live-flash,
+      .variant-toggle.is-pressing,
       .variant-toggle.is-live .variant-title::after,
       .row.is-live .row-title::after,
       .date-chip.is-live .date-chip-label::after {
@@ -1230,6 +1279,111 @@
       white-space: nowrap;
       font-variant-numeric: tabular-nums;
       color: var(--label);
+    }
+
+    .bonus-card {
+      position: relative;
+      isolation: isolate;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid rgba(242, 215, 140, 0.22);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow:
+        var(--glass-shadow),
+        0 0 32px rgba(242, 215, 140, 0.06);
+      padding: 20px 18px;
+    }
+
+    .bonus-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(
+        160deg,
+        rgba(242, 215, 140, 0.06) 0%,
+        transparent 55%
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bonus-card > * { position: relative; z-index: 1; }
+
+    .bonus-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .bonus-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--time);
+      padding: 3px 9px;
+      border: 1px solid rgba(242, 215, 140, 0.3);
+      border-radius: 4px;
+      background: rgba(242, 215, 140, 0.06);
+    }
+
+    .bonus-list {
+      list-style: none;
+      display: grid;
+      gap: 0;
+    }
+
+    .bonus-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    .bonus-item:last-child { border-bottom: none; }
+
+    .bonus-item-icon {
+      flex-shrink: 0;
+      width: 11px;
+      height: 16px;
+      background: url("assets/symbol.png") center / contain no-repeat;
+      opacity: 0.75;
+      margin-top: 3px;
+    }
+
+    .bonus-item strong { color: var(--label); font-weight: 600; }
+    .bonus-item em { color: var(--time); font-style: normal; font-weight: 600; }
+
+    .cal-event-card--deadline {
+      align-items: center;
+      gap: 18px;
+      padding: 16px 18px;
+      border-left-width: 3px;
+    }
+
+    .cal-deadline-lamp {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 12px rgba(255, 180, 80, 0.5));
+    }
+
+    .cal-deadline-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--time);
+      line-height: 1.2;
     }
 
     .cal-footer {
@@ -1964,8 +2118,8 @@
       </div>
       <div class="stat full">
         <div class="stat-label">Полная сумма</div>
-        <div class="stat-value large" id="heroTotal">325 000 ₽</div>
-        <div class="stat-discount" id="heroDiscount">Итого со скидкой 20%: <strong>260 000 ₽</strong></div>
+        <div class="stat-value large" id="heroTotal">295 000 ₽</div>
+        <div class="stat-discount" id="heroDiscount">Итого со скидкой 20%: <strong>236 000 ₽</strong></div>
       </div>
       </div>
     </header>
@@ -1981,6 +2135,7 @@
       <li><a href="#payment">Оплата</a></li>
       <li><a href="#terms">Условия</a></li>
       <li><a href="#result">Результат</a></li>
+      <li><a href="#bonus">Бонусы</a></li>
     </ul>
       </nav>
       <span class="nav-scroll-hint nav-scroll-hint--right" aria-hidden="true">›</span>
@@ -2073,28 +2228,12 @@
           </div>
           <span class="row-price">75 000 ₽</span>
         </div>
-        <div class="row">
-          <span class="row-num">8</span>
-          <div class="row-body">
-            <div class="row-title">Доработки сведения</div>
-            <div class="row-meta">29 сен · 1 смена</div>
-          </div>
-          <span class="row-price">15 000 ₽</span>
-        </div>
-        <div class="row">
-          <span class="row-num">9</span>
-          <div class="row-body">
-            <div class="row-title">Доработки сведения</div>
-            <div class="row-meta">30 сен · 1 смена</div>
-          </div>
-          <span class="row-price">15 000 ₽</span>
-        </div>
         <div class="row total">
           <span class="row-num"></span>
           <div class="row-body">
             <div class="row-title">Итого</div>
           </div>
-          <span class="row-price" id="summaryTotal">325 000 ₽</span>
+          <span class="row-price" id="summaryTotal">295 000 ₽</span>
         </div>
       </div>
     </section>
@@ -2117,10 +2256,8 @@
         </div>
         <div class="cal-legend" id="calLegend"></div>
         <div class="cal-note" id="calNote" hidden></div>
-        <div class="cal-detail" id="calDetail">
-          <div class="cal-detail-placeholder">Выберите дату — расскажем, что там запланировано</div>
-        </div>
-        <div class="cal-footer">Итого часов: <strong>~ 78 ч.</strong> <span style="color:var(--muted);font-weight:400;">· редакция вокала + сведение + мастеринг — фикс. 25 000 ₽/трек</span></div>
+        <div class="cal-detail" id="calDetail"></div>
+        <div class="cal-footer">Итого часов: <strong>~ 68 ч.</strong> <span style="color:var(--muted);font-weight:400;">· редакция вокала + сведение + мастеринг — фикс. 25 000 ₽/трек</span></div>
       </div>
     </section>
 
@@ -2151,10 +2288,6 @@
           <span class="date-chip-label">Редакция вокала + сведение + мастеринг</span>
           <span class="date-chip-value">8, 15, 22 сен · 25 000 ₽/трек</span>
         </div>
-        <div class="date-chip">
-          <span class="date-chip-label">Доработки, если понадобятся</span>
-          <span class="date-chip-value">29, 30 сентября</span>
-        </div>
         <div class="date-chip date-chip--deadline">
           <span class="date-chip-label date-chip-label--deadline"><span class="icon-lamp icon-lamp--sm" aria-hidden="true"></span> Финальная сдача</span>
           <span class="date-chip-value" style="color: var(--time);">1 ОКТЯБРЯ 2026</span>
@@ -2168,10 +2301,10 @@
         <header class="payment-hero">
           <div class="payment-hero-top">
             <span class="payment-hero-label">Итого к оплате</span>
-            <span class="payment-hero-was" id="paymentFull">325 000 ₽</span>
+            <span class="payment-hero-was" id="paymentFull">295 000 ₽</span>
           </div>
-          <div class="payment-hero-price" id="paymentFinal">260 000 ₽</div>
-          <div class="payment-hero-note" id="paymentDiscount">Скидка 20% · экономия 65 000 ₽</div>
+          <div class="payment-hero-price" id="paymentFinal">236 000 ₽</div>
+          <div class="payment-hero-note" id="paymentDiscount">Скидка 20% · экономия 59 000 ₽</div>
           <div class="payment-hero-caption">Удобно разбить на 3 комфортных этапа</div>
         </header>
         <div class="payment-steps">
@@ -2183,7 +2316,7 @@
               </div>
               <div class="payment-step-title">Старт работ</div>
             </div>
-            <div class="payment-step-amount" id="paymentStep1">130 000 ₽</div>
+            <div class="payment-step-amount" id="paymentStep1">118 000 ₽</div>
           </div>
           <div class="payment-step">
             <div class="payment-step-main">
@@ -2193,7 +2326,7 @@
               </div>
               <div class="payment-step-title">Когда записи готовы</div>
             </div>
-            <div class="payment-step-amount" id="paymentStep2">52 000 ₽</div>
+            <div class="payment-step-amount" id="paymentStep2">47 200 ₽</div>
           </div>
           <div class="payment-step">
             <div class="payment-step-main">
@@ -2203,13 +2336,13 @@
               </div>
               <div class="payment-step-title">Когда всё готово</div>
             </div>
-            <div class="payment-step-amount" id="paymentStep3">78 000 ₽</div>
+            <div class="payment-step-amount" id="paymentStep3">70 800 ₽</div>
           </div>
         </div>
       </div>
       <div class="alert alert-warning">
         <span class="alert-icon">✦</span>
-        <span>Небольшое напоминание: если оплата задержится больше чем на 10 дней, скидка 20%, к сожалению, не сохранится — сумма вернётся к полной стоимости: <strong id="paymentAlertFull">325 000 ₽</strong>.</span>
+        <span>Небольшое напоминание: если оплата задержится больше чем на 10 дней, скидка 20%, к сожалению, не сохранится — сумма вернётся к полной стоимости: <strong id="paymentAlertFull">295 000 ₽</strong>.</span>
       </div>
     </section>
 
@@ -2276,6 +2409,29 @@
       </div>
     </section>
 
+    <section id="bonus">
+      <h2 class="section-title">Бонусы</h2>
+      <div class="bonus-card">
+        <div class="bonus-head">
+          <span class="bonus-label">Включено</span>
+        </div>
+        <ul class="bonus-list">
+          <li class="bonus-item">
+            <span class="bonus-item-icon" aria-hidden="true"></span>
+            <span><strong>Бесплатные стемы и минус</strong> — все треки сдаются с полным комплектом стемов по каждому инструменту и инструментальной версией.</span>
+          </li>
+          <li class="bonus-item">
+            <span class="bonus-item-icon" aria-hidden="true"></span>
+            <span><strong>Акустическая версия</strong> — если в течение месяца после окончания работы захотите записать акустику одной из песен, студия по ставке <em>2 000 ₽/ч</em>.</span>
+          </li>
+          <li class="bonus-item">
+            <span class="bonus-item-icon" aria-hidden="true"></span>
+            <span><strong>Специальные условия до конца года</strong> — повторные репетиции <em>10 000 ₽</em>, сведение любого нового трека <em>20 000 ₽</em>.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
   </main>
 
   </div>
@@ -2300,7 +2456,7 @@
   <div class="footer-bar">
     <div>
       <div class="label">Итого со скидкой 20%</div>
-      <div class="amount" id="footerAmount">260 000 ₽</div>
+      <div class="amount" id="footerAmount">236 000 ₽</div>
     </div>
     <div class="deadline">
       <span class="deadline-head"><span class="icon-lamp icon-lamp--sm" aria-hidden="true"></span> Готовность</span>

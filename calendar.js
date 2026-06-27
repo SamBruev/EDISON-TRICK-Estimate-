@@ -6,7 +6,6 @@
     guitars:   { label: 'Гитары', color: '#38bdf8' },
     vocals:    { label: 'Вокал', color: '#f472b6' },
     mixing:    { label: 'Редакция + сведение', color: '#ffb600' },
-    mixfix:    { label: 'Доработки', color: '#d97706' },
     deadline:  { label: 'Готовность', color: '#f2d78c' },
   };
 
@@ -31,8 +30,6 @@
     '2026-09-08': [{ type: 'mixing', title: 'Редакция вокала + сведение + мастеринг · трек 1', meta: 'за трек', price: '25 000 ₽' }],
     '2026-09-15': [{ type: 'mixing', title: 'Редакция вокала + сведение + мастеринг · трек 2', meta: 'за трек', price: '25 000 ₽' }],
     '2026-09-22': [{ type: 'mixing', title: 'Редакция вокала + сведение + мастеринг · трек 3', meta: 'за трек', price: '25 000 ₽' }],
-    '2026-09-29': [{ type: 'mixfix', title: 'Доработки сведения', hours: '5 ч.', price: '15 000 ₽' }],
-    '2026-09-30': [{ type: 'mixfix', title: 'Доработки сведения', hours: '5 ч.', price: '15 000 ₽' }],
     '2026-10-01': [{ type: 'deadline', title: 'Финальная сдача', hours: '', price: '' }],
   };
 
@@ -176,7 +173,13 @@
           .map((t) => colorMark(TYPES[t].color, 'cal-dot'))
           .join('');
 
-        btn.innerHTML = `<span class="cal-day-num">${day}</span><span class="cal-dots">${dots}</span>`;
+        const primaryType = events.find((e) => e.type !== 'deadline')?.type;
+        const primaryColor = primaryType ? TYPES[primaryType].color : null;
+        const numStyle = primaryColor
+          ? `style="border: 1.5px solid ${primaryColor}; box-shadow: 0 0 7px ${primaryColor}66;"`
+          : '';
+
+        btn.innerHTML = `<span class="cal-day-num" ${numStyle}>${day}</span><span class="cal-dots">${dots}</span>`;
         btn.addEventListener('click', () => selectDay(key));
       } else {
         btn.innerHTML = `<span class="cal-day-num">${day}</span>`;
@@ -204,10 +207,18 @@
       events
         .map((ev) => {
           const color = TYPES[ev.type].color;
+
+          if (ev.type === 'deadline') {
+            return `<div class="cal-event-card cal-event-card--deadline" style="border-left-color:${color}">
+              <img src="assets/symbol.png" class="cal-deadline-lamp" alt="" aria-hidden="true">
+              <div class="cal-deadline-title">Финальная сдача</div>
+            </div>`;
+          }
+
           const meta = ev.meta || [ev.hours, TYPES[ev.type].label].filter(Boolean).join(' · ');
           const price = ev.price
             ? `<span class="cal-event-price">${ev.price}</span>`
-            : '<span class="cal-event-price" style="color:var(--time)">Финал</span>';
+            : '';
           return `<div class="cal-event-card" style="border-left-color:${color}">
             <div>
               <div class="cal-event-title">${ev.title}</div>
@@ -221,8 +232,7 @@
 
   function renderDetailPlaceholder() {
     if (!selectedKey || !EVENTS[selectedKey]) {
-      detailEl.innerHTML =
-        '<div class="cal-detail-placeholder">Выберите дату — расскажем, что там запланировано</div>';
+      detailEl.innerHTML = '';
     }
   }
 

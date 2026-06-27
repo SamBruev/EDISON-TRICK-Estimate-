@@ -9,8 +9,8 @@
   var BASE = {
     drumsMidi: 30000,
     bassMidi: 15000,
-    other: 280000,
-    total: 325000
+    other: 250000,
+    total: 295000
   };
 
   var prevTotal = null;
@@ -284,10 +284,23 @@
     prevDrumsLive = drumsLive;
   }
 
+  function pressToggle(el) {
+    if (!el) return;
+    el.classList.remove('is-pressing');
+    void el.offsetWidth;
+    el.classList.add('is-pressing');
+    el.addEventListener('animationend', function onEnd() {
+      el.classList.remove('is-pressing');
+      el.removeEventListener('animationend', onEnd);
+    });
+  }
+
   document.getElementById('variantBassLive').addEventListener('change', function () {
+    pressToggle(bassToggle);
     update(true);
   });
   document.getElementById('variantDrumsLive').addEventListener('change', function () {
+    pressToggle(drumsToggle);
     update(true);
   });
 

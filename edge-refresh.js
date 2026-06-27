@@ -30,6 +30,24 @@
     );
   }
 
+  var pendingProgress = null;
+  var progressRaf = null;
+
+  function flushProgress() {
+    progressRaf = null;
+    if (pendingProgress !== null) {
+      var v = pendingProgress;
+      pendingProgress = null;
+      setProgress(v);
+    }
+  }
+
+  function scheduleProgress(value) {
+    pendingProgress = value;
+    if (progressRaf) return;
+    progressRaf = requestAnimationFrame(flushProgress);
+  }
+
   function setProgress(value) {
     progress = Math.max(0, Math.min(1, value));
     root.style.setProperty('--edge-refresh-progress', progress.toFixed(3));
@@ -117,7 +135,7 @@
     }
 
     if (preventDefault) preventDefault();
-    setProgress(Math.min(dx, MAX_PULL) / THRESHOLD);
+    scheduleProgress(Math.min(dx, MAX_PULL) / THRESHOLD);
   }
 
   function onEnd() {

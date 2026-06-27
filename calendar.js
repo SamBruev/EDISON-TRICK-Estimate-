@@ -13,9 +13,9 @@
     return `<span class="${className}" style="background:${color};box-shadow:0 0 6px ${color}99"></span>`;
   }
 
-  const EVENTS = {
-    '2026-06-28': [{ type: 'rehearsal', title: 'Репетиция', hours: '4 ч.', price: '15 000 ₽' }],
-    '2026-07-05': [{ type: 'rehearsal', title: 'Репетиция', hours: '4 ч.', price: '15 000 ₽' }],
+  const BASE_EVENTS = {
+    '2026-06-28': [{ type: 'rehearsal', title: 'Репетиция', hours: '5 ч.', price: '15 000 ₽' }],
+    '2026-07-05': [{ type: 'rehearsal', title: 'Репетиция', hours: '5 ч.', price: '15 000 ₽' }],
     '2026-07-06': [{ type: 'drums', title: 'Барабаны (MIDI)', meta: '3 трека', hours: '5 ч.', price: '15 000 ₽' }],
     '2026-07-07': [{ type: 'drums', title: 'Барабаны (MIDI)', meta: '3 трека', hours: '5 ч.', price: '15 000 ₽' }],
     '2026-07-08': [{ type: 'bass', title: 'Бас (MIDI)', meta: '3 трека', hours: '5 ч.', price: '15 000 ₽' }],
@@ -51,6 +51,14 @@
   let viewYear = 2026;
   let viewMonth = 5;
   let selectedKey = null;
+
+  // Live-recording state, kept in sync with the checkboxes in estimate.js.
+  // When a part is recorded live, its MIDI calendar days are dropped
+  // (live dates are agreed separately) and a note is shown in July.
+  let liveState = { bass: false, drums: false };
+  const DRUMS_MIDI_KEYS = ['2026-07-06', '2026-07-07'];
+  const BASS_MIDI_KEY = '2026-07-08';
+  let EVENTS = computeEvents();
 
   const tabsEl = document.getElementById('calMonthTabs');
   const titleEl = document.getElementById('calTitle');
@@ -93,6 +101,14 @@
     return Object.keys(EVENTS).some((k) => k.startsWith(prefix));
   }
 
+  function computeEvents() {
+    const ev = {};
+    Object.keys(BASE_EVENTS).forEach((k) => { ev[k] = BASE_EVENTS[k]; });
+    if (liveState.drums) DRUMS_MIDI_KEYS.forEach((k) => { delete ev[k]; });
+    if (liveState.bass) delete ev[BASS_MIDI_KEY];
+    return ev;
+  }
+
   function renderTabs() {
     tabsEl.innerHTML = MONTHS.map(({ y, m, short }) => {
       const active = y === viewYear && m === viewMonth ? ' active' : '';
@@ -125,10 +141,24 @@
   }
 
   function renderNote() {
+    const lines = [];
+
+    if (viewMonth === 6) {
+      if (liveState.drums) {
+        lines.push('<strong>Барабаны вживую</strong> — 3 смены по 3 ч, даты согласуем вместе (вместо MIDI 6–7 июля).');
+      }
+      if (liveState.bass) {
+        lines.push('<strong>Бас вживую</strong> — 3 × 3 ч, даты согласуем вместе (вместо MIDI 8 июля).');
+      }
+    }
+
     if (viewMonth === 8) {
+      lines.push('<strong>Продакшн и правки</strong> (10 ч. · 25 000 ₽) — дату согласуем вместе, между записью вокала (2 сен) и сведением (8 сен).');
+    }
+
+    if (lines.length) {
       noteEl.hidden = false;
-      noteEl.innerHTML =
-        '<strong>Продакшн и правки</strong> (10 ч. · 25 000 ₽) — дату согласуем вместе, между записью вокала (2 сен) и сведением (8 сен).';
+      noteEl.innerHTML = lines.join('<br><br>');
     } else {
       noteEl.hidden = true;
     }
@@ -245,8 +275,10 @@
   }
 
   function render() {
+    EVENTS = computeEvents();
     renderTabs();
     renderNav();
+    renderLegend();
     renderGrid();
     renderNote();
     renderDetailPlaceholder();
@@ -273,7 +305,15 @@
     { passive: true }
   );
 
-  renderLegend();
+  // Called by estimate.js whenever the live checkboxes change.
+  window.calendarSetLive = function (bassLive, drumsLive) {
+    liveState.bass = !!bassLive;
+    liveState.drums = !!drumsLive;
+    EVENTS = computeEvents();
+    if (selectedKey && !EVENTS[selectedKey]) selectedKey = null;
+    render();
+  };
+
   render();
 
   const firstEvent = Object.keys(EVENTS).sort()[0];

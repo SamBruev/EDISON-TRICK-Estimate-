@@ -67,6 +67,7 @@
   }
 
   var priceAnimations = new WeakMap();
+  var discountAnimations = new WeakMap();
 
   function animateRub(el, toValue, options) {
     if (!el) return;
@@ -117,14 +118,24 @@
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       el.textContent = prefix + formatRub(toValue);
+      discountAnimations.delete(el);
       return;
     }
 
-    var fromValue = parseRub(el.textContent);
+    var existing = discountAnimations.get(el);
+    // Strip the prefix before parsing — otherwise the "20" in "Скидка 20%"
+    // gets glued onto the amount (e.g. 59 000 -> 2 059 000).
+    var fromValue = existing
+      ? existing.current
+      : parseRub((el.textContent || '').replace(prefix, ''));
     if (fromValue === toValue) {
+      if (existing) cancelAnimationFrame(existing.rafId);
+      discountAnimations.delete(el);
       el.textContent = prefix + formatRub(toValue);
       return;
     }
+
+    if (existing) cancelAnimationFrame(existing.rafId);
 
     if (direction) playBump(el, direction);
 
@@ -134,10 +145,15 @@
       var t = Math.min(1, (ts - startTime) / duration);
       var current = Math.round(fromValue + (toValue - fromValue) * easeOutCubic(t));
       el.textContent = prefix + formatRub(current);
-      if (t < 1) requestAnimationFrame(frame);
-      else el.textContent = prefix + formatRub(toValue);
+      if (t < 1) {
+        discountAnimations.set(el, { rafId: requestAnimationFrame(frame), current: current });
+      } else {
+        el.textContent = prefix + formatRub(toValue);
+        discountAnimations.delete(el);
+      }
     }
-    requestAnimationFrame(frame);
+
+    discountAnimations.set(el, { rafId: requestAnimationFrame(frame), current: fromValue });
   }
 
   function setPrice(el, value, anim) {
@@ -277,6 +293,10 @@
       } else if (!drumsLive && prevDrumsLive) {
         playBump(drumsToggle && drumsToggle.querySelector('.variant-diff'), 'down');
       }
+    }
+
+    if (window.calendarSetLive) {
+      window.calendarSetLive(bassLive, drumsLive);
     }
 
     prevTotal = state.total;

@@ -1398,6 +1398,7 @@
       -webkit-backdrop-filter: var(--glass-blur);
       box-shadow: var(--glass-shadow), 0 0 40px rgba(242, 215, 140, 0.12);
       transition: border-color 0.25s ease;
+      scroll-margin-top: 78px;
     }
 
     .bonus-summary > * { position: relative; z-index: 1; }
@@ -1412,7 +1413,7 @@
       width: 200%;
       height: 20px;
       color: var(--time);
-      opacity: 0.42;
+      opacity: 0.48;
       z-index: 0;
       pointer-events: none;
       transform: translateX(0) scaleY(0.62);
@@ -1444,6 +1445,39 @@
       --wave-amp: 1;
       opacity: 0.7;
       animation-duration: 5s;
+    }
+
+    /* Разряд: яркая искра-«заряд» бежит вдоль волны (как ток по проводу) —
+       так анимация однозначно читается как электричество. Суть прежняя:
+       волна остаётся «проводом», искра — бегущий по нему заряд. */
+    .bonus-spark {
+      position: absolute;
+      bottom: 14px;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      margin-left: -3px;
+      border-radius: 50%;
+      background: #fff7e6;
+      box-shadow:
+        0 0 5px 1.5px rgba(255, 222, 150, 0.95),
+        0 0 12px 3px rgba(242, 200, 120, 0.6),
+        -11px 0 11px 1px rgba(242, 200, 120, 0.34);
+      opacity: 0;
+      z-index: 0;
+      pointer-events: none;
+      animation: bonusSpark 3s linear infinite;
+    }
+
+    @keyframes bonusSpark {
+      0%   { left: 0%;   opacity: 0; }
+      8%   { opacity: 1; }
+      92%  { opacity: 1; }
+      100% { left: 100%; opacity: 0; }
+    }
+
+    .bonus-toggle:checked ~ .bonus-summary .bonus-spark {
+      animation-duration: 1.7s;
     }
 
     .bonus-summary-title {
@@ -1520,6 +1554,7 @@
         transition: none;
       }
       .bonus-wave { animation: none; }
+      .bonus-spark { animation: none; display: none; }
       .bonus-toggle:checked ~ .bonus-collapse .bonus-item,
       .bonus-toggle:checked ~ .bonus-collapse .bonus-item .bonus-item-icon { animation: none; }
     }
@@ -2660,6 +2695,7 @@
           <path class="bonus-wave-path bonus-wave-path--echo" d="M0,22 Q25,15 50,22 Q75,29 100,22 Q125,15 150,22 Q175,29 200,22 Q225,15 250,22 Q275,29 300,22 Q325,15 350,22 Q375,29 400,22 Q425,15 450,22 Q475,29 500,22 Q525,15 550,22 Q575,29 600,22 Q625,15 650,22 Q675,29 700,22 Q725,15 750,22 Q775,29 800,22 Q825,15 850,22 Q875,29 900,22 Q925,15 950,22 Q975,29 1000,22 Q1025,15 1050,22 Q1075,29 1100,22 Q1125,15 1150,22 Q1175,29 1200,22"/>
           <path class="bonus-wave-path" d="M0,22 Q25,15 50,22 Q75,29 100,22 Q125,15 150,22 Q175,29 200,22 Q225,15 250,22 Q275,29 300,22 Q325,15 350,22 Q375,29 400,22 Q425,15 450,22 Q475,29 500,22 Q525,15 550,22 Q575,29 600,22 Q625,15 650,22 Q675,29 700,22 Q725,15 750,22 Q775,29 800,22 Q825,15 850,22 Q875,29 900,22 Q925,15 950,22 Q975,29 1000,22 Q1025,15 1050,22 Q1075,29 1100,22 Q1125,15 1150,22 Q1175,29 1200,22"/>
         </svg>
+        <span class="bonus-spark" aria-hidden="true"></span>
         <span class="bonus-summary-title">✦ Бонусы</span>
         <span class="bonus-chevron" aria-hidden="true">⌄</span>
       </label>
@@ -2731,6 +2767,20 @@
     ['gesturestart', 'gesturechange', 'gestureend'].forEach(function (type) {
       document.addEventListener(type, function (e) { e.preventDefault(); }, { passive: false });
     });
+
+    // При раскрытии «Бонусов» подкручиваем плашку к верху, чтобы список
+    // разворачивался в зоне видимости и анимация не пролистывалась мимо.
+    (function () {
+      var toggle = document.getElementById('bonusToggle');
+      var summary = document.querySelector('.bonus-summary');
+      if (!toggle || !summary) return;
+      toggle.addEventListener('change', function () {
+        if (!toggle.checked) return;
+        requestAnimationFrame(function () {
+          summary.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+    })();
   </script>
 </body>
 </html>

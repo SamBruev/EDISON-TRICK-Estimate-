@@ -36,8 +36,8 @@
       --glass-bg-elevated: rgba(24, 26, 32, 0.62);
       --glass-bg-bar: rgba(12, 13, 17, 0.6);
       --glass-bg-fallback: rgba(10, 11, 15, 0.94);
-      --glass-blur: blur(32px) saturate(180%);
-      --glass-blur-strong: blur(42px) saturate(195%);
+      --glass-blur: blur(18px) saturate(155%);
+      --glass-blur-strong: blur(22px) saturate(165%);
       --glass-highlight: rgba(255, 248, 230, 0.22);
       --glass-shine: linear-gradient(
         180deg,
@@ -368,6 +368,13 @@
       font-weight: 600;
     }
 
+    .stat-label--ready {
+      font-size: 14px;
+      color: var(--time);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
     .stat-value {
       font-size: 1rem;
       font-weight: 600;
@@ -508,27 +515,19 @@
       z-index: 21;
       transform: translateY(-50%);
       pointer-events: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      font-size: 17px;
-      font-weight: 700;
+      font-size: 13px;
       line-height: 1;
-      color: #0c0c0c;
-      background: var(--time);
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.6), 0 0 14px var(--time);
+      color: var(--muted);
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.85);
       opacity: 0;
       transition: opacity 0.2s ease;
     }
 
-    .nav-scroll-hint--left { left: 5px; }
-    .nav-scroll-hint--right { right: 5px; }
+    .nav-scroll-hint--left { left: 6px; }
+    .nav-scroll-hint--right { right: 6px; }
 
-    .nav-scroll-wrap.can-scroll-left .nav-scroll-hint--left { opacity: 0.95; }
-    .nav-scroll-wrap.can-scroll-right .nav-scroll-hint--right { opacity: 0.95; }
+    .nav-scroll-wrap.can-scroll-left .nav-scroll-hint--left { opacity: 0.32; }
+    .nav-scroll-wrap.can-scroll-right .nav-scroll-hint--right { opacity: 0.32; }
 
     .nav-scroll-wrap.can-scroll nav ul {
       padding-left: 22px;
@@ -1292,16 +1291,29 @@
     .bonus-card {
       position: relative;
       isolation: isolate;
-      background: var(--glass-bg);
+      background:
+        linear-gradient(180deg, rgba(242, 215, 140, 0.07), transparent 40%),
+        var(--glass-bg);
       backdrop-filter: var(--glass-blur);
       -webkit-backdrop-filter: var(--glass-blur);
-      border: 1px solid rgba(242, 215, 140, 0.22);
+      border: 1px solid rgba(242, 215, 140, 0.42);
       border-radius: var(--radius);
       overflow: hidden;
       box-shadow:
         var(--glass-shadow),
-        0 0 32px rgba(242, 215, 140, 0.06);
+        0 0 40px rgba(242, 215, 140, 0.14);
       padding: 20px 18px;
+    }
+
+    .bonus-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(242, 215, 140, 0.9), transparent);
+      z-index: 2;
     }
 
     .bonus-card::before {
@@ -1339,6 +1351,19 @@
       background: rgba(242, 215, 140, 0.06);
     }
 
+    #bonus .section-title {
+      color: var(--time);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    #bonus .section-title::before {
+      content: "✦";
+      margin-right: 7px;
+      color: var(--time);
+    }
+
     .bonus-list {
       list-style: none;
       display: grid;
@@ -1360,11 +1385,12 @@
 
     .bonus-item-icon {
       flex-shrink: 0;
-      width: 16px;
-      height: 23px;
+      width: 22px;
+      height: 31px;
       background: url("assets/symbol.png") center / contain no-repeat;
-      opacity: 0.85;
-      margin-top: 1px;
+      opacity: 0.92;
+      margin-top: -3px;
+      filter: drop-shadow(0 0 7px rgba(255, 198, 110, 0.4));
     }
 
     .bonus-item strong { color: var(--label); font-weight: 600; }
@@ -1868,6 +1894,23 @@
       letter-spacing: 0.02em;
     }
 
+    .footer-deadline {
+      text-align: right;
+    }
+
+    .footer-deadline .label {
+      text-align: right;
+    }
+
+    .footer-deadline-date {
+      margin-top: 2px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--time);
+      letter-spacing: 0.08em;
+      font-variant-numeric: tabular-nums;
+    }
+
     @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
       .card,
       .stat,
@@ -2124,15 +2167,15 @@
   <div class="wrap">
     <header class="page-head">
       <div class="hero-band">EDISON TRICK</div>
-      <h1>Смета на производство<br>3 песен</h1>
+      <h1>Смета на производство 3 песен</h1>
       <div class="hero-stats">
       <div class="stat">
         <div class="stat-label">Стоимость часа</div>
         <div class="stat-value">3 000 ₽ / ч</div>
       </div>
       <div class="stat">
-        <div class="stat-label">Готовность</div>
-        <div class="stat-value accent deadline-date"><span class="icon-lamp icon-lamp--xs" aria-hidden="true"></span> 1 ОКТ 2026</div>
+        <div class="stat-label stat-label--ready">Готовность</div>
+        <div class="stat-value accent deadline-date">1 ОКТ 2026</div>
       </div>
       <div class="stat full">
         <div class="stat-label">Полная сумма</div>
@@ -2475,6 +2518,10 @@
     <div>
       <div class="label">Итого со скидкой 20%</div>
       <div class="amount" id="footerAmount">236 000 ₽</div>
+    </div>
+    <div class="footer-deadline">
+      <div class="label">Готовность</div>
+      <div class="footer-deadline-date">1 ОКТ 2026</div>
     </div>
   </div>
 

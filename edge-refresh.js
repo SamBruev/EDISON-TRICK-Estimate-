@@ -26,7 +26,7 @@
 
   function isBlockedTarget(el) {
     return el && el.closest(
-      '#nav-scroll-wrap, nav, .cal-grid, .cal-tabs, input, textarea, select, label.variant-toggle'
+      '#nav-scroll-wrap, nav, .cal-grid, .cal-month-tabs, input, textarea, select, label.variant-toggle'
     );
   }
 

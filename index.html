@@ -1718,6 +1718,20 @@
       }
     }
 
+    .brand-watermark {
+      position: fixed;
+      top: -4%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(520px, 92vw);
+      aspect-ratio: 1;
+      background: url("assets/et-logo.png") center top / contain no-repeat;
+      mix-blend-mode: screen;
+      opacity: 0.16;
+      pointer-events: none;
+      z-index: 0;
+    }
+
     html.edge-refresh-active .wrap {
       transform: translateX(calc(var(--edge-refresh-progress) * -22px));
     }
@@ -1924,6 +1938,7 @@
 </head>
 <body>
 
+  <div class="brand-watermark" aria-hidden="true"></div>
   <div class="top-logo" id="top-logo-block">
     <div class="top-logo-brand">
       <div class="logo-bg" role="img" aria-label="Sam Bruev · Mixing and Recording"></div>

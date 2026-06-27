@@ -7,7 +7,7 @@
     vocals:    { label: 'Вокал', color: '#f472b6' },
     mixing:    { label: 'Редакция + сведение', color: '#ffb600' },
     mixfix:    { label: 'Доработки', color: '#d97706' },
-    deadline:  { label: 'Сдача', color: '#f2d78c' },
+    deadline:  { label: 'Готовность', color: '#f2d78c' },
   };
 
   function colorMark(color, className) {
@@ -33,7 +33,7 @@
     '2026-09-22': [{ type: 'mixing', title: 'Редакция вокала + сведение + мастеринг · трек 3', meta: 'за трек', price: '25 000 ₽' }],
     '2026-09-29': [{ type: 'mixfix', title: 'Доработки сведения', hours: '5 ч.', price: '15 000 ₽' }],
     '2026-09-30': [{ type: 'mixfix', title: 'Доработки сведения', hours: '5 ч.', price: '15 000 ₽' }],
-    '2026-10-01': [{ type: 'deadline', title: 'Сдача материала', hours: '', price: '' }],
+    '2026-10-01': [{ type: 'deadline', title: 'Финальная сдача', hours: '', price: '' }],
   };
 
   const MONTHS = [
@@ -131,7 +131,7 @@
     if (viewMonth === 8) {
       noteEl.hidden = false;
       noteEl.innerHTML =
-        '<strong>Продакшн, правки</strong> (10 ч. · 25 000 ₽) — дата по согласованию, между записью вокала (2 сен) и сведением (8 сен).';
+        '<strong>Продакшн и правки</strong> (10 ч. · 25 000 ₽) — дату согласуем вместе, между записью вокала (2 сен) и сведением (8 сен).';
     } else {
       noteEl.hidden = true;
     }
@@ -222,7 +222,7 @@
   function renderDetailPlaceholder() {
     if (!selectedKey || !EVENTS[selectedKey]) {
       detailEl.innerHTML =
-        '<div class="cal-detail-placeholder">Выберите дату с событием — подробности появятся здесь</div>';
+        '<div class="cal-detail-placeholder">Выберите дату — расскажем, что там запланировано</div>';
     }
   }
 

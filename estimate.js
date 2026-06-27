@@ -111,7 +111,7 @@
   function animateDiscountLine(el, toValue, options) {
     if (!el) return;
     options = options || {};
-    var prefix = 'Скидка 20% · − ';
+    var prefix = 'Скидка 20% · экономия ';
     var duration = options.duration || 980;
     var direction = options.direction;
 
@@ -211,7 +211,7 @@
       setText('rowDrumsTitle', 'Барабаны (вживую)');
       setText('rowDrumsMeta', TRACKS + ' × 3 ч · 5 000 ₽/ч + редакция 5 000 ₽');
       setText('dateDrumsLabel', 'Барабаны (вживую)');
-      setText('dateDrumsValue', '3 × 3 ч · по согласованию');
+      setText('dateDrumsValue', '3 × 3 ч · даты согласуем вместе');
     } else {
       setText('rowDrumsTitle', 'Барабаны (MIDI)');
       setText('rowDrumsMeta', '3 трека · MIDI-пакет · 30 000 ₽');
@@ -223,7 +223,7 @@
       setText('rowBassTitle', 'Бас (вживую)');
       setText('rowBassMeta', TRACKS + ' × 3 ч · 3 000 ₽/ч');
       setText('dateBassLabel', 'Бас (вживую)');
-      setText('dateBassValue', '3 × 3 ч · по согласованию');
+      setText('dateBassValue', '3 × 3 ч · даты согласуем вместе');
     } else {
       setText('rowBassTitle', 'Бас (MIDI)');
       setText('rowBassMeta', '3 трека · MIDI-пакет · 15 000 ₽');
@@ -242,7 +242,7 @@
       if (totalAnim) {
         animateDiscountLine(paymentDiscountEl, state.discountAmount, { direction: totalDir });
       } else {
-        paymentDiscountEl.textContent = 'Скидка 20% · − ' + formatRub(state.discountAmount);
+        paymentDiscountEl.textContent = 'Скидка 20% · экономия ' + formatRub(state.discountAmount);
       }
     }
 
@@ -259,7 +259,7 @@
       if (heroStrong) {
         setPrice(heroStrong, state.finalPrice, totalAnim);
       } else {
-        heroDiscountEl.innerHTML = 'Со скидкой 20%: <strong>' + formatRub(state.finalPrice) + '</strong>';
+        heroDiscountEl.innerHTML = 'Итого со скидкой 20%: <strong>' + formatRub(state.finalPrice) + '</strong>';
       }
     }
 

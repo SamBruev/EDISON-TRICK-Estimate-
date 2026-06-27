@@ -216,7 +216,7 @@
       setText('rowDrumsTitle', 'Барабаны (MIDI)');
       setText('rowDrumsMeta', '3 трека · MIDI-пакет · 30 000 ₽');
       setText('dateDrumsLabel', 'Барабаны (MIDI)');
-      setText('dateDrumsValue', '29, 30 июня');
+      setText('dateDrumsValue', '6, 7 июля');
     }
 
     if (bassLive) {
@@ -228,7 +228,7 @@
       setText('rowBassTitle', 'Бас (MIDI)');
       setText('rowBassMeta', '3 трека · MIDI-пакет · 15 000 ₽');
       setText('dateBassLabel', 'Бас (MIDI)');
-      setText('dateBassValue', '1 июля');
+      setText('dateBassValue', '8 июля');
     }
 
     setPrice(document.getElementById('rowDrumsPrice'), state.drums, drumsDir ? { run: true, direction: drumsDir } : null);

@@ -933,14 +933,23 @@
       box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.04);
     }
 
+    .variant-toggle.is-live .variant-check-wrap {
+      width: 34px;
+      height: 34px;
+    }
+
     .variant-toggle.is-live .variant-check-wrap::before {
       animation: none;
-      border-color: var(--hairline);
-      background: rgba(255, 255, 255, 0.12);
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+      width: 34px;
+      height: 34px;
+      border: none;
+      background: url("assets/symbol.png") center / contain no-repeat;
+      box-shadow: none;
+      border-radius: 0;
     }
 
     .variant-toggle.is-live .variant-check-wrap::after {
+      display: none;
       content: "";
       position: absolute;
       left: 50%;
@@ -1229,6 +1238,10 @@
       padding: 14px 16px;
       min-height: 72px;
       background: rgba(255, 255, 255, 0.02);
+    }
+
+    .cal-detail:empty {
+      display: none;
     }
 
     .cal-detail-placeholder {
@@ -2028,7 +2041,6 @@
       background: url("assets/symbol.png") center / contain no-repeat;
       filter: drop-shadow(0 0 8px rgba(255, 198, 110, 0.42));
       transform: rotate(calc(var(--edge-refresh-progress) * 360deg));
-      transition: transform 0.12s linear;
     }
 
     .edge-refresh.is-ready .edge-refresh-lamp {
@@ -2459,10 +2471,6 @@
     <div>
       <div class="label">Итого со скидкой 20%</div>
       <div class="amount" id="footerAmount">236 000 ₽</div>
-    </div>
-    <div class="deadline">
-      <span class="deadline-head"><span class="icon-lamp icon-lamp--sm" aria-hidden="true"></span> Готовность</span>
-      <span class="deadline-date">1 ОКТ 2026</span>
     </div>
   </div>
 

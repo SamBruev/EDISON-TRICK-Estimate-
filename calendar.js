@@ -14,11 +14,11 @@
   }
 
   const EVENTS = {
-    '2026-06-24': [{ type: 'rehearsal', title: 'Репетиция', hours: '4 ч.', price: '15 000 ₽' }],
     '2026-06-28': [{ type: 'rehearsal', title: 'Репетиция', hours: '4 ч.', price: '15 000 ₽' }],
-    '2026-06-29': [{ type: 'drums', title: 'Барабаны (MIDI)', meta: '3 трека', hours: '5 ч.', price: '15 000 ₽' }],
-    '2026-06-30': [{ type: 'drums', title: 'Барабаны (MIDI)', meta: '3 трека', hours: '5 ч.', price: '15 000 ₽' }],
-    '2026-07-01': [{ type: 'bass', title: 'Бас (MIDI)', meta: '3 трека', hours: '5 ч.', price: '15 000 ₽' }],
+    '2026-07-05': [{ type: 'rehearsal', title: 'Репетиция', hours: '4 ч.', price: '15 000 ₽' }],
+    '2026-07-06': [{ type: 'drums', title: 'Барабаны (MIDI)', meta: '3 трека', hours: '5 ч.', price: '15 000 ₽' }],
+    '2026-07-07': [{ type: 'drums', title: 'Барабаны (MIDI)', meta: '3 трека', hours: '5 ч.', price: '15 000 ₽' }],
+    '2026-07-08': [{ type: 'bass', title: 'Бас (MIDI)', meta: '3 трека', hours: '5 ч.', price: '15 000 ₽' }],
     '2026-07-12': [{ type: 'guitars', title: 'Гитары (смена 1)', hours: '5 ч.', price: '15 000 ₽' }],
     '2026-07-19': [{ type: 'guitars', title: 'Гитары (смена 2)', hours: '5 ч.', price: '15 000 ₽' }],
     '2026-07-26': [{ type: 'guitars', title: 'Гитары (смена 3)', hours: '5 ч.', price: '15 000 ₽' }],
@@ -210,7 +210,6 @@
 
           if (ev.type === 'deadline') {
             return `<div class="cal-event-card cal-event-card--deadline" style="border-left-color:${color}">
-              <img src="assets/symbol.png" class="cal-deadline-lamp" alt="" aria-hidden="true">
               <div class="cal-deadline-title">Финальная сдача</div>
             </div>`;
           }

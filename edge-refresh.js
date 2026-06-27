@@ -17,11 +17,17 @@
     ringFill.style.strokeDasharray = String(ringLen);
   }
 
-  var tracking = false;
+  var tracking = false;   // a touch/pointer near the right edge is being observed
+  var armed = false;      // gesture confirmed as a deliberate horizontal edge-pull
+  var locked = false;     // gesture classified as a scroll -> ignore until release
   var refreshing = false;
   var startX = 0;
   var startY = 0;
   var progress = 0;
+  // Below this travel we can't reliably tell a pull from a scroll yet.
+  var DECIDE = 10;
+  // A pull must be clearly more horizontal-left than vertical.
+  var H_DOMINANCE = 1.6;
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function isBlockedTarget(el) {
@@ -102,31 +108,41 @@
     if (isBlockedTarget(target)) return;
     if (window.innerWidth - clientX > EDGE) return;
 
+    // Observe the gesture, but show nothing and grab no scroll until it is
+    // confirmed as a deliberate horizontal pull (see onMove). This is what
+    // prevents an ordinary vertical scroll started near the right edge from
+    // ever triggering a reload.
     tracking = true;
+    armed = false;
+    locked = false;
     startX = clientX;
     startY = clientY;
     overlay.classList.remove('is-snapping', 'is-committing');
     root.classList.remove('edge-refresh-commit');
-    overlay.classList.add('is-active');
-    root.classList.add('edge-refresh-active');
   }
 
   function onMove(clientX, clientY, preventDefault) {
-    if (!tracking || refreshing) return;
+    if (!tracking || locked || refreshing) return;
 
-    var dx = startX - clientX;
+    var dx = startX - clientX;          // leftward pull is positive
     var dy = Math.abs(clientY - startY);
 
-    if (dx < 6 && dy > 14) {
-      tracking = false;
-      reset(true);
-      return;
-    }
+    // One-time direction decision. Until the gesture moves far enough we
+    // make no judgement; once it does, it is permanently either a pull or a
+    // scroll for the rest of this finger-down (no mid-gesture re-arming).
+    if (!armed) {
+      if (Math.max(Math.abs(dx), dy) < DECIDE) return;
 
-    if (dy > dx * 1.15 && dx < 24) {
-      tracking = false;
-      reset(true);
-      return;
+      if (dx > 0 && dx > dy * H_DOMINANCE) {
+        armed = true;
+        overlay.classList.add('is-active');
+        root.classList.add('edge-refresh-active');
+      } else {
+        locked = true;                  // it's a scroll — bail for good
+        tracking = false;
+        reset(false);
+        return;
+      }
     }
 
     if (dx <= 0) {
@@ -134,11 +150,14 @@
       return;
     }
 
+    // Only now do we swallow the gesture from the page scroller.
     if (preventDefault) preventDefault();
     scheduleProgress(Math.min(dx, MAX_PULL) / THRESHOLD);
   }
 
   function onEnd() {
+    armed = false;
+    locked = false;
     if (!tracking || refreshing) return;
     tracking = false;
 

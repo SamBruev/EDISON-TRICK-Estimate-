@@ -29,25 +29,28 @@
       --focus: #f0d080;
       --accent-soft: rgba(212, 175, 95, 0.14);
       --ui-violet-soft: rgba(212, 175, 95, 0.14);
-      --border: rgba(255, 255, 255, 0.2);
-      --border-strong: rgba(255, 255, 255, 0.32);
-      --hairline: rgba(255, 255, 255, 0.12);
-      --glass-bg: rgba(0, 0, 0, 0.88);
-      --glass-bg-elevated: rgba(0, 0, 0, 0.92);
-      --glass-bg-bar: rgba(8, 8, 8, 0.9);
-      --glass-bg-fallback: rgba(0, 0, 0, 0.96);
-      --glass-blur: blur(22px) saturate(118%);
-      --glass-blur-strong: blur(28px) saturate(120%);
-      --glass-highlight: rgba(255, 245, 218, 0.14);
+      --border: rgba(255, 255, 255, 0.28);
+      --border-strong: rgba(255, 255, 255, 0.44);
+      --hairline: rgba(255, 255, 255, 0.14);
+      --glass-bg: rgba(20, 22, 28, 0.55);
+      --glass-bg-elevated: rgba(24, 26, 32, 0.62);
+      --glass-bg-bar: rgba(12, 13, 17, 0.6);
+      --glass-bg-fallback: rgba(10, 11, 15, 0.94);
+      --glass-blur: blur(32px) saturate(180%);
+      --glass-blur-strong: blur(42px) saturate(195%);
+      --glass-highlight: rgba(255, 248, 230, 0.22);
       --glass-shine: linear-gradient(
         180deg,
-        rgba(255, 255, 255, 0.06) 0%,
-        rgba(255, 255, 255, 0) 36%
+        rgba(255, 255, 255, 0.16) 0%,
+        rgba(255, 255, 255, 0.04) 24%,
+        rgba(255, 255, 255, 0) 52%
       );
       --glass-shadow:
-        0 10px 28px rgba(0, 0, 0, 0.34),
-        inset 0 1px 0 rgba(255, 244, 220, 0.1),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.055);
+        0 14px 40px rgba(0, 0, 0, 0.46),
+        0 2px 10px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 250, 235, 0.24),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.08),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
       --panel: var(--glass-bg);
       --brand-serif: "Roboto Slab", Georgia, "Times New Roman", serif;
       --logo-scale: 1.45;
@@ -485,6 +488,13 @@
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       box-shadow: var(--glass-shadow);
+      scroll-snap-type: x mandatory;
+      scroll-padding-left: 22px;
+      scroll-padding-right: 22px;
+    }
+
+    nav ul li {
+      scroll-snap-align: start;
     }
 
     .nav-scroll-wrap {
@@ -498,19 +508,27 @@
       z-index: 21;
       transform: translateY(-50%);
       pointer-events: none;
-      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      font-size: 17px;
+      font-weight: 700;
       line-height: 1;
-      color: var(--time);
+      color: #0c0c0c;
+      background: var(--time);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.6), 0 0 14px var(--time);
       opacity: 0;
-      text-shadow: 0 0 10px rgba(0, 0, 0, 0.85);
       transition: opacity 0.2s ease;
     }
 
-    .nav-scroll-hint--left { left: 7px; }
-    .nav-scroll-hint--right { right: 7px; }
+    .nav-scroll-hint--left { left: 5px; }
+    .nav-scroll-hint--right { right: 5px; }
 
-    .nav-scroll-wrap.can-scroll-left .nav-scroll-hint--left { opacity: 0.5; }
-    .nav-scroll-wrap.can-scroll-right .nav-scroll-hint--right { opacity: 0.5; }
+    .nav-scroll-wrap.can-scroll-left .nav-scroll-hint--left { opacity: 0.95; }
+    .nav-scroll-wrap.can-scroll-right .nav-scroll-hint--right { opacity: 0.95; }
 
     .nav-scroll-wrap.can-scroll nav ul {
       padding-left: 22px;
@@ -1342,11 +1360,11 @@
 
     .bonus-item-icon {
       flex-shrink: 0;
-      width: 11px;
-      height: 16px;
+      width: 16px;
+      height: 23px;
       background: url("assets/symbol.png") center / contain no-repeat;
-      opacity: 0.75;
-      margin-top: 3px;
+      opacity: 0.85;
+      margin-top: 1px;
     }
 
     .bonus-item strong { color: var(--label); font-weight: 600; }
@@ -1877,6 +1895,18 @@
       opacity: 0.16;
       pointer-events: none;
       z-index: 0;
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 50%, transparent 73%);
+              mask-image: linear-gradient(to bottom, #000 0%, #000 50%, transparent 73%);
+    }
+
+    .brand-watermark::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("assets/et-logo.png") center top / contain no-repeat;
+      filter: blur(22px);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 46%, #000 72%, #000 100%);
+              mask-image: linear-gradient(to bottom, transparent 46%, #000 72%, #000 100%);
     }
 
     html.edge-refresh-active .wrap {
@@ -2095,7 +2125,6 @@
     <header class="page-head">
       <div class="hero-band">EDISON TRICK</div>
       <h1>Смета на производство<br>3 песен</h1>
-      <p class="hero-intro">Всё прозрачно и по шагам — без лишней суеты</p>
       <div class="hero-stats">
       <div class="stat">
         <div class="stat-label">Стоимость часа</div>
@@ -2278,7 +2307,7 @@
           <span class="date-chip-value">8, 15, 22 сен · 25 000 ₽/трек</span>
         </div>
         <div class="date-chip date-chip--deadline">
-          <span class="date-chip-label date-chip-label--deadline"><span class="icon-lamp icon-lamp--sm" aria-hidden="true"></span> Финальная сдача</span>
+          <span class="date-chip-label date-chip-label--deadline">Финальная сдача</span>
           <span class="date-chip-value" style="color: var(--time);">1 ОКТЯБРЯ 2026</span>
         </div>
       </div>

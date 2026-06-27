@@ -1,6 +1,6 @@
 (function () {
   const TYPES = {
-    rehearsal: { label: 'Репетиция', color: '#a78bfa' },
+    rehearsal: { label: 'Репетиция', color: '#34d399' },
     drums:     { label: 'Барабаны', color: '#f87171' },
     bass:      { label: 'Бас', color: '#fb923c' },
     guitars:   { label: 'Гитары', color: '#38bdf8' },
